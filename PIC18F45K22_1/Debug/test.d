@@ -1,0 +1,1 @@
+ test.d  test.p1:  ../test.c ../test.h ../GLCD.h

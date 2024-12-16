@@ -1,0 +1,1 @@
+ main.d  main.p1:  ../main.c ../test.h ../utils.h ../GLCD.h ../splash.h ../config.h
