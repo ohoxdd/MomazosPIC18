@@ -3,7 +3,7 @@
  * Compiler:  MPLAB XC8
  */
 
-#include <xc.h>
+#include "xc.h"
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
