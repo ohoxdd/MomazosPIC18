@@ -9696,7 +9696,7 @@ ANSELE = 0xFF;
 TRISC = 0x87;
 TRISA = 0x00;
 TRISD = 0x00;
-TRISE = 0x02;
+TRISE = 0x06;
 TRISEbits.RE1 = 1;
 TRISB = 0x00;
 
@@ -9724,12 +9724,13 @@ ADCON1 = 0;
 
 ADCON0 = 0x19;
 
-# 61
+# 62
+ADCON0bits.CHS = 0x6;
 ADIE = 1;
 
 ADIF= 0;
 
-# 69
+# 71
 T0CONbits.T08BIT = 0;
 T0CONbits.T0CS = 0;
 T0CONbits.PSA = 0;
@@ -9747,7 +9748,7 @@ TMR2IE = 1;
 T2CON = 0x03;
 PR2 = 0x7C;
 
-# 92
+# 94
 CCP3CON |= ( 0x2<< 4);
 CCPR3L = 0x3E;
 
@@ -9765,10 +9766,10 @@ BAUDCON = 0x08;
 
 TXSTA1 = 0x24;
 
-# 115
+# 117
 SPBRGH = 0x00;
 SPBRG = 0x10;
 
-# 123
+# 125
 PIE1bits.RC1IE = 1;
 }

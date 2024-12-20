@@ -219,7 +219,6 @@ void play_splash_screen() {
 	if (!splash_on) return;
 		writeMatrix(0, 0, 8, 128, splash_bitmap);
 		__delay_ms(2000);
-	if (!splash_on) return;
 		clearGLCD(0, 8, 0, 128);
 		int n = sizeof(splash_text)/sizeof(splash_text[0]);
 		for (int i = 0; i < n; i++) {
@@ -347,6 +346,40 @@ void update_medidor(int current_psi, int change_psi){
 	
 }
 
+	void write_debugging_text() {
+		char buff[64];
+		int current_chan = ADCON0bits.CHS;
+
+		if (current_chan == 6){
+			sprintf(buff, "ADC 6: %d\n", adc_value);
+			writeTxt(6, 11, buff);
+		}
+		else if (current_chan == 7) {
+			sprintf(buff, "ADC 7: %d\n", adc_value);
+			writeTxt(7, 11, buff);
+		}
+		sprintf(buff, "ADC CHAN: %d\n", ADCON0bits.CHS);
+		writeTxt(5, 11, buff);
+	}
+
+	void ADC_start() {
+		// swap channels
+		int current_chan = ADCON0bits.CHS;
+		int next_chan;
+		if (current_chan == 6) {
+			next_chan = 7;
+		} else {
+			next_chan = 6;
+		}
+		ADCON0bits.CHS = next_chan;
+		// start conversion
+		GO_nDONE = 1;    
+	}
+
+	int get_adc_channel(){
+		return ADCON0bits.CHS;
+	}
+
 void main(void)
 { 
 	configPIC();
@@ -395,16 +428,17 @@ void main(void)
 		puts_usart1(splash_text[i]);
 	}
 	
-	/*char buffer[128];
-	gets_usart1(buffer);
-	puts_usart1(buffer);*/
+
 
 	while (1)
 	{   
 		// Inicia una nueva conversi�n del adc cuando no hay una en curso
 		if (!GO_nDONE) {
-			GO_nDONE = 1;
+			// GO_nDONE = 1;
+			ADC_start();
 		}
+
+		write_debugging_text();
 		
 		if (change_temp) {
 			// escribe temperatura
@@ -485,19 +519,19 @@ void main(void)
 		PREV_C = READ_C;
 
 		// Actualiza los textos en pantalla para los botones RC0 RC1
-		if (RC0_update) {
-			RC0_update = false;
-			sprintf(buff, "RC0 pressed: %d\n", RC0_pressed);
-			writeTxt(5, 11, buff);
-		}
-		if (RC1_update) {
-			RC1_update = false;
-			sprintf(buff, "RC1 pressed: %d\n", RC1_pressed);
-			writeTxt(6, 11, buff);
-		}
+		// if (RC0_update) {
+		// 	RC0_update = false;
+		// 	sprintf(buff, "RC0 pressed: %d\n", RC0_pressed);
+		// 	writeTxt(5, 11, buff);
+		// }
+		// if (RC1_update) {
+		// 	RC1_update = false;
+		// 	sprintf(buff, "RC1 pressed: %d\n", RC1_pressed);
+		// 	writeTxt(6, 11, buff);
+		// }
 		
-		val = sum(val,1);
-		val++;
+		// val = sum(val,1);
+		// val++;
 		
 	}
 }

@@ -17,7 +17,7 @@ void configPIC()
 	TRISC = 0x87;   				// RC0 y RC1 y RC2 como input, RC6 output (TX1), RC7 input (RX1)
 	TRISA = 0x00;   				// Port A como ouptut
 	TRISD = 0x00;   				// Port D como ouptut
-	TRISE = 0x02;   				// AN6 input, los dem�s output
+	TRISE = 0x06;   				// AN6 input, AN7 input, los dem�s output
 	TRISEbits.RE1 = 1;				
 	TRISB = 0x00;   				// Port B como ouptut
 	
@@ -58,6 +58,8 @@ void configPIC()
 		//
 		// (0) GO/nDONE: No posem cap conversi� en progr�s
 		// (1) ADON: ADC habilitat
+
+	ADCON0bits.CHS = 0x6;
 	ADIE = 1;
 		// Habilitem l'inerrupci� del ADC
 	ADIF= 0;

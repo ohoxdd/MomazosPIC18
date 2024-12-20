@@ -1,7 +1,7 @@
 
 
 Microchip MPLAB XC8 Assembler V2.50 build 20240725155939 
-                                                                                                           Fri Dec 20 21:16:17 2024
+                                                                                                           Fri Dec 20 22:00:48 2024
 
 
      1                           	processor	18F45K22
@@ -151,7 +151,7 @@ Microchip MPLAB XC8 Assembler V2.50 build 20240725155939
    145                           	callstack 0
    146                           
    147                           	psect	mediumconst
-   148   0078D4                     __mediumconst:
+   148   0078D2                     __mediumconst:
    149                           	callstack 0	; top of RAM usage
    150                           
    151                           	psect	reset_vec
@@ -168,7 +168,7 @@ Microchip MPLAB XC8 Assembler V2.50 build 20240725155939
    162                           	psect	init
    163   000044                     start:
    164                           	callstack 0
-   165   000044  EF75  F015         	goto	start_initialization	;jump to C runtime clear & initialization
+   165   000044  EFF8  F012         	goto	start_initialization	;jump to C runtime clear & initialization
    166                           
    167                           	psect	text
    168   000000                     intlevel0:
@@ -249,13 +249,13 @@ Microchip MPLAB XC8 Assembler V2.50 build 20240725155939
 
 
 Microchip Technology PIC18 Macro Assembler V2.50 build 20240725155939 
-Symbol Table                                                                                               Fri Dec 20 21:16:17 2024
+Symbol Table                                                                                               Fri Dec 20 22:00:48 2024
 
-                __S1 0300                 ___sp 0000                 _main 0A6C                 start 0044  
+                __S1 0299                 ___sp 0000                 _main 0DD4                 start 0044  
               __HRAM 0000                __LRAM 0001               isa$std 0001     ___inthi_stack_hi 0000  
-   ___inthi_stack_lo 0000         __mediumconst 78D4               stackhi 0000               stacklo 0000  
+   ___inthi_stack_lo 0000         __mediumconst 78D2               stackhi 0000               stacklo 0000  
          __accesstop 0060           ___inthi_sp 0000           ___intlo_sp 0000           ___stack_hi 0000  
          ___stack_lo 0000     ___intlo_stack_hi 0000     ___intlo_stack_lo 0000              __ramtop 0600  
-start_initialization 2AEA            ___heap_hi 0000            ___heap_lo 0000          __smallconst 0000  
+start_initialization 25F0            ___heap_hi 0000            ___heap_lo 0000          __smallconst 0000  
            isa$xinst 0000             intlevel0 0000             intlevel1 0000             intlevel2 0000  
            intlevel3 0000             reset_vec 0000  

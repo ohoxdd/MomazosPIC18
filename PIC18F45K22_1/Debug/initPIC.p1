@@ -72,6 +72,35 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _ADCON1 `Vuc ~T0 @X0 0 e@4033 ]
 "13577
 [v _ADCON0 `Vuc ~T0 @X0 0 e@4034 ]
+"13583
+[s S640 :1 `uc 1 :1 `uc 1 ]
+[n S640 . . GO_NOT_DONE ]
+"13587
+[s S641 :1 `uc 1 :1 `uc 1 :5 `uc 1 ]
+[n S641 . ADON GO_nDONE CHS ]
+"13592
+[s S642 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S642 . . GO CHS0 CHS1 CHS2 CHS3 CHS4 ]
+"13601
+[s S643 :1 `uc 1 :1 `uc 1 ]
+[n S643 . . DONE ]
+"13605
+[s S644 :1 `uc 1 :1 `uc 1 ]
+[n S644 . . NOT_DONE ]
+"13609
+[s S645 :1 `uc 1 :1 `uc 1 ]
+[n S645 . . nDONE ]
+"13613
+[s S646 :1 `uc 1 :1 `uc 1 ]
+[n S646 . . GO_DONE ]
+"13617
+[s S647 :1 `uc 1 :1 `uc 1 ]
+[n S647 . . GODONE ]
+"13582
+[u S639 `S640 1 `S641 1 `S642 1 `S643 1 `S644 1 `S645 1 `S646 1 `S647 1 ]
+[n S639 . . . . . . . . . ]
+"13622
+[v _ADCON0bits `VS639 ~T0 @X0 0 e@4034 ]
 "17450
 [v _ADIE `Vb ~T0 @X0 0 e@31982 ]
 "17453
@@ -646,7 +675,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "19
 [e = _TRISD -> -> 0 `i `uc ]
 "20
-[e = _TRISE -> -> 2 `i `uc ]
+[e = _TRISE -> -> 6 `i `uc ]
 "21
 [e = . . _TRISEbits 1 1 -> -> 1 `i `uc ]
 "22
@@ -671,54 +700,56 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _ADCON1 -> -> 0 `i `uc ]
 "52
 [e = _ADCON0 -> -> 25 `i `uc ]
-"61
-[e = _ADIE -> -> 1 `i `b ]
+"62
+[e = . . _ADCON0bits 1 2 -> -> 6 `i `uc ]
 "63
+[e = _ADIE -> -> 1 `i `b ]
+"65
 [e = _ADIF -> -> 0 `i `b ]
-"69
-[e = . . _T0CONbits 0 4 -> -> 0 `i `uc ]
-"70
-[e = . . _T0CONbits 0 3 -> -> 0 `i `uc ]
 "71
-[e = . . _T0CONbits 0 1 -> -> 0 `i `uc ]
+[e = . . _T0CONbits 0 4 -> -> 0 `i `uc ]
 "72
-[e = . . _T0CONbits 0 2 -> -> 0 `i `uc ]
+[e = . . _T0CONbits 0 3 -> -> 0 `i `uc ]
 "73
+[e = . . _T0CONbits 0 1 -> -> 0 `i `uc ]
+"74
+[e = . . _T0CONbits 0 2 -> -> 0 `i `uc ]
+"75
 [e = . . _T0CONbits 0 0 -> -> 1 `i `uc ]
-"77
-[e = . . _TRISEbits 1 0 -> -> 1 `i `uc ]
-"78
-[e = _CCPTMRS0 -> -> 0 `i `uc ]
 "79
-[e = _CCP3CON -> -> 12 `i `uc ]
+[e = . . _TRISEbits 1 0 -> -> 1 `i `uc ]
+"80
+[e = _CCPTMRS0 -> -> 0 `i `uc ]
 "81
-[e = _TMR2IF -> -> 0 `i `b ]
-"82
-[e = _TMR2IE -> -> 1 `i `b ]
+[e = _CCP3CON -> -> 12 `i `uc ]
 "83
-[e = _T2CON -> -> 3 `i `uc ]
+[e = _TMR2IF -> -> 0 `i `b ]
 "84
+[e = _TMR2IE -> -> 1 `i `b ]
+"85
+[e = _T2CON -> -> 3 `i `uc ]
+"86
 [e = _PR2 -> -> 124 `i `uc ]
-"92
+"94
 [e =| _CCP3CON -> << -> 2 `i -> 4 `i `uc ]
-"93
+"95
 [e = _CCPR3L -> -> 62 `i `uc ]
-"96
+"98
 [e = _TMR0IF -> -> 0 `i `b ]
-"97
+"99
 [e = _TMR0IE -> -> 1 `i `b ]
-"101
+"103
 [e = _RCSTA1 -> -> 144 `i `uc ]
-"105
-[e = _BAUDCON -> -> 8 `i `uc ]
 "107
+[e = _BAUDCON -> -> 8 `i `uc ]
+"109
 [e = _TXSTA1 -> -> 36 `i `uc ]
-"115
+"117
 [e = _SPBRGH -> -> 0 `i `uc ]
-"116
+"118
 [e = _SPBRG -> -> 16 `i `uc ]
-"123
+"125
 [e = . . _PIE1bits 0 5 -> -> 1 `i `uc ]
-"124
+"126
 [e :UE 846 ]
 }

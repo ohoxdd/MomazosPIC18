@@ -3,13 +3,13 @@
 [d edition pro ]
 [d chip 18F45K22 ]
 [d frameptr 4065 ]
-"108 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
+"110 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
 [e E6184 . `uc
 Ready 0
 Running 1
 Stopped 2
 ]
-"295
+"298
 [e E6189 flanc_t `uc
 FALLING 0
 RISING 1
@@ -42,39 +42,41 @@ RISING 1
 [v _putchGLCD putchGLCD `(v  1 e 1 0 ]
 "2 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/initPIC.c
 [v _configPIC configPIC `(v  1 e 1 0 ]
-"47 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
+"49 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
 [v _handleUsartInput handleUsartInput `(v  1 e 1 0 ]
-"57
+"59
 [v _tic tic `(v  1 e 1 0 ]
-"63
+"65
 [v _handleADCresult handleADCresult `(v  1 e 1 0 ]
-"69
+"71
 [v _RSI RSI `II(v  1 e 1 0 ]
-"108
+"110
 [v _updateTimerText updateTimerText `(uc  1 e 1 0 ]
-"175
+"177
 [v _next_timer_state next_timer_state `(E6184  1 e 1 0 ]
-"216
+"218
 [v _play_splash_screen play_splash_screen `(v  1 e 1 0 ]
-"229
+"232
 [v _calculate_temp calculate_temp `(d  1 e 3 0 ]
-"253
+"256
 [v _write_pressure write_pressure `(v  1 e 1 0 ]
-"261
+"264
 [v _change_selected_pressure change_selected_pressure `(v  1 e 1 0 ]
-"267
+"270
 [v _get_adjusted_pressure get_adjusted_pressure `(i  1 e 2 0 ]
-"274
+"277
 [v _set_pwm_pressure set_pwm_pressure `(i  1 e 2 0 ]
-"288
+"291
 [v _inputDetector inputDetector `(uc  1 e 1 0 ]
-"312
+"315
 [v _update_medidor update_medidor `(v  1 e 1 0 ]
-"346
+"349
+[v _write_debugging_text write_debugging_text `(v  1 e 1 0 ]
+"365
+[v _ADC_start ADC_start `(v  1 e 1 0 ]
+"379
 [v _main main `(v  1 e 1 0 ]
-"5 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/test.c
-[v _sum sum `(i  1 e 2 0 ]
-"9
+"9 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/test.c
 [v _writeMatrix writeMatrix `(v  1 e 1 0 ]
 "4 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/utils.c
 [v _putc_usart1 putc_usart1 `(v  1 e 1 0 ]
@@ -168,24 +170,24 @@ RISING 1
 [v ___omul __omul `(ul  1 e 4 0 ]
 "6 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/ascii.h
 [v _font5x7 font5x7 `C[500]uc  1 e 500 0 ]
-"32 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
+"34 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
 [v _time_left time_left `ui  1 e 2 0 ]
-"33
+"35
 [v _change_time change_time `uc  1 e 1 0 ]
-"34
-[v _pressure_perc pressure_perc `ui  1 e 2 0 ]
 "36
-[v _adc_value adc_value `ui  1 e 2 0 ]
-"37
-[v _duty_one_pc duty_one_pc `i  1 e 2 0 ]
+[v _pressure_perc pressure_perc `ui  1 e 2 0 ]
 "38
-[v _change_temp change_temp `uc  1 e 1 0 ]
+[v _adc_value adc_value `ui  1 e 2 0 ]
 "39
+[v _duty_one_pc duty_one_pc `i  1 e 2 0 ]
+"40
+[v _change_temp change_temp `uc  1 e 1 0 ]
+"41
 [v _w_pressed w_pressed `uc  1 e 1 0 ]
 [v _a_pressed a_pressed `uc  1 e 1 0 ]
 [v _s_pressed s_pressed `uc  1 e 1 0 ]
 [v _d_pressed d_pressed `uc  1 e 1 0 ]
-"209
+"211
 [v _splash_text splash_text `[4]*.32uc  1 e 8 0 ]
 "3 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/splash.h
 [v _splash_bitmap splash_bitmap `C[1024]uc  1 e 1024 0 ]
@@ -209,7 +211,7 @@ RISING 1
 [v _PORTA PORTA `VEuc  1 e 1 @3968 ]
 "6565
 [v _PORTB PORTB `VEuc  1 e 1 @3969 ]
-[s S574 . 1 `uc 1 RB0 1 0 :1:0 
+[s S651 . 1 `uc 1 RB0 1 0 :1:0 
 `uc 1 RB1 1 0 :1:1 
 `uc 1 RB2 1 0 :1:2 
 `uc 1 RB3 1 0 :1:3 
@@ -219,7 +221,7 @@ RISING 1
 `uc 1 RB7 1 0 :1:7 
 ]
 "6635
-[s S583 . 1 `uc 1 INT0 1 0 :1:0 
+[s S660 . 1 `uc 1 INT0 1 0 :1:0 
 `uc 1 INT1 1 0 :1:1 
 `uc 1 INT2 1 0 :1:2 
 `uc 1 CCP2 1 0 :1:3 
@@ -228,7 +230,7 @@ RISING 1
 `uc 1 KBI2 1 0 :1:6 
 `uc 1 KBI3 1 0 :1:7 
 ]
-[s S592 . 1 `uc 1 AN12 1 0 :1:0 
+[s S669 . 1 `uc 1 AN12 1 0 :1:0 
 `uc 1 AN10 1 0 :1:1 
 `uc 1 AN8 1 0 :1:2 
 `uc 1 AN9 1 0 :1:3 
@@ -237,39 +239,39 @@ RISING 1
 `uc 1 PGC 1 0 :1:6 
 `uc 1 PGD 1 0 :1:7 
 ]
-[s S601 . 1 `uc 1 FLT0 1 0 :1:0 
+[s S678 . 1 `uc 1 FLT0 1 0 :1:0 
 `uc 1 C12IN3M 1 0 :1:1 
 `uc 1 . 1 0 :1:2 
 `uc 1 C12IN2M 1 0 :1:3 
 `uc 1 T5G 1 0 :1:4 
 `uc 1 T1G 1 0 :1:5 
 ]
-[s S608 . 1 `uc 1 SRI 1 0 :1:0 
+[s S685 . 1 `uc 1 SRI 1 0 :1:0 
 `uc 1 C12IN3N 1 0 :1:1 
 `uc 1 . 1 0 :1:2 
 `uc 1 C12IN2N 1 0 :1:3 
 `uc 1 . 1 0 :1:4 
 `uc 1 CCP3 1 0 :1:5 
 ]
-[s S615 . 1 `uc 1 . 1 0 :2:0 
+[s S692 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 CTED1 1 0 :1:2 
 `uc 1 CTED2 1 0 :1:3 
 `uc 1 . 1 0 :1:4 
 `uc 1 T3CKI 1 0 :1:5 
 ]
-[s S621 . 1 `uc 1 . 1 0 :3:0 
+[s S698 . 1 `uc 1 . 1 0 :3:0 
 `uc 1 P2A 1 0 :1:3 
 `uc 1 . 1 0 :1:4 
 `uc 1 P3A 1 0 :1:5 
 ]
-[s S626 . 1 `uc 1 . 1 0 :3:0 
+[s S703 . 1 `uc 1 . 1 0 :3:0 
 `uc 1 CCP2_PA2 1 0 :1:3 
 ]
-[u S629 . 1 `S574 1 . 1 0 `S583 1 . 1 0 `S592 1 . 1 0 `S601 1 . 1 0 `S608 1 . 1 0 `S615 1 . 1 0 `S621 1 . 1 0 `S626 1 . 1 0 ]
-[v _PORTBbits PORTBbits `VES629  1 e 1 @3969 ]
+[u S706 . 1 `S651 1 . 1 0 `S660 1 . 1 0 `S669 1 . 1 0 `S678 1 . 1 0 `S685 1 . 1 0 `S692 1 . 1 0 `S698 1 . 1 0 `S703 1 . 1 0 ]
+[v _PORTBbits PORTBbits `VES706  1 e 1 @3969 ]
 "6835
 [v _PORTC PORTC `VEuc  1 e 1 @3970 ]
-[s S275 . 1 `uc 1 RC0 1 0 :1:0 
+[s S346 . 1 `uc 1 RC0 1 0 :1:0 
 `uc 1 RC1 1 0 :1:1 
 `uc 1 RC2 1 0 :1:2 
 `uc 1 RC3 1 0 :1:3 
@@ -279,7 +281,7 @@ RISING 1
 `uc 1 RC7 1 0 :1:7 
 ]
 "6907
-[s S284 . 1 `uc 1 T1OSO 1 0 :1:0 
+[s S355 . 1 `uc 1 T1OSO 1 0 :1:0 
 `uc 1 T1OSI 1 0 :1:1 
 `uc 1 T5CKI 1 0 :1:2 
 `uc 1 SCK 1 0 :1:3 
@@ -288,7 +290,7 @@ RISING 1
 `uc 1 TX 1 0 :1:6 
 `uc 1 RX 1 0 :1:7 
 ]
-[s S293 . 1 `uc 1 P2B 1 0 :1:0 
+[s S364 . 1 `uc 1 P2B 1 0 :1:0 
 `uc 1 P2A 1 0 :1:1 
 `uc 1 P1A 1 0 :1:2 
 `uc 1 SCL 1 0 :1:3 
@@ -297,7 +299,7 @@ RISING 1
 `uc 1 CK 1 0 :1:6 
 `uc 1 DT 1 0 :1:7 
 ]
-[s S302 . 1 `uc 1 T1CKI 1 0 :1:0 
+[s S373 . 1 `uc 1 T1CKI 1 0 :1:0 
 `uc 1 CCP2 1 0 :1:1 
 `uc 1 CCP1 1 0 :1:2 
 `uc 1 SCK1 1 0 :1:3 
@@ -306,7 +308,7 @@ RISING 1
 `uc 1 TX1 1 0 :1:6 
 `uc 1 RX1 1 0 :1:7 
 ]
-[s S311 . 1 `uc 1 T3CKI 1 0 :1:0 
+[s S382 . 1 `uc 1 T3CKI 1 0 :1:0 
 `uc 1 . 1 0 :1:1 
 `uc 1 CTPLS 1 0 :1:2 
 `uc 1 SCL1 1 0 :1:3 
@@ -315,7 +317,7 @@ RISING 1
 `uc 1 CK1 1 0 :1:6 
 `uc 1 DT1 1 0 :1:7 
 ]
-[s S320 . 1 `uc 1 T3G 1 0 :1:0 
+[s S391 . 1 `uc 1 T3G 1 0 :1:0 
 `uc 1 . 1 0 :1:1 
 `uc 1 AN14 1 0 :1:2 
 `uc 1 AN15 1 0 :1:3 
@@ -324,12 +326,12 @@ RISING 1
 `uc 1 AN18 1 0 :1:6 
 `uc 1 AN19 1 0 :1:7 
 ]
-[s S329 . 1 `uc 1 . 1 0 :1:0 
+[s S400 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 PA2 1 0 :1:1 
 `uc 1 PA1 1 0 :1:2 
 ]
-[u S333 . 1 `S275 1 . 1 0 `S284 1 . 1 0 `S293 1 . 1 0 `S302 1 . 1 0 `S311 1 . 1 0 `S320 1 . 1 0 `S329 1 . 1 0 ]
-[v _PORTCbits PORTCbits `VES333  1 e 1 @3970 ]
+[u S404 . 1 `S346 1 . 1 0 `S355 1 . 1 0 `S364 1 . 1 0 `S373 1 . 1 0 `S382 1 . 1 0 `S391 1 . 1 0 `S400 1 . 1 0 ]
+[v _PORTCbits PORTCbits `VES404  1 e 1 @3970 ]
 "7142
 [v _PORTD PORTD `VEuc  1 e 1 @3971 ]
 "8060
@@ -342,19 +344,19 @@ RISING 1
 [v _TRISD TRISD `VEuc  1 e 1 @3989 ]
 "8948
 [v _TRISE TRISE `VEuc  1 e 1 @3990 ]
-[s S250 . 1 `uc 1 TRISE0 1 0 :1:0 
+[s S321 . 1 `uc 1 TRISE0 1 0 :1:0 
 `uc 1 TRISE1 1 0 :1:1 
 `uc 1 TRISE2 1 0 :1:2 
 `uc 1 . 1 0 :4:3 
 `uc 1 WPUE3 1 0 :1:7 
 ]
 "8972
-[s S256 . 1 `uc 1 RE0 1 0 :1:0 
+[s S327 . 1 `uc 1 RE0 1 0 :1:0 
 `uc 1 RE1 1 0 :1:1 
 `uc 1 RE2 1 0 :1:2 
 ]
-[u S260 . 1 `S250 1 . 1 0 `S256 1 . 1 0 ]
-[v _TRISEbits TRISEbits `VES260  1 e 1 @3990 ]
+[u S331 . 1 `S321 1 . 1 0 `S327 1 . 1 0 ]
+[v _TRISEbits TRISEbits `VES331  1 e 1 @3990 ]
 [s S65 . 1 `uc 1 TMR1IE 1 0 :1:0 
 `uc 1 TMR2IE 1 0 :1:1 
 `uc 1 CCP1IE 1 0 :1:2 
@@ -391,7 +393,7 @@ RISING 1
 [v _RCSTA1 RCSTA1 `VEuc  1 e 1 @4011 ]
 "10801
 [v _TXSTA1 TXSTA1 `VEuc  1 e 1 @4012 ]
-[s S795 . 1 `uc 1 TX9D 1 0 :1:0 
+[s S872 . 1 `uc 1 TX9D 1 0 :1:0 
 `uc 1 TRMT 1 0 :1:1 
 `uc 1 BRGH 1 0 :1:2 
 `uc 1 SENDB 1 0 :1:3 
@@ -401,7 +403,7 @@ RISING 1
 `uc 1 CSRC 1 0 :1:7 
 ]
 "10842
-[s S804 . 1 `uc 1 TX9D1 1 0 :1:0 
+[s S881 . 1 `uc 1 TX9D1 1 0 :1:0 
 `uc 1 TRMT1 1 0 :1:1 
 `uc 1 BRGH1 1 0 :1:2 
 `uc 1 SENDB1 1 0 :1:3 
@@ -410,12 +412,12 @@ RISING 1
 `uc 1 TX91 1 0 :1:6 
 `uc 1 CSRC1 1 0 :1:7 
 ]
-[s S813 . 1 `uc 1 TXD8 1 0 :1:0 
+[s S890 . 1 `uc 1 TXD8 1 0 :1:0 
 `uc 1 . 1 0 :5:1 
 `uc 1 TX8_9 1 0 :1:6 
 ]
-[u S817 . 1 `S795 1 . 1 0 `S804 1 . 1 0 `S813 1 . 1 0 ]
-[v _TXSTA1bits TXSTA1bits `VES817  1 e 1 @4012 ]
+[u S894 . 1 `S872 1 . 1 0 `S881 1 . 1 0 `S890 1 . 1 0 ]
+[v _TXSTA1bits TXSTA1bits `VES894  1 e 1 @4012 ]
 "11176
 [v _TXREG1 TXREG1 `VEuc  1 e 1 @4013 ]
 "11254
@@ -451,6 +453,39 @@ RISING 1
 [v _ADCON1 ADCON1 `VEuc  1 e 1 @4033 ]
 "13577
 [v _ADCON0 ADCON0 `VEuc  1 e 1 @4034 ]
+[s S236 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 GO_NOT_DONE 1 0 :1:1 
+]
+"13622
+[s S239 . 1 `uc 1 ADON 1 0 :1:0 
+`uc 1 GO_nDONE 1 0 :1:1 
+`uc 1 CHS 1 0 :5:2 
+]
+[s S243 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 GO 1 0 :1:1 
+`uc 1 CHS0 1 0 :1:2 
+`uc 1 CHS1 1 0 :1:3 
+`uc 1 CHS2 1 0 :1:4 
+`uc 1 CHS3 1 0 :1:5 
+`uc 1 CHS4 1 0 :1:6 
+]
+[s S251 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 DONE 1 0 :1:1 
+]
+[s S254 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 NOT_DONE 1 0 :1:1 
+]
+[s S257 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 nDONE 1 0 :1:1 
+]
+[s S260 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 GO_DONE 1 0 :1:1 
+]
+[s S263 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 GODONE 1 0 :1:1 
+]
+[u S266 . 1 `S236 1 . 1 0 `S239 1 . 1 0 `S243 1 . 1 0 `S251 1 . 1 0 `S254 1 . 1 0 `S257 1 . 1 0 `S260 1 . 1 0 `S263 1 . 1 0 ]
+[v _ADCON0bits ADCON0bits `VES266  1 e 1 @4034 ]
 "13709
 [v _ADRESL ADRESL `VEuc  1 e 1 @4035 ]
 "13729
@@ -501,51 +536,45 @@ RISING 1
 [v __powers_ _powers_ `C[13]d  1 e 39 0 ]
 "39
 [v __npowers_ _npowers_ `C[13]d  1 e 39 0 ]
-"346 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
+"379 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
 [v _main main `(v  1 e 1 0 ]
 {
-"408
+"442
 [v main@buff buff `[128]uc  1 a 128 0 ]
-"421
-[v main@buff_565 buff `[128]uc  1 a 128 128 ]
-"389
-[v main@i i `i  1 a 2 101 ]
-"382
-[v main@temperature temperature `d  1 a 3 98 ]
-"386
-[v main@precalc precalc `Cd  1 a 3 87 ]
-"383
-[v main@adjusted_pressure adjusted_pressure `i  1 a 2 105 ]
-"387
-[v main@val val `i  1 a 2 90 ]
-"359
-[v main@READ_C READ_C `uc  1 a 1 107 ]
-"360
-[v main@PREV_C PREV_C `uc  1 a 1 104 ]
-"368
-[v main@timer_state timer_state `E6184  1 a 1 103 ]
-"363
-[v main@RC1_pressed RC1_pressed `uc  1 a 1 97 ]
-"362
-[v main@RC0_pressed RC0_pressed `uc  1 a 1 96 ]
-"366
-[v main@RC1_update RC1_update `uc  1 a 1 95 ]
-"365
-[v main@RC0_update RC0_update `uc  1 a 1 94 ]
-"373
-[v main@timer_end timer_end `uc  1 a 1 93 ]
-"372
-[v main@timer_changed_state timer_changed_state `uc  1 a 1 92 ]
-"499
+"422
+[v main@i i `i  1 a 2 139 ]
+"415
+[v main@temperature temperature `d  1 a 3 136 ]
+"419
+[v main@precalc precalc `Cd  1 a 3 129 ]
+"416
+[v main@adjusted_pressure adjusted_pressure `i  1 a 2 143 ]
+"392
+[v main@READ_C READ_C `uc  1 a 1 145 ]
+"393
+[v main@PREV_C PREV_C `uc  1 a 1 142 ]
+"401
+[v main@timer_state timer_state `E6184  1 a 1 141 ]
+"396
+[v main@RC1_pressed RC1_pressed `uc  1 a 1 135 ]
+"395
+[v main@RC0_pressed RC0_pressed `uc  1 a 1 134 ]
+"406
+[v main@timer_end timer_end `uc  1 a 1 133 ]
+"405
+[v main@timer_changed_state timer_changed_state `uc  1 a 1 132 ]
+"399
+[v main@RC1_update RC1_update `uc  1 a 1 128 ]
+"533
 } 0
-"253
+"256
 [v _write_pressure write_pressure `(v  1 e 1 0 ]
 {
-"254
+"257
 [v write_pressure@buff buff `[256]uc  1 a 256 0 ]
-"253
+"256
 [v write_pressure@adjusted_pressure adjusted_pressure `Ci  1 p 2 30 ]
-"259
+"262
 } 0
 "52 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/utils.c
 [v _clearChars clearChars `(v  1 e 1 0 ]
@@ -562,33 +591,42 @@ RISING 1
 [v clearChars@page page `uc  1 p 1 31 ]
 "56
 } 0
-"312 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
+"349 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
+[v _write_debugging_text write_debugging_text `(v  1 e 1 0 ]
+{
+"350
+[v write_debugging_text@buff buff `[64]uc  1 a 64 30 ]
+"351
+[v write_debugging_text@current_chan current_chan `i  1 a 2 94 ]
+"363
+} 0
+"315
 [v _update_medidor update_medidor `(v  1 e 1 0 ]
 {
-"335
+"338
 [v update_medidor@j j `i  1 a 2 52 ]
-"334
+"337
 [v update_medidor@i i `i  1 a 2 41 ]
-"319
-[v update_medidor@diff diff `i  1 a 2 50 ]
-"313
-[v update_medidor@new_psi new_psi `i  1 a 2 48 ]
 "322
-[v update_medidor@row row `i  1 a 2 46 ]
+[v update_medidor@diff diff `i  1 a 2 50 ]
 "316
-[v update_medidor@height height `i  1 a 2 44 ]
-"324
-[v update_medidor@change change `i  1 a 2 39 ]
-"321
-[v update_medidor@num_its num_its `i  1 a 2 37 ]
-"317
-[v update_medidor@new_height new_height `i  1 a 2 35 ]
+[v update_medidor@new_psi new_psi `i  1 a 2 48 ]
 "325
+[v update_medidor@row row `i  1 a 2 46 ]
+"319
+[v update_medidor@height height `i  1 a 2 44 ]
+"327
+[v update_medidor@change change `i  1 a 2 39 ]
+"324
+[v update_medidor@num_its num_its `i  1 a 2 37 ]
+"320
+[v update_medidor@new_height new_height `i  1 a 2 35 ]
+"328
 [v update_medidor@increase increase `uc  1 a 1 43 ]
-"312
+"315
 [v update_medidor@current_psi current_psi `i  1 p 2 30 ]
 [v update_medidor@change_psi change_psi `i  1 p 2 32 ]
-"344
+"347
 } 0
 "4 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\abs.c
 [v _abs abs `(i  1 e 2 0 ]
@@ -659,32 +697,32 @@ RISING 1
 [v readByteReal@p p `uc  1 p 1 11 ]
 "205
 } 0
-"108 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
+"110 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
 [v _updateTimerText updateTimerText `(uc  1 e 1 0 ]
 {
 [v updateTimerText@timer_state timer_state `E6184  1 p 1 wreg ]
-"111
+"113
 [v updateTimerText@countdown countdown `[256]uc  1 a 256 0 ]
-"112
+"114
 [v updateTimerText@stateText stateText `[50]uc  1 a 50 30 ]
 [s S99 . 4 `ui 1 segs 2 0 `ui 1 dec 2 2 ]
-"109
+"111
 [v updateTimerText@ftime ftime `S99  1 a 4 81 ]
-"108
+"110
 [v updateTimerText@timer_state timer_state `E6184  1 p 1 wreg ]
 [v updateTimerText@timer_changed_state timer_changed_state `uc  1 p 1 83 ]
-"115
+"117
 [v updateTimerText@timer_state timer_state `E6184  1 p 1 80 ]
-"173
+"175
 } 0
 "505 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\doprnt.c
 [v _sprintf sprintf `(i  1 e 2 0 ]
 {
 "545
 [v sprintf@val val `ul  1 a 4 14 ]
-[u S1053 . 4 `ul 1 vd 4 0 `d 1 integ 3 0 ]
+[u S1170 . 4 `ul 1 vd 4 0 `d 1 integ 3 0 ]
 "543
-[v sprintf@tmpval tmpval `S1053  1 a 4 10 ]
+[v sprintf@tmpval tmpval `S1170  1 a 4 10 ]
 "533
 [v sprintf@fval fval `d  1 a 3 24 ]
 "517
@@ -898,25 +936,18 @@ RISING 1
 [v ___lwdiv@divisor divisor `ui  1 p 2 6 ]
 "30
 } 0
-"5 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/test.c
-[v _sum sum `(i  1 e 2 0 ]
-{
-[v sum@a a `i  1 p 2 4 ]
-[v sum@b b `i  1 p 2 6 ]
-"7
-} 0
-"274 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
+"277 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
 [v _set_pwm_pressure set_pwm_pressure `(i  1 e 2 0 ]
 {
-"276
-[v set_pwm_pressure@pwm_val pwm_val `i  1 a 2 12 ]
 "279
+[v set_pwm_pressure@pwm_val pwm_val `i  1 a 2 12 ]
+"282
 [v set_pwm_pressure@pwm_low pwm_low `i  1 a 2 10 ]
-"278
+"281
 [v set_pwm_pressure@pwm_high pwm_high `i  1 a 2 8 ]
-"274
+"277
 [v set_pwm_pressure@adjusted_pressure adjusted_pressure `Ci  1 p 2 4 ]
-"285
+"288
 } 0
 "10 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/utils.c
 [v _puts_usart1 puts_usart1 `(v  1 e 1 0 ]
@@ -932,16 +963,10 @@ RISING 1
 [v putc_usart1@xc xc `uc  1 p 1 4 ]
 "8
 } 0
-"216 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
+"218 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
 [v _play_splash_screen play_splash_screen `(v  1 e 1 0 ]
 {
-"222
-[v play_splash_screen@column column `i  1 a 2 38 ]
-"221
-[v play_splash_screen@i i `i  1 a 2 40 ]
-"220
-[v play_splash_screen@n n `i  1 a 2 36 ]
-"227
+"230
 } 0
 "43 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/utils.c
 [v _writeTxt writeTxt `(v  1 e 1 0 ]
@@ -1054,45 +1079,45 @@ RISING 1
 [v strlen@s s `*.32Cuc  1 p 2 4 ]
 "13
 } 0
-"175 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
+"177 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
 [v _next_timer_state next_timer_state `(E6184  1 e 1 0 ]
 {
 [v next_timer_state@state state `E6184  1 p 1 wreg ]
-"176
+"178
 [v next_timer_state@new_state new_state `E6184  1 a 1 5 ]
-"175
+"177
 [v next_timer_state@state state `E6184  1 p 1 wreg ]
 [v next_timer_state@state state `E6184  1 p 1 4 ]
-"207
+"209
 } 0
-"288
+"291
 [v _inputDetector inputDetector `(uc  1 e 1 0 ]
 {
 [v inputDetector@REG_ant REG_ant `uc  1 p 1 wreg ]
-"289
+"292
 [v inputDetector@ret ret `uc  1 a 1 14 ]
-"293
+"296
 [v inputDetector@pin_ant pin_ant `uc  1 a 1 13 ]
-"291
+"294
 [v inputDetector@pin_act pin_act `uc  1 a 1 12 ]
-"288
+"291
 [v inputDetector@REG_ant REG_ant `uc  1 p 1 wreg ]
 [v inputDetector@REG_act REG_act `uc  1 p 1 4 ]
 [v inputDetector@num_pin num_pin `uc  1 p 1 5 ]
 [v inputDetector@flanc flanc `uc  1 p 1 6 ]
 [v inputDetector@REG_ant REG_ant `uc  1 p 1 9 ]
-"305
+"308
 } 0
-"267
+"270
 [v _get_adjusted_pressure get_adjusted_pressure `(i  1 e 2 0 ]
 {
-"269
-[v get_adjusted_pressure@change change `d  1 a 3 78 ]
-"270
-[v get_adjusted_pressure@adjusted_pressure adjusted_pressure `i  1 a 2 84 ]
-"267
-[v get_adjusted_pressure@temperature temperature `Cd  1 p 3 75 ]
 "272
+[v get_adjusted_pressure@change change `d  1 a 3 78 ]
+"273
+[v get_adjusted_pressure@adjusted_pressure adjusted_pressure `i  1 a 2 84 ]
+"270
+[v get_adjusted_pressure@temperature temperature `Cd  1 p 3 75 ]
+"275
 } 0
 "44 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\fttol.c
 [v ___fttol __fttol `(l  1 e 4 0 ]
@@ -1109,22 +1134,22 @@ RISING 1
 "2 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/initPIC.c
 [v _configPIC configPIC `(v  1 e 1 0 ]
 {
-"124
+"126
 } 0
-"261 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
+"264 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
 [v _change_selected_pressure change_selected_pressure `(v  1 e 1 0 ]
 {
 [v change_selected_pressure@change change `i  1 p 2 4 ]
-"265
+"268
 } 0
-"229
+"232
 [v _calculate_temp calculate_temp `(d  1 e 3 0 ]
 {
-"245
+"248
 [v calculate_temp@result result `d  1 a 3 3 ]
-"229
+"232
 [v calculate_temp@precalc precalc `Cd  1 p 3 79 ]
-"251
+"254
 } 0
 "5 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\log.c
 [v _log log `(d  1 e 3 0 ]
@@ -1262,27 +1287,36 @@ RISING 1
 [v GLCDBusyWait@CS CS `uc  1 p 1 5 ]
 "69
 } 0
-"69 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
+"365 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
+[v _ADC_start ADC_start `(v  1 e 1 0 ]
+{
+"368
+[v ADC_start@next_chan next_chan `i  1 a 2 7 ]
+"367
+[v ADC_start@current_chan current_chan `i  1 a 2 5 ]
+"377
+} 0
+"71
 [v _RSI RSI `II(v  1 e 1 0 ]
 {
-"106
+"108
 } 0
-"57
+"59
 [v _tic tic `(v  1 e 1 0 ]
 {
-"61
+"63
 } 0
-"47
+"49
 [v _handleUsartInput handleUsartInput `(v  1 e 1 0 ]
 {
-"48
+"50
 [v handleUsartInput@input input `uc  1 a 1 0 ]
-"55
+"57
 } 0
-"63
+"65
 [v _handleADCresult handleADCresult `(v  1 e 1 0 ]
 {
-"64
+"66
 [v handleADCresult@result result `ui  1 a 2 2 ]
-"67
+"69
 } 0

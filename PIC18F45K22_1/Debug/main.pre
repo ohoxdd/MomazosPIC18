@@ -10113,6 +10113,8 @@ void configPIC();
 typedef unsigned char bool;
 
 # 32 "../main.c"
+bool splash_on = 0;
+
 unsigned int time_left = 100;
 unsigned char change_time = 1;
 unsigned int pressure_perc;
@@ -10122,7 +10124,7 @@ int duty_one_pc;
 bool change_temp;
 bool w_pressed, a_pressed, s_pressed, d_pressed;
 
-# 47
+# 49
 void handleUsartInput() {
 unsigned char input = RCREG1;
 switch (input) {
@@ -10155,7 +10157,7 @@ TMR2IF = 0;
 if (TMR0IF == 1 && TMR0IE == 1) {
 TMR0IF = 0;
 
-# 85
+# 87
 TMR0H = 0x3C;
 TMR0L += 0xB0;
 
@@ -10169,7 +10171,7 @@ handleADCresult();
 
 if (PIR1bits.RCIF && PIE1bits.RC1IE) {
 
-# 102
+# 104
 PIE1bits.RC1IE = 0;
 handleUsartInput();
 PIE1bits.RC1IE = 1;
@@ -10285,6 +10287,7 @@ char* splash_text[] = {
 };
 
 void play_splash_screen() {
+if (!splash_on) return;
 writeMatrix(0, 0, 8, 128, splash_bitmap);
 _delay((unsigned long)((2000)*(8000000/4000.0)));
 clearGLCD(0, 8, 0, 128);
@@ -10299,7 +10302,7 @@ clearGLCD(0,7,0,127);
 
 double calculate_temp(const double precalc) {
 
-# 245
+# 248
 double result;
 result = (1023.0 / adc_value) - 1;
 result = 4050.0 / (precalc + log(result));
@@ -10401,6 +10404,36 @@ row += change;
 
 }
 
+void write_debugging_text() {
+char buff[64];
+int current_chan = ADCON0bits.CHS;
+
+if (current_chan == 6){
+sprintf(buff, "ADC 6: %d\n", adc_value);
+writeTxt(6, 11, buff);
+}
+else if (current_chan == 7) {
+sprintf(buff, "ADC 7: %d\n", adc_value);
+writeTxt(7, 11, buff);
+}
+sprintf(buff, "ADC CHAN: %d\n", ADCON0bits.CHS);
+writeTxt(5, 11, buff);
+}
+
+void ADC_start() {
+
+int current_chan = ADCON0bits.CHS;
+int next_chan;
+if (current_chan == 6) {
+next_chan = 7;
+} else {
+next_chan = 6;
+}
+ADCON0bits.CHS = next_chan;
+
+GO_nDONE = 1;
+}
+
 void main(void)
 {
 configPIC();
@@ -10449,13 +10482,17 @@ if (i == 1) continue;
 puts_usart1(splash_text[i]);
 }
 
-# 398
+
+
 while (1)
 {
 
 if (!GO_nDONE) {
-GO_nDONE = 1;
+
+ADC_start();
 }
+
+write_debugging_text();
 
 if (change_temp) {
 
@@ -10535,20 +10572,6 @@ timer_changed_state = updateTimerText(timer_state, timer_changed_state);
 
 PREV_C = READ_C;
 
-
-if (RC0_update) {
-RC0_update = 0;
-sprintf(buff, "RC0 pressed: %d\n", RC0_pressed);
-writeTxt(5, 11, buff);
-}
-if (RC1_update) {
-RC1_update = 0;
-sprintf(buff, "RC1 pressed: %d\n", RC1_pressed);
-writeTxt(6, 11, buff);
-}
-
-val = sum(val,1);
-val++;
-
+# 532
 }
 }
