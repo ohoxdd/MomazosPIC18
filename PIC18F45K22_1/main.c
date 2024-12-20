@@ -28,7 +28,9 @@
 #define NOM1 "Angel A. Quinones\n"
 #define NOM2 "Hector Fdez. de Sevilla\n"
 
-// Varibales globales 
+// Varibales globales
+bool splash_on = 0;
+// habilitar deshabilitar splash screen
 unsigned int time_left = TIEMPO_INICIAL;
 unsigned char change_time = 1;
 unsigned int pressure_perc;
@@ -214,8 +216,10 @@ char* splash_text[] = {
 };
 
 void play_splash_screen() {
+	if (!splash_on) return;
 		writeMatrix(0, 0, 8, 128, splash_bitmap);
 		__delay_ms(2000);
+	if (!splash_on) return;
 		clearGLCD(0, 8, 0, 128);
 		int n = sizeof(splash_text)/sizeof(splash_text[0]);
 		for (int i = 0; i < n; i++) {
