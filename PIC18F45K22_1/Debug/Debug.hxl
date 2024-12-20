@@ -1,7 +1,7 @@
 ### HEXMate logfile and output summary ###
 
 ### Command-line arguments ###
- C:\Users\Angel\AppData\Local\Temp\xcAs48g.\driver_tmp_3.obj
+ C:\Users\Angel\AppData\Local\Temp\xcAshd8.\driver_tmp_3.obj
  -ODebug.hex
  -logfile=Debug.hxl
  -addressing=1
@@ -9,21 +9,21 @@
 
 ### Memory Usage ###
  Input file ranges:
-  0h - 3h		(C:\Users\Angel\AppData\Local\Temp\xcAs48g.\driver_tmp_3.obj)
-  8h - 2F22h		(C:\Users\Angel\AppData\Local\Temp\xcAs48g.\driver_tmp_3.obj)
-  2F24h - 2F33h		(C:\Users\Angel\AppData\Local\Temp\xcAs48g.\driver_tmp_3.obj)
-  78D2h - 7FFEh		(C:\Users\Angel\AppData\Local\Temp\xcAs48g.\driver_tmp_3.obj)
-  300000h - 30000Dh		(C:\Users\Angel\AppData\Local\Temp\xcAs48g.\driver_tmp_3.obj)
+  0h - 3h		(C:\Users\Angel\AppData\Local\Temp\xcAshd8.\driver_tmp_3.obj)
+  8h - 2FB4h		(C:\Users\Angel\AppData\Local\Temp\xcAshd8.\driver_tmp_3.obj)
+  2FB6h - 2FC5h		(C:\Users\Angel\AppData\Local\Temp\xcAshd8.\driver_tmp_3.obj)
+  78D2h - 7FFEh		(C:\Users\Angel\AppData\Local\Temp\xcAshd8.\driver_tmp_3.obj)
+  300000h - 30000Dh		(C:\Users\Angel\AppData\Local\Temp\xcAshd8.\driver_tmp_3.obj)
  Unused ranges:
   4h - 7h
-  2F23h - 2F23h
-  2F34h - 78D1h
+  2FB5h - 2FB5h
+  2FC6h - 78D1h
   7FFFh - 2FFFFFh
 
 ### Hex Memory Map ###
  Legend:
   -- = Unused memory
-  H1 = Input file             (C:\Users\Angel\AppData\Local\Temp\xcAs48g.\driver_tmp_3.obj)
+  H1 = Input file             (C:\Users\Angel\AppData\Local\Temp\xcAshd8.\driver_tmp_3.obj)
 ----------------------------------------------------------
          | 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
 ----------------------------------------------------------
@@ -781,8 +781,17 @@
 00002EF0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 00002F00 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 00002F10 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
-00002F20 | H1 H1 H1 -- H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
-00002F30 | H1 H1 H1 H1 -- -- -- -- -- -- -- -- -- -- -- --
+00002F20 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00002F30 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00002F40 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00002F50 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00002F60 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00002F70 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00002F80 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00002F90 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00002FA0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00002FB0 | H1 H1 H1 H1 H1 -- H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00002FC0 | H1 H1 H1 H1 H1 H1 -- -- -- -- -- -- -- -- -- --
 ----------------------------------------------------------
 000078D0 | -- -- H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 000078E0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1

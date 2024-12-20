@@ -10122,9 +10122,11 @@ unsigned int adjust_pressure;
 uint16_t adc_value;
 int duty_one_pc;
 bool change_temp;
+bool adc_update;
+int adc_channel_values[28];
 bool w_pressed, a_pressed, s_pressed, d_pressed;
 
-# 49
+# 51
 void handleUsartInput() {
 unsigned char input = RCREG1;
 switch (input) {
@@ -10142,9 +10144,8 @@ change_time = 1;
 }
 
 void handleADCresult() {
-uint16_t result = (ADRESH << 8) | ADRESL;
-change_temp = (result != adc_value);
-adc_value = result;
+adc_value = (ADRESH << 8) | ADRESL;
+
 }
 
 void interrupt RSI(){
@@ -10157,7 +10158,7 @@ TMR2IF = 0;
 if (TMR0IF == 1 && TMR0IE == 1) {
 TMR0IF = 0;
 
-# 87
+# 88
 TMR0H = 0x3C;
 TMR0L += 0xB0;
 
@@ -10171,7 +10172,7 @@ handleADCresult();
 
 if (PIR1bits.RCIF && PIE1bits.RC1IE) {
 
-# 104
+# 105
 PIE1bits.RC1IE = 0;
 handleUsartInput();
 PIE1bits.RC1IE = 1;
@@ -10300,11 +10301,11 @@ _delay((unsigned long)((2000)*(8000000/4000.0)));
 clearGLCD(0,7,0,127);
 }
 
-double calculate_temp(const double precalc) {
+double calculate_temp(const double precalc, int adc_temp) {
 
-# 248
+# 249
 double result;
-result = (1023.0 / adc_value) - 1;
+result = (1023.0 / adc_temp) - 1;
 result = 4050.0 / (precalc + log(result));
 result -= 273.15;
 return result;
@@ -10404,34 +10405,33 @@ row += change;
 
 }
 
-void write_debugging_text() {
+void write_debugging_text(bool change_temp, bool change_press) {
 char buff[64];
 int current_chan = ADCON0bits.CHS;
 
-if (current_chan == 6){
-sprintf(buff, "ADC 6: %d\n", adc_value);
+if (change_temp){
+clearChars(6,11,11);
+sprintf(buff, "ADC 6: %d\n", adc_channel_values[6]);
 writeTxt(6, 11, buff);
 }
-else if (current_chan == 7) {
-sprintf(buff, "ADC 7: %d\n", adc_value);
+if (change_press) {
+clearChars(7,11,11);
+sprintf(buff, "ADC 7: %d\n", adc_channel_values[7]);
 writeTxt(7, 11, buff);
 }
 sprintf(buff, "ADC CHAN: %d\n", ADCON0bits.CHS);
 writeTxt(5, 11, buff);
 }
 
-void ADC_start() {
+void ADC_start(int channel) {
 
-int current_chan = ADCON0bits.CHS;
-int next_chan;
-if (current_chan == 6) {
-next_chan = 7;
-} else {
-next_chan = 6;
-}
-ADCON0bits.CHS = next_chan;
+ADCON0bits.CHS = channel;
 
 GO_nDONE = 1;
+}
+
+int get_adc_channel(){
+return ADCON0bits.CHS;
 }
 
 void main(void)
@@ -10469,7 +10469,6 @@ update_medidor(0, 50);
 
 
 
-change_temp = 1;
 double temperature = 25.0;
 int adjusted_pressure = pressure_perc;
 
@@ -10486,19 +10485,34 @@ puts_usart1(splash_text[i]);
 
 while (1)
 {
+bool change_temp = 0;
+bool change_press = 0;
 
 if (!GO_nDONE) {
 
-ADC_start();
+int channel = get_adc_channel();
+if (adc_channel_values[channel] != adc_value) {
+
+adc_channel_values[channel] = adc_value;
+
+if (channel == 6) change_temp = 1;
+else if (channel == 7) change_press = 1;
 }
 
-write_debugging_text();
+int next_chan;
+if (channel == 6) next_chan = 7;
+else if (channel == 7) next_chan = 6;
+
+ADC_start(next_chan);
+}
+
+write_debugging_text(change_temp, change_press);
 
 if (change_temp) {
 
 clearGLCD(2,2, 63, 127);
 char buff[128];
-temperature = calculate_temp(precalc);
+temperature = calculate_temp(precalc, adc_channel_values[6]);
 sprintf(buff, "%.2f C", temperature);
 writeTxt(2, 16, buff);
 
@@ -10572,6 +10586,6 @@ timer_changed_state = updateTimerText(timer_state, timer_changed_state);
 
 PREV_C = READ_C;
 
-# 532
+# 546
 }
 }

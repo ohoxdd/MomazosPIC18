@@ -38,6 +38,8 @@ unsigned int adjust_pressure;
 uint16_t adc_value;
 int duty_one_pc;
 bool change_temp;
+bool adc_update;
+int adc_channel_values[28];
 bool w_pressed, a_pressed, s_pressed, d_pressed;
 
 #define VCC_VAL 1023.0
@@ -63,9 +65,8 @@ void tic(void)
 }
 
 void handleADCresult() {
-	uint16_t result = (ADRESH << 8) | ADRESL;
-	change_temp = (result != adc_value);
-	adc_value = result;		
+	adc_value = (ADRESH << 8) | ADRESL;
+	// change_temp = (result != adc_value);
 }
 
 void interrupt RSI(){
@@ -229,7 +230,7 @@ void play_splash_screen() {
 		clearGLCD(0,7,0,127); 
 }
 
- double calculate_temp(const double precalc) {
+ double calculate_temp(const double precalc, int adc_temp) {
 	
 	// factorizamos R2/A
 	//
@@ -246,7 +247,7 @@ void play_splash_screen() {
 	// usamos ln(R2/A) previamente calculado
 
 	double result;
-	result = (VCC_VAL / adc_value) - 1;
+	result = (VCC_VAL / adc_temp) - 1;
 	result = B_VALUE / (precalc + log(result));
 	result -= K_ABS_ZERO;
 	return result; 
@@ -346,32 +347,27 @@ void update_medidor(int current_psi, int change_psi){
 	
 }
 
-	void write_debugging_text() {
+	void write_adc_values(bool change_temp, bool change_press) {
 		char buff[64];
 		int current_chan = ADCON0bits.CHS;
 
-		if (current_chan == 6){
-			sprintf(buff, "ADC 6: %d\n", adc_value);
+		if (change_temp){
+			clearChars(6,11,11);
+			sprintf(buff, "ADC 6: %d\n", adc_channel_values[6]);
 			writeTxt(6, 11, buff);
 		}
-		else if (current_chan == 7) {
-			sprintf(buff, "ADC 7: %d\n", adc_value);
+		if (change_press) {
+			clearChars(7,11,11);
+			sprintf(buff, "ADC 7: %d\n", adc_channel_values[7]);
 			writeTxt(7, 11, buff);
 		}
 		sprintf(buff, "ADC CHAN: %d\n", ADCON0bits.CHS);
 		writeTxt(5, 11, buff);
 	}
 
-	void ADC_start() {
-		// swap channels
-		int current_chan = ADCON0bits.CHS;
-		int next_chan;
-		if (current_chan == 6) {
-			next_chan = 7;
-		} else {
-			next_chan = 6;
-		}
-		ADCON0bits.CHS = next_chan;
+	void ADC_start(int channel) {
+
+		ADCON0bits.CHS = channel;
 		// start conversion
 		GO_nDONE = 1;    
 	}
@@ -415,7 +411,6 @@ void main(void)
 
 	// Variable que dicta si se escribe la temperatura en pantalla 
 	// y se recalcula la presion ajustada a la temperatura
-	change_temp = true;
 	double temperature = 25.0;
 	int adjusted_pressure = pressure_perc;
 
@@ -432,19 +427,35 @@ void main(void)
 
 	while (1)
 	{   
-		// Inicia una nueva conversi�n del adc cuando no hay una en curso
+		// adc related update flags to 0
+		bool change_temp = false;
+		bool change_press = false;
+		// no hay conversion / ultima conversion ha acabado
 		if (!GO_nDONE) {
-			// GO_nDONE = 1;
-			ADC_start();
+			// check if there was a change in previous adc conversion
+			int channel = get_adc_channel();
+			if (adc_channel_values[channel] != adc_value) {
+				// for the updated channel, set the new value
+				adc_channel_values[channel] = adc_value;
+				// raise flag, update values in the current iteration
+				if (channel == 6) change_temp = true;
+				else if (channel == 7) change_press = true;
+			}
+			// swap channels
+			int next_chan;
+			if (channel == 6) next_chan = 7;
+			else if (channel == 7) next_chan = 6;
+			// start conversion
+			ADC_start(next_chan);
 		}
 
-		write_debugging_text();
+		write_adc_values(change_temp, change_press);
 		
 		if (change_temp) {
 			// escribe temperatura
 			clearGLCD(2,2, 63, 127);
 			char buff[128];
-			temperature = calculate_temp(precalc);
+			temperature = calculate_temp(precalc, adc_channel_values[6]);
 			sprintf(buff, "%.2f C", temperature);
 			writeTxt(2, 16, buff);
 
