@@ -1,17 +1,125 @@
 
 # 1 "../main.c"
 
-# 18 "C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\xc.h"
+# 18 "C:\Program Files\Microchip\xc8\v2.50\pic\include\xc.h"
 extern const char __xc8_OPTIM_SPEED;
 
 extern double __fpnormalize(double);
 
 
-# 13 "C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\c90\xc8debug.h"
+# 13 "C:\Program Files\Microchip\xc8\v2.50\pic\include\c90\xc8debug.h"
 #pragma intrinsic(__builtin_software_breakpoint)
 extern void __builtin_software_breakpoint(void);
 
-# 52 "C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f45k22.h"
+# 13 "C:\Program Files\Microchip\xc8\v2.50\pic\include\c90\stdint.h"
+typedef signed char int8_t;
+
+# 20
+typedef signed int int16_t;
+
+# 28
+typedef __int24 int24_t;
+
+# 36
+typedef signed long int int32_t;
+
+# 52
+typedef unsigned char uint8_t;
+
+# 58
+typedef unsigned int uint16_t;
+
+# 65
+typedef __uint24 uint24_t;
+
+# 72
+typedef unsigned long int uint32_t;
+
+# 88
+typedef signed char int_least8_t;
+
+# 96
+typedef signed int int_least16_t;
+
+# 109
+typedef __int24 int_least24_t;
+
+# 118
+typedef signed long int int_least32_t;
+
+# 136
+typedef unsigned char uint_least8_t;
+
+# 143
+typedef unsigned int uint_least16_t;
+
+# 154
+typedef __uint24 uint_least24_t;
+
+# 162
+typedef unsigned long int uint_least32_t;
+
+# 181
+typedef signed char int_fast8_t;
+
+# 188
+typedef signed int int_fast16_t;
+
+# 200
+typedef __int24 int_fast24_t;
+
+# 208
+typedef signed long int int_fast32_t;
+
+# 224
+typedef unsigned char uint_fast8_t;
+
+# 230
+typedef unsigned int uint_fast16_t;
+
+# 240
+typedef __uint24 uint_fast24_t;
+
+# 247
+typedef unsigned long int uint_fast32_t;
+
+# 268
+typedef int32_t intmax_t;
+
+# 282
+typedef uint32_t uintmax_t;
+
+# 289
+typedef int16_t intptr_t;
+
+
+
+
+typedef uint16_t uintptr_t;
+
+
+# 7 "C:\Program Files\Microchip\xc8\v2.50\pic\include\builtins.h"
+#pragma intrinsic(__nop)
+extern void __nop(void);
+
+#pragma intrinsic(__nopf000)
+extern void __nopf000(void);
+#pragma intrinsic(__nopffff)
+extern void __nopffff(void);
+#pragma intrinsic(__nop0000)
+extern void __nop0000(void);
+
+
+
+#pragma intrinsic(_delay)
+extern __nonreentrant void _delay(uint32_t);
+#pragma intrinsic(_delaywdt)
+extern __nonreentrant void _delaywdt(uint32_t);
+
+#pragma intrinsic(_delay3)
+extern __nonreentrant void _delay3(uint8_t);
+
+# 52 "C:\Program Files\Microchip\xc8\v2.50\pic\include\proc\pic18f45k22.h"
 extern volatile unsigned char ANSELA __at(0xF38);
 
 asm("ANSELA equ 0F38h");
@@ -6166,7 +6274,7 @@ extern volatile unsigned char TOSU __at(0xFFF);
 
 asm("TOSU equ 0FFFh");
 
-# 17383
+# 17387
 extern volatile __bit ABDEN1 __at(0x7DC0);
 
 
@@ -9553,37 +9661,23 @@ extern volatile __bit nW2 __at(0x7B6A);
 
 extern volatile __bit nWRITE2 __at(0x7B6A);
 
-# 18 "C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18.h"
+# 19 "C:\Program Files\Microchip\xc8\v2.50\pic\include\pic18.h"
 __attribute__((__unsupported__("The " "flash_write" " routine is no longer supported. Please use the MPLAB X MCC."))) void flash_write(const unsigned char *, unsigned int, __far unsigned char *);
 __attribute__((__unsupported__("The " "EraseFlash" " routine is no longer supported. Please use the MPLAB X MCC."))) void EraseFlash(unsigned long startaddr, unsigned long endaddr);
 
-
-# 49
-#pragma intrinsic(__nop)
-extern void __nop(void);
-
-# 158
+# 156
 __attribute__((__unsupported__("The " "Read_b_eep" " routine is no longer supported. Please use the MPLAB X MCC."))) unsigned char Read_b_eep(unsigned int badd);
 __attribute__((__unsupported__("The " "Busy_eep" " routine is no longer supported. Please use the MPLAB X MCC."))) void Busy_eep(void);
 __attribute__((__unsupported__("The " "Write_b_eep" " routine is no longer supported. Please use the MPLAB X MCC."))) void Write_b_eep(unsigned int badd, unsigned char bdat);
 
-# 178
+# 192
 unsigned char __t1rd16on(void);
 unsigned char __t3rd16on(void);
 
-
-# 186
-#pragma intrinsic(_delay)
-extern __nonreentrant void _delay(unsigned long);
-#pragma intrinsic(_delaywdt)
-extern __nonreentrant void _delaywdt(unsigned long);
-#pragma intrinsic(_delay3)
-extern __nonreentrant void _delay3(unsigned char);
-
-# 4 "C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\__size_t.h"
+# 4 "C:\Program Files\Microchip\xc8\v2.50\pic\include\c90\__size_t.h"
 typedef unsigned size_t;
 
-# 14 "C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\c90\string.h"
+# 14 "C:\Program Files\Microchip\xc8\v2.50\pic\include\c90\string.h"
 extern void * memcpy(void *, const void *, size_t);
 extern void * memmove(void *, const void *, size_t);
 extern void * memset(void *, int, size_t);
@@ -9599,23 +9693,23 @@ extern char * strtok(char *, const char *);
 
 extern int memcmp(const void *, const void *, size_t);
 extern int strcmp(const char *, const char *);
-extern int stricmp(const char *, const char *);
+extern int stricmp(const char *, const char *) __attribute__((__deprecated__));
 extern int strncmp(const char *, const char *, size_t);
-extern int strnicmp(const char *, const char *, size_t);
+extern int strnicmp(const char *, const char *, size_t) __attribute__((__deprecated__));
 extern void * memchr(const void *, int, size_t);
 extern size_t strcspn(const char *, const char *);
 extern char * strpbrk(const char *, const char *);
 extern size_t strspn(const char *, const char *);
 extern char * strstr(const char *, const char *);
-extern char * stristr(const char *, const char *);
+extern char * stristr(const char *, const char *) __attribute__((__deprecated__));
 extern char * strerror(int);
 extern size_t strlen(const char *);
 extern char * strchr(const char *, int);
-extern char * strichr(const char *, int);
+extern char * strichr(const char *, int) __attribute__((__deprecated__));
 extern char * strrchr(const char *, int);
-extern char * strrichr(const char *, int);
+extern char * strrichr(const char *, int) __attribute__((__deprecated__));
 
-# 7 "C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\c90\stdlib.h"
+# 7 "C:\Program Files\Microchip\xc8\v2.50\pic\include\c90\stdlib.h"
 typedef unsigned short wchar_t;
 
 # 15
@@ -9640,7 +9734,7 @@ unsigned long rem;
 extern double atof(const char *);
 extern double strtod(const char *, const char **);
 extern int atoi(const char *);
-extern unsigned xtoi(const char *);
+extern unsigned xtoi(const char *) __attribute__((__deprecated__));
 extern long atol(const char *);
 
 # 73
@@ -9650,9 +9744,9 @@ extern int rand(void);
 extern void srand(unsigned int);
 extern void * calloc(size_t, size_t);
 extern div_t div(int numer, int denom);
-extern udiv_t udiv(unsigned numer, unsigned denom);
+extern udiv_t udiv(unsigned numer, unsigned denom) __attribute__((__deprecated__));
 extern ldiv_t ldiv(long numer, long denom);
-extern uldiv_t uldiv(unsigned long numer,unsigned long denom);
+extern uldiv_t uldiv(unsigned long numer,unsigned long denom) __attribute__((__deprecated__));
 
 # 85
 extern unsigned long _lrotl(unsigned long value, unsigned int shift);
@@ -9677,18 +9771,18 @@ extern void * bsearch(const void *, void *, size_t, size_t, int(*)(const void *,
 extern int abs(int);
 extern long labs(long);
 
-extern char * itoa(char * buf, int val, int base);
-extern char * utoa(char * buf, unsigned val, int base);
+extern char * itoa(char * buf, int val, int base) __attribute__((__deprecated__));
+extern char * utoa(char * buf, unsigned val, int base) __attribute__((__deprecated__));
 
 
 
 
-extern char * ltoa(char * buf, long val, int base);
+extern char * ltoa(char * buf, long val, int base) __attribute__((__deprecated__));
 extern char * ultoa(char * buf, unsigned long val, int base);
 
-extern char * ftoa(float f, int * status);
+extern char * ftoa(float f, int * status) __attribute__((__deprecated__));
 
-# 7 "C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\c90\stdarg.h"
+# 7 "C:\Program Files\Microchip\xc8\v2.50\pic\include\c90\stdarg.h"
 typedef void * va_list[1];
 
 #pragma intrinsic(__va_start)
@@ -9697,31 +9791,31 @@ extern void * __va_start(void);
 #pragma intrinsic(__va_arg)
 extern void * __va_arg(void *, ...);
 
-# 43 "C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\c90\stdio.h"
+# 43 "C:\Program Files\Microchip\xc8\v2.50\pic\include\c90\stdio.h"
 struct __prbuf
 {
 char * ptr;
 void (* func)(char);
 };
 
-# 29 "C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\c90\errno.h"
+# 29 "C:\Program Files\Microchip\xc8\v2.50\pic\include\c90\errno.h"
 extern int errno;
 
-# 12 "C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\c90\conio.h"
+# 12 "C:\Program Files\Microchip\xc8\v2.50\pic\include\c90\conio.h"
 extern void init_uart(void);
 
 extern char getch(void);
-extern char getche(void);
+extern char getche(void) __attribute__((__deprecated__));
 extern void putch(char);
 extern void ungetch(char);
 
 extern __bit kbhit(void);
 
 # 23
-extern char * cgets(char *);
-extern void cputs(const char *);
+extern char * cgets(char *) __attribute__((__deprecated__));
+extern void cputs(const char *) __attribute__((__deprecated__));
 
-# 88 "C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\c90\stdio.h"
+# 88 "C:\Program Files\Microchip\xc8\v2.50\pic\include\c90\stdio.h"
 extern int cprintf(char *, ...);
 #pragma printf_check(cprintf)
 
@@ -9984,93 +10078,7 @@ void clearChars(byte page, byte y, int length);
 
 format_t getFormatedTime(unsigned int deciseconds);
 
-# 13 "C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\c90\stdint.h"
-typedef signed char int8_t;
-
-# 20
-typedef signed int int16_t;
-
-# 28
-typedef __int24 int24_t;
-
-# 36
-typedef signed long int int32_t;
-
-# 52
-typedef unsigned char uint8_t;
-
-# 58
-typedef unsigned int uint16_t;
-
-# 65
-typedef __uint24 uint24_t;
-
-# 72
-typedef unsigned long int uint32_t;
-
-# 88
-typedef signed char int_least8_t;
-
-# 96
-typedef signed int int_least16_t;
-
-# 109
-typedef __int24 int_least24_t;
-
-# 118
-typedef signed long int int_least32_t;
-
-# 136
-typedef unsigned char uint_least8_t;
-
-# 143
-typedef unsigned int uint_least16_t;
-
-# 154
-typedef __uint24 uint_least24_t;
-
-# 162
-typedef unsigned long int uint_least32_t;
-
-# 181
-typedef signed char int_fast8_t;
-
-# 188
-typedef signed int int_fast16_t;
-
-# 200
-typedef __int24 int_fast24_t;
-
-# 208
-typedef signed long int int_fast32_t;
-
-# 224
-typedef unsigned char uint_fast8_t;
-
-# 230
-typedef unsigned int uint_fast16_t;
-
-# 240
-typedef __uint24 uint_fast24_t;
-
-# 247
-typedef unsigned long int uint_fast32_t;
-
-# 268
-typedef int32_t intmax_t;
-
-# 282
-typedef uint32_t uintmax_t;
-
-# 289
-typedef int16_t intptr_t;
-
-
-
-
-typedef uint16_t uintptr_t;
-
-# 30 "C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\c90\math.h"
+# 30 "C:\Program Files\Microchip\xc8\v2.50\pic\include\c90\math.h"
 extern double fabs(double);
 extern double floor(double);
 extern double ceil(double);
@@ -10091,7 +10099,7 @@ extern double exp(double) ;
 extern double sinh(double) ;
 extern double cosh(double) ;
 extern double tanh(double);
-extern double eval_poly(double, const double *, int);
+extern double eval_poly(double, const double *, int) __attribute__((__deprecated__));
 extern double frexp(double, int *);
 extern double ldexp(double, int);
 extern double fmod(double, double);
@@ -10101,7 +10109,7 @@ extern double round(double);
 # 4 "../initPIC.h"
 void configPIC();
 
-# 15 "C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\c90\stdbool.h"
+# 15 "C:\Program Files\Microchip\xc8\v2.50\pic\include\c90\stdbool.h"
 typedef unsigned char bool;
 
 # 32 "../main.c"

@@ -1,5 +1,5 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"10816 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f45k22.h
+"10816 C:\Program Files\Microchip\xc8\v2.50\pic\include\proc\pic18f45k22.h
 [s S496 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S496 . TX9D TRMT BRGH SENDB SYNC TXEN TX9 CSRC ]
 "10826
@@ -28,7 +28,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _PIR1bits `VS436 ~T0 @X0 0 e@3998 ]
 "11254
 [v _RCREG1 `Vuc ~T0 @X0 0 e@4014 ]
-"56 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\c90\string.h
+"56 C:\Program Files\Microchip\xc8\v2.50\pic\include\c90\string.h
 [v _strlen `(ui ~T0 @X0 0 ef1`*Cuc ]
 "32 ../GLCD.h
 [v _putchGLCD `(v ~T0 @X0 0 ef3`uc`uc`uc ]
@@ -37,7 +37,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "14 ../typedefs.h
 [s S1 `ui 1 `ui 1 ]
 [n S1 . segs dec ]
-"54 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f45k22.h
+"54 C:\Program Files\Microchip\xc8\v2.50\pic\include\proc\pic18f45k22.h
 [; <" ANSELA equ 0F38h ;# ">
 "99
 [; <" ANSELB equ 0F39h ;# ">

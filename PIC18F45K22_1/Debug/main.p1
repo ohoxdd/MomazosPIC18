@@ -1,25 +1,25 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"11254 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f45k22.h
+"11254 C:\Program Files\Microchip\xc8\v2.50\pic\include\proc\pic18f45k22.h
 [v _RCREG1 `Vuc ~T0 @X0 0 e@4014 ]
 "13729
 [v _ADRESH `Vuc ~T0 @X0 0 e@4036 ]
 "13709
 [v _ADRESL `Vuc ~T0 @X0 0 e@4035 ]
-"20293
+"20297
 [v _TMR2IF `Vb ~T0 @X0 0 e@31985 ]
-"20290
+"20294
 [v _TMR2IE `Vb ~T0 @X0 0 e@31977 ]
-"20248
+"20252
 [v _TMR0IF `Vb ~T0 @X0 0 e@32658 ]
-"20245
+"20249
 [v _TMR0IE `Vb ~T0 @X0 0 e@32661 ]
 "16192
 [v _TMR0H `Vuc ~T0 @X0 0 e@4055 ]
 "16172
 [v _TMR0L `Vuc ~T0 @X0 0 e@4054 ]
-"17449
+"17453
 [v _ADIF `Vb ~T0 @X0 0 e@31990 ]
-"17446
+"17450
 [v _ADIE `Vb ~T0 @X0 0 e@31982 ]
 "9497
 [s S436 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -44,20 +44,20 @@ Version 3.2 HI-TECH Software Intermediate Code
 "9436
 [v _PIE1bits `VS432 ~T0 @X0 0 e@3997 ]
 "108 ../main.c
-[c E6150 0 1 2 .. ]
-[n E6150 . Ready Running Stopped  ]
+[c E6184 0 1 2 .. ]
+[n E6184 . Ready Running Stopped  ]
 "14 ../typedefs.h
 [s S851 `ui 1 `ui 1 ]
 [n S851 . segs dec ]
 "18 ../utils.h
 [v _getFormatedTime `(S851 ~T0 @X0 0 ef1`ui ]
-"194 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\c90\stdio.h
+"194 C:\Program Files\Microchip\xc8\v2.50\pic\include\c90\stdio.h
 [v _sprintf `(i ~T0 @X0 0 e1v`*uc`*Cuc ]
 "14 ../utils.h
 [v _writeTxt `(v ~T0 @X0 0 ef3`uc`uc`*uc ]
 "36 ../GLCD.h
 [v _clearGLCD `(v ~T0 @X0 0 ef4`uc`uc`uc`uc ]
-"13204 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f45k22.h
+"13204 C:\Program Files\Microchip\xc8\v2.50\pic\include\proc\pic18f45k22.h
 [s S619 :2 `uc 1 :1 `uc 1 :4 `uc 1 ]
 [n S619 . T2CKPS TMR2ON T2OUTPS ]
 "13209
@@ -81,24 +81,24 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _T0CONbits `VS760 ~T0 @X0 0 e@4053 ]
 "5 ../test.h
 [v _writeMatrix `(v ~T0 @X0 0 ef5`i`i`i`i`*uc ]
-[v F5805 `(v ~T0 @X0 1 tf1`ul ]
-"187 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18.h
-[v __delay `JF5805 ~T0 @X0 0 e ]
+[v F44 `(v ~T0 @X0 1 tf1`ul ]
+"20 C:\Program Files\Microchip\xc8\v2.50\pic\include\builtins.h
+[v __delay `JF44 ~T0 @X0 0 e ]
 [p i __delay ]
 "12 ../utils.h
 [v _calc_center_spacing `(i ~T0 @X0 0 ef1`*uc ]
-"43 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\c90\math.h
+"43 C:\Program Files\Microchip\xc8\v2.50\pic\include\c90\math.h
 [v _log `(d ~T0 @X0 0 ef1`d ]
 "16 ../utils.h
 [v _clearChars `(v ~T0 @X0 0 ef3`uc`uc`i ]
-"2546 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f45k22.h
+"2546 C:\Program Files\Microchip\xc8\v2.50\pic\include\proc\pic18f45k22.h
 [v _CCP3CON `Vuc ~T0 @X0 0 e@3933 ]
 "2635
 [v _CCPR3L `Vuc ~T0 @X0 0 e@3934 ]
 "295 ../main.c
-[c E6155 0 1 .. ]
-[n E6155 flanc_t FALLING RISING  ]
-"110 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\c90\stdlib.h
+[c E6189 0 1 .. ]
+[n E6189 flanc_t FALLING RISING  ]
+"110 C:\Program Files\Microchip\xc8\v2.50\pic\include\c90\stdlib.h
 [v _abs `(i ~T0 @X0 0 ef1`i ]
 "42 ../GLCD.h
 [v _SetDot `(v ~T0 @X0 0 ef2`uc`uc ]
@@ -107,13 +107,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 [p mainexit ]
 "4 ../initPIC.h
 [v _configPIC `(v ~T0 @X0 0 ef ]
-"13269 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f45k22.h
+"13269 C:\Program Files\Microchip\xc8\v2.50\pic\include\proc\pic18f45k22.h
 [v _PR2 `Vuc ~T0 @X0 0 e@4027 ]
 "24 ../GLCD.h
 [v _GLCDinit `(v ~T0 @X0 0 ef ]
 "15
 [v _setStartLine `(v ~T0 @X0 0 ef1`uc ]
-"8959 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f45k22.h
+"8959 C:\Program Files\Microchip\xc8\v2.50\pic\include\proc\pic18f45k22.h
 [s S414 :1 `uc 1 :1 `uc 1 :1 `uc 1 :4 `uc 1 :1 `uc 1 ]
 [n S414 . TRISE0 TRISE1 TRISE2 . WPUE3 ]
 "8966
@@ -154,11 +154,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _PORTCbits `VS349 ~T0 @X0 0 e@3970 ]
 "8 ../utils.h
 [v _puts_usart1 `(v ~T0 @X0 0 ef1`*uc ]
-"18475 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f45k22.h
+"18479 C:\Program Files\Microchip\xc8\v2.50\pic\include\proc\pic18f45k22.h
 [v _GO_nDONE `Vb ~T0 @X0 0 e@32273 ]
 "3 ../test.h
 [v _sum `(i ~T0 @X0 0 ef2`i`i ]
-"54 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f45k22.h
+"54 C:\Program Files\Microchip\xc8\v2.50\pic\include\proc\pic18f45k22.h
 [; <" ANSELA equ 0F38h ;# ">
 "99
 [; <" ANSELB equ 0F39h ;# ">
@@ -1935,9 +1935,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 860 ]
 }
 [v $root$_RSI `(v ~T0 @X0 0 e ]
-[v F6289 `(v ~T0 @X0 1 tf ]
+[v F6295 `(v ~T0 @X0 1 tf ]
 "69
-[v _RSI `IF6289 ~T0 @X0 1 e ]
+[v _RSI `IF6295 ~T0 @X0 1 e ]
 {
 [e :U _RSI ]
 [f ]
@@ -1989,10 +1989,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 861 ]
 }
 "108
-[v _updateTimerText `(uc ~T0 @X0 1 ef2`E6150`uc ]
+[v _updateTimerText `(uc ~T0 @X0 1 ef2`E6184`uc ]
 {
 [e :U _updateTimerText ]
-[v _timer_state `E6150 ~T0 @X0 1 r1 ]
+[v _timer_state `E6184 ~T0 @X0 1 r1 ]
 [v _timer_changed_state `uc ~T0 @X0 1 r2 ]
 [f ]
 "109
@@ -2002,7 +2002,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "112
 [v _stateText `uc ~T0 @X0 -> 50 `i a ]
 "115
-[e $ ! && == -> _timer_state `i -> . `E6150 1 `i != -> _change_time `i -> -> -> 0 `i `uc `i 867  ]
+[e $ ! && == -> _timer_state `i -> . `E6184 1 `i != -> _change_time `i -> -> -> 0 `i `uc `i 867  ]
 {
 "117
 [e = _ftime ( _getFormatedTime (1 _time_left ]
@@ -2066,9 +2066,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 869  ]
 "132
 [e :U 870 ]
-[e [\ _timer_state , $ . `E6150 0 871
- , $ . `E6150 1 872
- , $ . `E6150 2 873
+[e [\ _timer_state , $ . `E6184 0 871
+ , $ . `E6184 1 872
+ , $ . `E6184 2 873
  869 ]
 "168
 [e :U 869 ]
@@ -2082,20 +2082,20 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 866 ]
 }
 "175
-[v _next_timer_state `(E6150 ~T0 @X0 1 ef1`E6150 ]
+[v _next_timer_state `(E6184 ~T0 @X0 1 ef1`E6184 ]
 {
 [e :U _next_timer_state ]
-[v _state `E6150 ~T0 @X0 1 r1 ]
+[v _state `E6184 ~T0 @X0 1 r1 ]
 [f ]
 "176
-[v _new_state `E6150 ~T0 @X0 1 a ]
+[v _new_state `E6184 ~T0 @X0 1 a ]
 "177
 [e $U 876  ]
 {
 "178
 [e :U 877 ]
 "180
-[e = _new_state . `E6150 1 ]
+[e = _new_state . `E6184 1 ]
 "182
 [e = . . _T2CONbits 0 1 -> -> 1 `i `uc ]
 "183
@@ -2105,7 +2105,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "186
 [e :U 878 ]
 "189
-[e = _new_state . `E6150 2 ]
+[e = _new_state . `E6184 2 ]
 "192
 [e = . . _T2CONbits 0 1 -> -> 0 `i `uc ]
 "193
@@ -2121,7 +2121,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "201
 [e = _TMR0L -> -> 176 `i `uc ]
 "203
-[e = _new_state . `E6150 0 ]
+[e = _new_state . `E6184 0 ]
 "204
 [e $U 875  ]
 "205
@@ -2129,9 +2129,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 875  ]
 "177
 [e :U 876 ]
-[e [\ _state , $ . `E6150 0 877
- , $ . `E6150 1 878
- , $ . `E6150 2 879
+[e [\ _state , $ . `E6184 0 877
+ , $ . `E6184 1 878
+ , $ . `E6184 2 879
  875 ]
 "205
 [e :U 875 ]
@@ -2317,7 +2317,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _pin_ant `uc ~T0 @X0 1 a ]
 [e = _pin_ant -> & >> -> _REG_ant `i _num_pin -> 1 `i `uc ]
 "295
-[e $ ! == -> _flanc `i -> . `E6155 1 `i 894  ]
+[e $ ! == -> _flanc `i -> . `E6189 1 `i 894  ]
 {
 "296
 [e = _ret -> -> && != -> _pin_act `i -> -> -> 0 `i `uc `i ! != -> _pin_ant `i -> -> -> 0 `i `uc `i `i `uc ]
@@ -2495,8 +2495,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _RC1_update `uc ~T0 @X0 1 a ]
 [e = _RC1_update -> -> 1 `i `uc ]
 "368
-[v _timer_state `E6150 ~T0 @X0 1 a ]
-[e = _timer_state . `E6150 0 ]
+[v _timer_state `E6184 ~T0 @X0 1 a ]
+[e = _timer_state . `E6184 0 ]
 "369
 [e = . . _T0CONbits 0 5 -> -> 0 `i `uc ]
 "370
@@ -2587,7 +2587,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "421
 [v _buff `uc ~T0 @X0 -> 128 `i a ]
 "423
-[e $ ! || && ! != -> _RC0_pressed `i -> -> -> 0 `i `uc `i != -> ( _inputDetector (4 , , , _PREV_C _READ_C -> -> 0 `i `uc -> . `E6155 0 `uc `i -> -> -> 0 `i `uc `i != -> _d_pressed `i -> -> -> 0 `i `uc `i 922  ]
+[e $ ! || && ! != -> _RC0_pressed `i -> -> -> 0 `i `uc `i != -> ( _inputDetector (4 , , , _PREV_C _READ_C -> -> 0 `i `uc -> . `E6189 0 `uc `i -> -> -> 0 `i `uc `i != -> _d_pressed `i -> -> -> 0 `i `uc `i 922  ]
 {
 "424
 [e = _d_pressed -> -> 0 `i `uc ]
@@ -2609,7 +2609,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 }
 [e $U 923  ]
 [e :U 922 ]
-[e $ ! && != -> _RC0_pressed `i -> -> -> 0 `i `uc `i != -> ( _inputDetector (4 , , , _PREV_C _READ_C -> -> 0 `i `uc -> . `E6155 1 `uc `i -> -> -> 0 `i `uc `i 924  ]
+[e $ ! && != -> _RC0_pressed `i -> -> -> 0 `i `uc `i != -> ( _inputDetector (4 , , , _PREV_C _READ_C -> -> 0 `i `uc -> . `E6189 1 `uc `i -> -> -> 0 `i `uc `i 924  ]
 {
 "438
 [e = _RC0_pressed -> -> 0 `i `uc ]
@@ -2620,7 +2620,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 924 ]
 "443
 [e :U 923 ]
-[e $ ! || && ! != -> _RC1_pressed `i -> -> -> 0 `i `uc `i != -> ( _inputDetector (4 , , , _PREV_C _READ_C -> -> 1 `i `uc -> . `E6155 1 `uc `i -> -> -> 0 `i `uc `i != -> _a_pressed `i -> -> -> 0 `i `uc `i 925  ]
+[e $ ! || && ! != -> _RC1_pressed `i -> -> -> 0 `i `uc `i != -> ( _inputDetector (4 , , , _PREV_C _READ_C -> -> 1 `i `uc -> . `E6189 1 `uc `i -> -> -> 0 `i `uc `i != -> _a_pressed `i -> -> -> 0 `i `uc `i 925  ]
 {
 "444
 [e = _a_pressed -> -> 0 `i `uc ]
@@ -2642,7 +2642,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 }
 [e $U 926  ]
 [e :U 925 ]
-[e $ ! && != -> _RC1_pressed `i -> -> -> 0 `i `uc `i != -> ( _inputDetector (4 , , , _PREV_C _READ_C -> -> 1 `i `uc -> . `E6155 0 `uc `i -> -> -> 0 `i `uc `i 927  ]
+[e $ ! && != -> _RC1_pressed `i -> -> -> 0 `i `uc `i != -> ( _inputDetector (4 , , , _PREV_C _READ_C -> -> 1 `i `uc -> . `E6189 0 `uc `i -> -> -> 0 `i `uc `i 927  ]
 {
 "458
 [e = _RC1_pressed -> -> 0 `i `uc ]
@@ -2653,7 +2653,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 927 ]
 "464
 [e :U 926 ]
-[e $ ! && == -> _timer_state `i -> . `E6150 1 `i == _time_left -> -> 0 `i `ui 928  ]
+[e $ ! && == -> _timer_state `i -> . `E6184 1 `i == _time_left -> -> 0 `i `ui 928  ]
 {
 "465
 [e = _timer_end -> -> 1 `i `uc ]
@@ -2664,7 +2664,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $ ! || != -> ( _inputDetector (4 , , , _PREV_C _READ_C -> -> 2 `i `uc -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i != -> _timer_end `i -> -> -> 0 `i `uc `i 929  ]
 {
 "469
-[e $ ! == -> _timer_state `i -> . `E6150 1 `i 930  ]
+[e $ ! == -> _timer_state `i -> . `E6184 1 `i 930  ]
 {
 "470
 [e = _timer_end -> -> 0 `i `uc ]

@@ -3,18 +3,18 @@
 [d edition pro ]
 [d chip 18F45K22 ]
 [d frameptr 4065 ]
-"108 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/main.c
-[e E6150 . `uc
+"108 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
+[e E6184 . `uc
 Ready 0
 Running 1
 Stopped 2
 ]
 "295
-[e E6155 flanc_t `uc
+[e E6189 flanc_t `uc
 FALLING 0
 RISING 1
 ]
-"43 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/GLCD.c
+"43 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/GLCD.c
 [v _GLCDBusyWait GLCDBusyWait `(v  1 e 1 0 ]
 "74
 [v _sendGLCDCommand sendGLCDCommand `(v  1 e 1 0 ]
@@ -40,9 +40,9 @@ RISING 1
 [v _ClearDot ClearDot `(v  1 e 1 0 ]
 "249
 [v _putchGLCD putchGLCD `(v  1 e 1 0 ]
-"2 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/initPIC.c
+"2 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/initPIC.c
 [v _configPIC configPIC `(v  1 e 1 0 ]
-"47 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/main.c
+"47 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
 [v _handleUsartInput handleUsartInput `(v  1 e 1 0 ]
 "57
 [v _tic tic `(v  1 e 1 0 ]
@@ -53,7 +53,7 @@ RISING 1
 "108
 [v _updateTimerText updateTimerText `(uc  1 e 1 0 ]
 "175
-[v _next_timer_state next_timer_state `(E6150  1 e 1 0 ]
+[v _next_timer_state next_timer_state `(E6184  1 e 1 0 ]
 "216
 [v _play_splash_screen play_splash_screen `(v  1 e 1 0 ]
 "229
@@ -72,11 +72,11 @@ RISING 1
 [v _update_medidor update_medidor `(v  1 e 1 0 ]
 "346
 [v _main main `(v  1 e 1 0 ]
-"5 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/test.c
+"5 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/test.c
 [v _sum sum `(i  1 e 2 0 ]
 "9
 [v _writeMatrix writeMatrix `(v  1 e 1 0 ]
-"4 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/utils.c
+"4 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/utils.c
 [v _putc_usart1 putc_usart1 `(v  1 e 1 0 ]
 "10
 [v _puts_usart1 puts_usart1 `(v  1 e 1 0 ]
@@ -88,87 +88,87 @@ RISING 1
 [v _writeTxt writeTxt `(v  1 e 1 0 ]
 "52
 [v _clearChars clearChars `(v  1 e 1 0 ]
-"14 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/typedefs.h
+"14 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/typedefs.h
 [s S99 . 4 `ui 1 segs 2 0 `ui 1 dec 2 2 ]
-"58 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/utils.c
+"58 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/utils.c
 [v _getFormatedTime getFormatedTime `(S99  1 e 4 0 ]
-"7 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\__lldiv.c
+"7 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\__lldiv.c
 [v ___lldiv __lldiv `(ul  1 e 4 0 ]
-"4 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\abs.c
+"4 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\abs.c
 [v _abs abs `(i  1 e 2 0 ]
-"7 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\awdiv.c
+"7 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\awdiv.c
 [v ___awdiv __awdiv `(i  1 e 2 0 ]
-"7 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\awmod.c
+"7 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\awmod.c
 [v ___awmod __awmod `(i  1 e 2 0 ]
-"32 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\awtoft.c
+"32 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\awtoft.c
 [v ___awtoft __awtoft `(f  1 e 3 0 ]
-"417 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\doprnt.c
+"417 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\doprnt.c
 [v _fround fround `(d  1 s 3 fround ]
 "433
 [v _scale scale `(d  1 s 3 scale ]
 "505
 [v _sprintf sprintf `(i  1 e 2 0 ]
-"4 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\evalpoly.c
+"4 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\evalpoly.c
 [v _eval_poly eval_poly `(d  1 e 3 0 ]
-"60 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\fldivl.c
+"60 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\fldivl.c
 [v __div_to_l_ _div_to_l_ `(ul  1 e 4 0 ]
-"62 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\float.c
+"62 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\float.c
 [v ___ftpack __ftpack `(f  1 e 3 0 ]
-"254 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\frexp.c
+"254 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\frexp.c
 [v _frexp frexp `(d  1 e 3 0 ]
-"86 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\ftadd.c
+"86 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\ftadd.c
 [v ___ftadd __ftadd `(f  1 e 3 0 ]
-"54 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\ftdiv.c
+"54 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\ftdiv.c
 [v ___ftdiv __ftdiv `(f  1 e 3 0 ]
-"60 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\ftdivl.c
+"60 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\ftdivl.c
 [v __tdiv_to_l_ _tdiv_to_l_ `(ul  1 e 4 0 ]
-"4 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\ftge.c
+"4 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\ftge.c
 [v ___ftge __ftge `(b  1 e 0 0 ]
-"62 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\ftmul.c
+"62 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\ftmul.c
 [v ___ftmul __ftmul `(f  1 e 3 0 ]
-"15 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\ftneg.c
+"15 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\ftneg.c
 [v ___ftneg __ftneg `(f  1 e 3 0 ]
-"19 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\ftsub.c
+"19 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\ftsub.c
 [v ___ftsub __ftsub `(f  1 e 3 0 ]
-"44 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\fttol.c
+"44 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\fttol.c
 [v ___fttol __fttol `(l  1 e 4 0 ]
-"8 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\isdigit.c
+"8 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\isdigit.c
 [v _isdigit isdigit `(b  1 e 0 0 ]
-"4 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\lbdiv.c
+"4 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\lbdiv.c
 [v ___lbdiv __lbdiv `(uc  1 e 1 0 ]
-"4 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\lbmod.c
+"4 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\lbmod.c
 [v ___lbmod __lbmod `(uc  1 e 1 0 ]
-"7 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\llmod.c
+"7 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\llmod.c
 [v ___llmod __llmod `(ul  1 e 4 0 ]
-"35 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\lltoft.c
+"35 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\lltoft.c
 [v ___lltoft __lltoft `(f  1 e 3 0 ]
-"5 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\log.c
+"5 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\log.c
 [v _log log `(d  1 e 3 0 ]
-"7 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\lwdiv.c
+"7 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\lwdiv.c
 [v ___lwdiv __lwdiv `(ui  1 e 2 0 ]
-"7 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\lwmod.c
+"7 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\lwmod.c
 [v ___lwmod __lwmod `(ui  1 e 2 0 ]
-"28 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\lwtoft.c
+"28 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\lwtoft.c
 [v ___lwtoft __lwtoft `(f  1 e 3 0 ]
-"10 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\sprcadd.c
+"10 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\sprcadd.c
 [v ___fladd __fladd `(d  1 e 3 0 ]
 "245
 [v ___flsub __flsub `(d  1 e 3 0 ]
-"11 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\sprcdiv.c
+"11 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\sprcdiv.c
 [v ___fldiv __fldiv `(d  1 e 3 0 ]
-"8 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\sprcmul.c
+"8 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\sprcmul.c
 [v ___flmul __flmul `(d  1 e 3 0 ]
-"4 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\strlen.c
+"4 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\strlen.c
 [v _strlen strlen `(ui  1 e 2 0 ]
-"15 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\Umul16.c
+"15 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\Umul16.c
 [v ___wmul __wmul `(ui  1 e 2 0 ]
-"15 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\Umul32.c
+"15 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\Umul32.c
 [v ___lmul __lmul `(ul  1 e 4 0 ]
-"91 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\Umul64.c
+"91 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\Umul64.c
 [v ___omul __omul `(ul  1 e 4 0 ]
-"6 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/ascii.h
+"6 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/ascii.h
 [v _font5x7 font5x7 `C[500]uc  1 e 500 0 ]
-"32 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/main.c
+"32 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
 [v _time_left time_left `ui  1 e 2 0 ]
 "33
 [v _change_time change_time `uc  1 e 1 0 ]
@@ -186,10 +186,10 @@ RISING 1
 [v _s_pressed s_pressed `uc  1 e 1 0 ]
 [v _d_pressed d_pressed `uc  1 e 1 0 ]
 "209
-[v _splash_text splash_text `[4]*.25uc  1 e 8 0 ]
-"3 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/splash.h
+[v _splash_text splash_text `[4]*.32uc  1 e 8 0 ]
+"3 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/splash.h
 [v _splash_bitmap splash_bitmap `C[1024]uc  1 e 1024 0 ]
-"52 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f45k22.h
+"52 C:\Program Files\Microchip\xc8\v2.50\pic\include\proc\pic18f45k22.h
 [v _ANSELA ANSELA `VEuc  1 e 1 @3896 ]
 "97
 [v _ANSELB ANSELB `VEuc  1 e 1 @3897 ]
@@ -473,35 +473,35 @@ RISING 1
 [v _TMR0L TMR0L `VEuc  1 e 1 @4054 ]
 "16192
 [v _TMR0H TMR0H `VEuc  1 e 1 @4055 ]
-"17446
+"17450
 [v _ADIE ADIE `VEb  1 e 0 @31982 ]
-"17449
+"17453
 [v _ADIF ADIF `VEb  1 e 0 @31990 ]
-"18451
+"18455
 [v _GIE GIE `VEb  1 e 0 @32663 ]
-"18475
+"18479
 [v _GO_nDONE GO_nDONE `VEb  1 e 0 @32273 ]
-"18622
+"18626
 [v _IPEN IPEN `VEb  1 e 0 @32391 ]
-"19312
+"19316
 [v _PEIE PEIE `VEb  1 e 0 @32662 ]
-"20245
+"20249
 [v _TMR0IE TMR0IE `VEb  1 e 0 @32661 ]
-"20248
+"20252
 [v _TMR0IF TMR0IF `VEb  1 e 0 @32658 ]
-"20290
+"20294
 [v _TMR2IE TMR2IE `VEb  1 e 0 @31977 ]
-"20293
+"20297
 [v _TMR2IF TMR2IF `VEb  1 e 0 @31985 ]
-"358 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\doprnt.c
+"358 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\doprnt.c
 [v _dpowers dpowers `C[10]ul  1 s 40 dpowers ]
-"3 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\errno.c
+"3 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\errno.c
 [v _errno errno `i  1 e 2 0 ]
-"7 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\powers.c
+"7 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\powers.c
 [v __powers_ _powers_ `C[13]d  1 e 39 0 ]
 "39
 [v __npowers_ _npowers_ `C[13]d  1 e 39 0 ]
-"346 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/main.c
+"346 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
 [v _main main `(v  1 e 1 0 ]
 {
 "408
@@ -509,33 +509,33 @@ RISING 1
 "421
 [v main@buff_565 buff `[128]uc  1 a 128 128 ]
 "389
-[v main@i i `i  1 a 2 96 ]
+[v main@i i `i  1 a 2 101 ]
 "382
-[v main@temperature temperature `d  1 a 3 93 ]
+[v main@temperature temperature `d  1 a 3 98 ]
 "386
-[v main@precalc precalc `Cd  1 a 3 82 ]
+[v main@precalc precalc `Cd  1 a 3 87 ]
 "383
-[v main@adjusted_pressure adjusted_pressure `i  1 a 2 100 ]
+[v main@adjusted_pressure adjusted_pressure `i  1 a 2 105 ]
 "387
-[v main@val val `i  1 a 2 85 ]
+[v main@val val `i  1 a 2 90 ]
 "359
-[v main@READ_C READ_C `uc  1 a 1 102 ]
+[v main@READ_C READ_C `uc  1 a 1 107 ]
 "360
-[v main@PREV_C PREV_C `uc  1 a 1 99 ]
+[v main@PREV_C PREV_C `uc  1 a 1 104 ]
 "368
-[v main@timer_state timer_state `E6150  1 a 1 98 ]
+[v main@timer_state timer_state `E6184  1 a 1 103 ]
 "363
-[v main@RC1_pressed RC1_pressed `uc  1 a 1 92 ]
+[v main@RC1_pressed RC1_pressed `uc  1 a 1 97 ]
 "362
-[v main@RC0_pressed RC0_pressed `uc  1 a 1 91 ]
+[v main@RC0_pressed RC0_pressed `uc  1 a 1 96 ]
 "366
-[v main@RC1_update RC1_update `uc  1 a 1 90 ]
+[v main@RC1_update RC1_update `uc  1 a 1 95 ]
 "365
-[v main@RC0_update RC0_update `uc  1 a 1 89 ]
+[v main@RC0_update RC0_update `uc  1 a 1 94 ]
 "373
-[v main@timer_end timer_end `uc  1 a 1 88 ]
+[v main@timer_end timer_end `uc  1 a 1 93 ]
 "372
-[v main@timer_changed_state timer_changed_state `uc  1 a 1 87 ]
+[v main@timer_changed_state timer_changed_state `uc  1 a 1 92 ]
 "499
 } 0
 "253
@@ -544,25 +544,25 @@ RISING 1
 "254
 [v write_pressure@buff buff `[256]uc  1 a 256 0 ]
 "253
-[v write_pressure@adjusted_pressure adjusted_pressure `Ci  1 p 2 24 ]
+[v write_pressure@adjusted_pressure adjusted_pressure `Ci  1 p 2 30 ]
 "259
 } 0
-"52 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/utils.c
+"52 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/utils.c
 [v _clearChars clearChars `(v  1 e 1 0 ]
 {
-[v clearChars@page page `uc  1 a 1 wreg ]
+[v clearChars@page page `uc  1 p 1 wreg ]
 "53
 [v clearChars@column column `uc  1 a 1 32 ]
 "54
 [v clearChars@column_end column_end `uc  1 a 1 30 ]
 "52
-[v clearChars@page page `uc  1 a 1 wreg ]
+[v clearChars@page page `uc  1 p 1 wreg ]
 [v clearChars@y y `uc  1 p 1 26 ]
 [v clearChars@length length `i  1 p 2 27 ]
-[v clearChars@page page `uc  1 a 1 31 ]
+[v clearChars@page page `uc  1 p 1 31 ]
 "56
 } 0
-"312 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/main.c
+"312 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
 [v _update_medidor update_medidor `(v  1 e 1 0 ]
 {
 "335
@@ -590,16 +590,16 @@ RISING 1
 [v update_medidor@change_psi change_psi `i  1 p 2 32 ]
 "344
 } 0
-"4 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\abs.c
+"4 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\abs.c
 [v _abs abs `(i  1 e 2 0 ]
 {
 [v abs@a a `i  1 p 2 4 ]
 "9
 } 0
-"231 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/GLCD.c
+"231 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/GLCD.c
 [v _SetDot SetDot `(v  1 e 1 0 ]
 {
-[v SetDot@x x `uc  1 a 1 wreg ]
+[v SetDot@x x `uc  1 p 1 wreg ]
 "233
 [v SetDot@page page `i  1 a 2 27 ]
 "235
@@ -607,16 +607,16 @@ RISING 1
 "234
 [v SetDot@aux aux `i  1 a 2 23 ]
 "231
-[v SetDot@x x `uc  1 a 1 wreg ]
+[v SetDot@x x `uc  1 p 1 wreg ]
 [v SetDot@y y `uc  1 p 1 19 ]
 "233
-[v SetDot@x x `uc  1 a 1 29 ]
+[v SetDot@x x `uc  1 p 1 29 ]
 "237
 } 0
 "239
 [v _ClearDot ClearDot `(v  1 e 1 0 ]
 {
-[v ClearDot@x x `uc  1 a 1 wreg ]
+[v ClearDot@x x `uc  1 p 1 wreg ]
 "241
 [v ClearDot@page page `i  1 a 2 27 ]
 "243
@@ -624,96 +624,96 @@ RISING 1
 "242
 [v ClearDot@aux aux `i  1 a 2 23 ]
 "239
-[v ClearDot@x x `uc  1 a 1 wreg ]
+[v ClearDot@x x `uc  1 p 1 wreg ]
 [v ClearDot@y y `uc  1 p 1 19 ]
 "241
-[v ClearDot@x x `uc  1 a 1 29 ]
+[v ClearDot@x x `uc  1 p 1 29 ]
 "245
 } 0
 "211
 [v _readByte readByte `(uc  1 e 1 0 ]
 {
-[v readByte@p p `uc  1 a 1 wreg ]
+[v readByte@p p `uc  1 p 1 wreg ]
 "213
 [v readByte@aux aux `uc  1 a 1 17 ]
 "211
-[v readByte@p p `uc  1 a 1 wreg ]
+[v readByte@p p `uc  1 p 1 wreg ]
 [v readByte@y y `uc  1 p 1 16 ]
 "214
-[v readByte@p p `uc  1 a 1 18 ]
+[v readByte@p p `uc  1 p 1 18 ]
 "217
 } 0
 "174
 [v _readByteReal readByteReal `(uc  1 e 1 0 ]
 {
-[v readByteReal@p p `uc  1 a 1 wreg ]
+[v readByteReal@p p `uc  1 p 1 wreg ]
 "177
 [v readByteReal@chip chip `uc  1 a 1 15 ]
 "176
 [v readByteReal@data data `uc  1 a 1 14 ]
 "174
-[v readByteReal@p p `uc  1 a 1 wreg ]
+[v readByteReal@p p `uc  1 p 1 wreg ]
 [v readByteReal@y y `uc  1 p 1 9 ]
 [v readByteReal@first first `uc  1 p 1 10 ]
 "177
-[v readByteReal@p p `uc  1 a 1 11 ]
+[v readByteReal@p p `uc  1 p 1 11 ]
 "205
 } 0
-"108 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/main.c
+"108 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
 [v _updateTimerText updateTimerText `(uc  1 e 1 0 ]
 {
-[v updateTimerText@timer_state timer_state `E6150  1 a 1 wreg ]
+[v updateTimerText@timer_state timer_state `E6184  1 p 1 wreg ]
 "111
 [v updateTimerText@countdown countdown `[256]uc  1 a 256 0 ]
 "112
-[v updateTimerText@stateText stateText `[50]uc  1 a 50 25 ]
+[v updateTimerText@stateText stateText `[50]uc  1 a 50 30 ]
 [s S99 . 4 `ui 1 segs 2 0 `ui 1 dec 2 2 ]
 "109
-[v updateTimerText@ftime ftime `S99  1 a 4 76 ]
+[v updateTimerText@ftime ftime `S99  1 a 4 81 ]
 "108
-[v updateTimerText@timer_state timer_state `E6150  1 a 1 wreg ]
-[v updateTimerText@timer_changed_state timer_changed_state `uc  1 p 1 24 ]
+[v updateTimerText@timer_state timer_state `E6184  1 p 1 wreg ]
+[v updateTimerText@timer_changed_state timer_changed_state `uc  1 p 1 83 ]
 "115
-[v updateTimerText@timer_state timer_state `E6150  1 a 1 75 ]
+[v updateTimerText@timer_state timer_state `E6184  1 p 1 80 ]
 "173
 } 0
-"505 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\doprnt.c
+"505 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\doprnt.c
 [v _sprintf sprintf `(i  1 e 2 0 ]
 {
 "545
-[v sprintf@val val `ul  1 a 4 8 ]
+[v sprintf@val val `ul  1 a 4 14 ]
 [u S1053 . 4 `ul 1 vd 4 0 `d 1 integ 3 0 ]
 "543
-[v sprintf@tmpval tmpval `S1053  1 a 4 4 ]
+[v sprintf@tmpval tmpval `S1053  1 a 4 10 ]
 "533
-[v sprintf@fval fval `d  1 a 3 18 ]
+[v sprintf@fval fval `d  1 a 3 24 ]
 "517
-[v sprintf@prec prec `i  1 a 2 21 ]
+[v sprintf@prec prec `i  1 a 2 27 ]
 "514
-[v sprintf@width width `i  1 a 2 16 ]
+[v sprintf@width width `i  1 a 2 22 ]
 "525
-[v sprintf@flag flag `us  1 a 2 14 ]
+[v sprintf@flag flag `us  1 a 2 20 ]
 "534
-[v sprintf@eexp eexp `i  1 a 2 12 ]
+[v sprintf@eexp eexp `i  1 a 2 18 ]
 "512
-[v sprintf@c c `uc  1 a 1 23 ]
+[v sprintf@c c `uc  1 a 1 29 ]
 "507
-[v sprintf@ap ap `[1]*.30v  1 a 1 3 ]
+[v sprintf@ap ap `[1]*.30v  1 a 1 9 ]
 "505
-[v sprintf@sp sp `*.39uc  1 p 2 72 ]
-[v sprintf@f f `*.25Cuc  1 p 2 74 ]
+[v sprintf@sp sp `*.39uc  1 p 2 75 ]
+[v sprintf@f f `*.32Cuc  1 p 2 77 ]
 "1567
 } 0
 "433
 [v _scale scale `(d  1 s 3 scale ]
 {
-[v scale@scl scl `c  1 a 1 wreg ]
-[v scale@scl scl `c  1 a 1 wreg ]
+[v scale@scl scl `c  1 p 1 wreg ]
+[v scale@scl scl `c  1 p 1 wreg ]
 "436
-[v scale@scl scl `c  1 a 1 39 ]
+[v scale@scl scl `c  1 p 1 39 ]
 "449
 } 0
-"7 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\awmod.c
+"7 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\awmod.c
 [v ___awmod __awmod `(i  1 e 2 0 ]
 {
 "10
@@ -724,7 +724,7 @@ RISING 1
 [v ___awmod@divisor divisor `i  1 p 2 6 ]
 "34
 } 0
-"7 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\awdiv.c
+"7 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\awdiv.c
 [v ___awdiv __awdiv `(i  1 e 2 0 ]
 {
 "10
@@ -737,55 +737,55 @@ RISING 1
 [v ___awdiv@divisor divisor `i  1 p 2 12 ]
 "41
 } 0
-"8 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\isdigit.c
+"8 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\isdigit.c
 [v _isdigit isdigit `(b  1 e 0 0 ]
 {
-[v isdigit@c c `uc  1 a 1 wreg ]
-[v isdigit@c c `uc  1 a 1 wreg ]
+[v isdigit@c c `uc  1 p 1 wreg ]
+[v isdigit@c c `uc  1 p 1 wreg ]
 "14
-[v isdigit@c c `uc  1 a 1 6 ]
+[v isdigit@c c `uc  1 p 1 6 ]
 "15
 } 0
-"417 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\doprnt.c
+"417 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\doprnt.c
 [v _fround fround `(d  1 s 3 fround ]
 {
-[v fround@prec prec `uc  1 a 1 wreg ]
-[v fround@prec prec `uc  1 a 1 wreg ]
+[v fround@prec prec `uc  1 p 1 wreg ]
+[v fround@prec prec `uc  1 p 1 wreg ]
 "421
-[v fround@prec prec `uc  1 a 1 44 ]
+[v fround@prec prec `uc  1 p 1 44 ]
 "426
 } 0
-"4 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\lbmod.c
+"4 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\lbmod.c
 [v ___lbmod __lbmod `(uc  1 e 1 0 ]
 {
-[v ___lbmod@dividend dividend `uc  1 a 1 wreg ]
+[v ___lbmod@dividend dividend `uc  1 p 1 wreg ]
 "6
 [v ___lbmod@rem rem `uc  1 a 1 7 ]
 "7
 [v ___lbmod@counter counter `uc  1 a 1 6 ]
 "4
-[v ___lbmod@dividend dividend `uc  1 a 1 wreg ]
+[v ___lbmod@dividend dividend `uc  1 p 1 wreg ]
 [v ___lbmod@divisor divisor `uc  1 p 1 4 ]
 "9
-[v ___lbmod@dividend dividend `uc  1 a 1 5 ]
+[v ___lbmod@dividend dividend `uc  1 p 1 5 ]
 "18
 } 0
-"4 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\lbdiv.c
+"4 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\lbdiv.c
 [v ___lbdiv __lbdiv `(uc  1 e 1 0 ]
 {
-[v ___lbdiv@dividend dividend `uc  1 a 1 wreg ]
+[v ___lbdiv@dividend dividend `uc  1 p 1 wreg ]
 "6
 [v ___lbdiv@quotient quotient `uc  1 a 1 11 ]
 "7
 [v ___lbdiv@counter counter `uc  1 a 1 10 ]
 "4
-[v ___lbdiv@dividend dividend `uc  1 a 1 wreg ]
+[v ___lbdiv@dividend dividend `uc  1 p 1 wreg ]
 [v ___lbdiv@divisor divisor `uc  1 p 1 8 ]
 "9
-[v ___lbdiv@dividend dividend `uc  1 a 1 9 ]
+[v ___lbdiv@dividend dividend `uc  1 p 1 9 ]
 "26
 } 0
-"60 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\ftdivl.c
+"60 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\ftdivl.c
 [v __tdiv_to_l_ _tdiv_to_l_ `(ul  1 e 4 0 ]
 {
 "63
@@ -798,7 +798,7 @@ RISING 1
 [v __tdiv_to_l_@f2 f2 `f  1 p 3 7 ]
 "101
 } 0
-"60 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\fldivl.c
+"60 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\fldivl.c
 [v __div_to_l_ _div_to_l_ `(ul  1 e 4 0 ]
 {
 "63
@@ -811,7 +811,17 @@ RISING 1
 [v __div_to_l_@f2 f2 `d  1 p 3 7 ]
 "101
 } 0
-"35 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\lltoft.c
+"15 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\Umul16.c
+[v ___wmul __wmul `(ui  1 e 2 0 ]
+{
+"17
+[v ___wmul@product product `ui  1 a 2 8 ]
+"15
+[v ___wmul@multiplier multiplier `ui  1 p 2 4 ]
+[v ___wmul@multiplicand multiplicand `ui  1 p 2 6 ]
+"53
+} 0
+"35 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\lltoft.c
 [v ___lltoft __lltoft `(f  1 e 3 0 ]
 {
 "37
@@ -820,7 +830,7 @@ RISING 1
 [v ___lltoft@c c `ul  1 p 4 12 ]
 "46
 } 0
-"7 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\llmod.c
+"7 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\llmod.c
 [v ___llmod __llmod `(ul  1 e 4 0 ]
 {
 "10
@@ -830,7 +840,7 @@ RISING 1
 [v ___llmod@divisor divisor `ul  1 p 4 21 ]
 "25
 } 0
-"7 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\__lldiv.c
+"7 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\__lldiv.c
 [v ___lldiv __lldiv `(ul  1 e 4 0 ]
 {
 "10
@@ -842,22 +852,22 @@ RISING 1
 [v ___lldiv@divisor divisor `ul  1 p 4 8 ]
 "30
 } 0
-"15 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\ftneg.c
+"15 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\ftneg.c
 [v ___ftneg __ftneg `(f  1 e 3 0 ]
 {
 [v ___ftneg@f1 f1 `f  1 p 3 4 ]
 "20
 } 0
-"4 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\ftge.c
+"4 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\ftge.c
 [v ___ftge __ftge `(b  1 e 0 0 ]
 {
 [v ___ftge@ff1 ff1 `f  1 p 3 4 ]
 [v ___ftge@ff2 ff2 `f  1 p 3 7 ]
 "13
 } 0
-"14 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/typedefs.h
+"14 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/typedefs.h
 [s S99 . 4 `ui 1 segs 2 0 `ui 1 dec 2 2 ]
-"58 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/utils.c
+"58 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/utils.c
 [v _getFormatedTime getFormatedTime `(S99  1 e 4 0 ]
 {
 "59
@@ -866,7 +876,7 @@ RISING 1
 [v getFormatedTime@deciseconds deciseconds `ui  1 p 2 11 ]
 "67
 } 0
-"7 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\lwmod.c
+"7 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\lwmod.c
 [v ___lwmod __lwmod `(ui  1 e 2 0 ]
 {
 "10
@@ -876,7 +886,7 @@ RISING 1
 [v ___lwmod@divisor divisor `ui  1 p 2 6 ]
 "25
 } 0
-"7 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\lwdiv.c
+"7 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\lwdiv.c
 [v ___lwdiv __lwdiv `(ui  1 e 2 0 ]
 {
 "10
@@ -888,83 +898,83 @@ RISING 1
 [v ___lwdiv@divisor divisor `ui  1 p 2 6 ]
 "30
 } 0
-"5 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/test.c
+"5 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/test.c
 [v _sum sum `(i  1 e 2 0 ]
 {
 [v sum@a a `i  1 p 2 4 ]
 [v sum@b b `i  1 p 2 6 ]
 "7
 } 0
-"274 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/main.c
+"274 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
 [v _set_pwm_pressure set_pwm_pressure `(i  1 e 2 0 ]
 {
 "276
-[v set_pwm_pressure@pwm_val pwm_val `i  1 a 2 18 ]
+[v set_pwm_pressure@pwm_val pwm_val `i  1 a 2 12 ]
 "279
-[v set_pwm_pressure@pwm_low pwm_low `i  1 a 2 16 ]
+[v set_pwm_pressure@pwm_low pwm_low `i  1 a 2 10 ]
 "278
-[v set_pwm_pressure@pwm_high pwm_high `i  1 a 2 14 ]
+[v set_pwm_pressure@pwm_high pwm_high `i  1 a 2 8 ]
 "274
-[v set_pwm_pressure@adjusted_pressure adjusted_pressure `Ci  1 p 2 10 ]
+[v set_pwm_pressure@adjusted_pressure adjusted_pressure `Ci  1 p 2 4 ]
 "285
 } 0
-"10 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/utils.c
+"10 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/utils.c
 [v _puts_usart1 puts_usart1 `(v  1 e 1 0 ]
 {
-[v puts_usart1@cptr cptr `*.25uc  1 p 2 5 ]
+[v puts_usart1@cptr cptr `*.32uc  1 p 2 5 ]
 "16
 } 0
 "4
 [v _putc_usart1 putc_usart1 `(v  1 e 1 0 ]
 {
-[v putc_usart1@xc xc `uc  1 a 1 wreg ]
-[v putc_usart1@xc xc `uc  1 a 1 wreg ]
-[v putc_usart1@xc xc `uc  1 a 1 4 ]
+[v putc_usart1@xc xc `uc  1 p 1 wreg ]
+[v putc_usart1@xc xc `uc  1 p 1 wreg ]
+[v putc_usart1@xc xc `uc  1 p 1 4 ]
 "8
 } 0
-"216 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/main.c
+"216 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
 [v _play_splash_screen play_splash_screen `(v  1 e 1 0 ]
 {
 "222
-[v play_splash_screen@column column `i  1 a 2 37 ]
+[v play_splash_screen@column column `i  1 a 2 38 ]
 "221
-[v play_splash_screen@i i `i  1 a 2 39 ]
+[v play_splash_screen@i i `i  1 a 2 40 ]
 "220
-[v play_splash_screen@n n `i  1 a 2 35 ]
+[v play_splash_screen@n n `i  1 a 2 36 ]
 "227
 } 0
-"43 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/utils.c
+"43 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/utils.c
 [v _writeTxt writeTxt `(v  1 e 1 0 ]
 {
-[v writeTxt@page page `uc  1 a 1 wreg ]
+[v writeTxt@page page `uc  1 p 1 wreg ]
 "44
-[v writeTxt@i i `i  1 a 2 28 ]
+[v writeTxt@i i `i  1 a 2 32 ]
 "43
-[v writeTxt@page page `uc  1 a 1 wreg ]
-[v writeTxt@y y `uc  1 p 1 24 ]
-[v writeTxt@s s `*.35uc  1 p 2 25 ]
-[v writeTxt@page page `uc  1 a 1 27 ]
+[v writeTxt@page page `uc  1 p 1 wreg ]
+[v writeTxt@y y `uc  1 p 1 28 ]
+[v writeTxt@s s `*.35uc  1 p 2 29 ]
+[v writeTxt@page page `uc  1 p 1 31 ]
 "50
 } 0
-"249 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/GLCD.c
+"249 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/GLCD.c
 [v _putchGLCD putchGLCD `(v  1 e 1 0 ]
 {
-[v putchGLCD@p p `uc  1 a 1 wreg ]
+[v putchGLCD@p p `uc  1 p 1 wreg ]
 "252
-[v putchGLCD@i i `i  1 a 2 22 ]
+[v putchGLCD@i i `i  1 a 2 26 ]
 "251
-[v putchGLCD@fontPos fontPos `i  1 a 2 20 ]
+[v putchGLCD@fontPos fontPos `i  1 a 2 24 ]
 "254
-[v putchGLCD@aux aux `i  1 a 2 17 ]
+[v putchGLCD@aux aux `i  1 a 2 21 ]
 "249
-[v putchGLCD@p p `uc  1 a 1 wreg ]
+[v putchGLCD@p p `uc  1 p 1 wreg ]
 [v putchGLCD@y y `uc  1 p 1 15 ]
 [v putchGLCD@c c `uc  1 p 1 16 ]
 "251
-[v putchGLCD@p p `uc  1 a 1 19 ]
+[v putchGLCD@p p `uc  1 p 1 23 ]
 "262
 } 0
-"9 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/test.c
+"9 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/test.c
 [v _writeMatrix writeMatrix `(v  1 e 1 0 ]
 {
 "12
@@ -978,87 +988,87 @@ RISING 1
 [v writeMatrix@start_col start_col `i  1 p 2 17 ]
 [v writeMatrix@fil fil `i  1 p 2 19 ]
 [v writeMatrix@col col `i  1 p 2 21 ]
-[v writeMatrix@matrix matrix `*.25uc  1 p 2 23 ]
+[v writeMatrix@matrix matrix `*.32uc  1 p 2 23 ]
 "17
 } 0
-"221 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/GLCD.c
+"221 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/GLCD.c
 [v _clearGLCD clearGLCD `(v  1 e 1 0 ]
 {
-[v clearGLCD@ri ri `uc  1 a 1 wreg ]
+[v clearGLCD@ri ri `uc  1 p 1 wreg ]
 "223
 [v clearGLCD@j j `i  1 a 2 24 ]
 [v clearGLCD@i i `i  1 a 2 22 ]
 "221
-[v clearGLCD@ri ri `uc  1 a 1 wreg ]
+[v clearGLCD@ri ri `uc  1 p 1 wreg ]
 [v clearGLCD@re re `uc  1 p 1 15 ]
 [v clearGLCD@ci ci `uc  1 p 1 16 ]
 [v clearGLCD@ce ce `uc  1 p 1 17 ]
 "225
-[v clearGLCD@ri ri `uc  1 a 1 21 ]
+[v clearGLCD@ri ri `uc  1 p 1 21 ]
 "228
 } 0
 "147
 [v _writeByte writeByte `(v  1 e 1 0 ]
 {
-[v writeByte@p p `uc  1 a 1 wreg ]
+[v writeByte@p p `uc  1 p 1 wreg ]
 "149
 [v writeByte@chip chip `uc  1 a 1 14 ]
 "147
-[v writeByte@p p `uc  1 a 1 wreg ]
+[v writeByte@p p `uc  1 p 1 wreg ]
 [v writeByte@y y `uc  1 p 1 9 ]
 [v writeByte@data data `uc  1 p 1 10 ]
 "149
-[v writeByte@p p `uc  1 a 1 11 ]
+[v writeByte@p p `uc  1 p 1 11 ]
 "172
 } 0
 "115
 [v _setYAddress setYAddress `(v  1 e 1 0 ]
 {
-[v setYAddress@y y `uc  1 a 1 wreg ]
-[v setYAddress@y y `uc  1 a 1 wreg ]
+[v setYAddress@y y `uc  1 p 1 wreg ]
+[v setYAddress@y y `uc  1 p 1 wreg ]
 "117
-[v setYAddress@y y `uc  1 a 1 8 ]
+[v setYAddress@y y `uc  1 p 1 8 ]
 "125
 } 0
 "107
 [v _setXAddress setXAddress `(v  1 e 1 0 ]
 {
-[v setXAddress@page page `uc  1 a 1 wreg ]
-[v setXAddress@page page `uc  1 a 1 wreg ]
+[v setXAddress@page page `uc  1 p 1 wreg ]
+[v setXAddress@page page `uc  1 p 1 wreg ]
 "109
-[v setXAddress@page page `uc  1 a 1 8 ]
+[v setXAddress@page page `uc  1 p 1 8 ]
 "111
 } 0
-"39 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/utils.c
+"39 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/utils.c
 [v _calc_center_spacing calc_center_spacing `(i  1 e 2 0 ]
 {
-[v calc_center_spacing@string string `*.25uc  1 p 2 8 ]
+[v calc_center_spacing@string string `*.32uc  1 p 2 8 ]
 "41
 } 0
-"4 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\strlen.c
+"4 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\strlen.c
 [v _strlen strlen `(ui  1 e 2 0 ]
 {
 "6
-[v strlen@cp cp `*.25Cuc  1 a 2 6 ]
+[v strlen@cp cp `*.32Cuc  1 a 2 6 ]
 "4
-[v strlen@s s `*.25Cuc  1 p 2 4 ]
+[v strlen@s s `*.32Cuc  1 p 2 4 ]
 "13
 } 0
-"175 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/main.c
-[v _next_timer_state next_timer_state `(E6150  1 e 1 0 ]
+"175 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
+[v _next_timer_state next_timer_state `(E6184  1 e 1 0 ]
 {
-[v next_timer_state@state state `E6150  1 a 1 wreg ]
+[v next_timer_state@state state `E6184  1 p 1 wreg ]
 "176
-[v next_timer_state@new_state new_state `E6150  1 a 1 5 ]
+[v next_timer_state@new_state new_state `E6184  1 a 1 5 ]
 "175
-[v next_timer_state@state state `E6150  1 a 1 wreg ]
-[v next_timer_state@state state `E6150  1 a 1 4 ]
+[v next_timer_state@state state `E6184  1 p 1 wreg ]
+[v next_timer_state@state state `E6184  1 p 1 4 ]
 "207
 } 0
 "288
 [v _inputDetector inputDetector `(uc  1 e 1 0 ]
 {
-[v inputDetector@REG_ant REG_ant `uc  1 a 1 wreg ]
+[v inputDetector@REG_ant REG_ant `uc  1 p 1 wreg ]
 "289
 [v inputDetector@ret ret `uc  1 a 1 14 ]
 "293
@@ -1066,42 +1076,42 @@ RISING 1
 "291
 [v inputDetector@pin_act pin_act `uc  1 a 1 12 ]
 "288
-[v inputDetector@REG_ant REG_ant `uc  1 a 1 wreg ]
+[v inputDetector@REG_ant REG_ant `uc  1 p 1 wreg ]
 [v inputDetector@REG_act REG_act `uc  1 p 1 4 ]
 [v inputDetector@num_pin num_pin `uc  1 p 1 5 ]
 [v inputDetector@flanc flanc `uc  1 p 1 6 ]
-[v inputDetector@REG_ant REG_ant `uc  1 a 1 9 ]
+[v inputDetector@REG_ant REG_ant `uc  1 p 1 9 ]
 "305
 } 0
 "267
 [v _get_adjusted_pressure get_adjusted_pressure `(i  1 e 2 0 ]
 {
 "269
-[v get_adjusted_pressure@change change `d  1 a 3 75 ]
+[v get_adjusted_pressure@change change `d  1 a 3 78 ]
 "270
-[v get_adjusted_pressure@adjusted_pressure adjusted_pressure `i  1 a 2 81 ]
+[v get_adjusted_pressure@adjusted_pressure adjusted_pressure `i  1 a 2 84 ]
 "267
-[v get_adjusted_pressure@temperature temperature `Cd  1 p 3 72 ]
+[v get_adjusted_pressure@temperature temperature `Cd  1 p 3 75 ]
 "272
 } 0
-"44 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\fttol.c
+"44 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\fttol.c
 [v ___fttol __fttol `(l  1 e 4 0 ]
 {
 "47
-[v ___fttol@lval lval `ul  1 a 4 67 ]
+[v ___fttol@lval lval `ul  1 a 4 70 ]
 "46
-[v ___fttol@exp1 exp1 `uc  1 a 1 71 ]
-[v ___fttol@sign1 sign1 `uc  1 a 1 66 ]
+[v ___fttol@exp1 exp1 `uc  1 a 1 74 ]
+[v ___fttol@sign1 sign1 `uc  1 a 1 69 ]
 "44
-[v ___fttol@f1 f1 `f  1 p 3 57 ]
+[v ___fttol@f1 f1 `f  1 p 3 60 ]
 "73
 } 0
-"2 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/initPIC.c
+"2 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/initPIC.c
 [v _configPIC configPIC `(v  1 e 1 0 ]
 {
 "124
 } 0
-"261 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/main.c
+"261 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
 [v _change_selected_pressure change_selected_pressure `(v  1 e 1 0 ]
 {
 [v change_selected_pressure@change change `i  1 p 2 4 ]
@@ -1111,51 +1121,41 @@ RISING 1
 [v _calculate_temp calculate_temp `(d  1 e 3 0 ]
 {
 "245
-[v calculate_temp@result result `d  1 a 3 80 ]
+[v calculate_temp@result result `d  1 a 3 3 ]
 "229
-[v calculate_temp@precalc precalc `Cd  1 p 3 74 ]
+[v calculate_temp@precalc precalc `Cd  1 p 3 79 ]
 "251
 } 0
-"5 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\log.c
+"5 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\log.c
 [v _log log `(d  1 e 3 0 ]
 {
 "7
-[v log@exponent exponent `i  1 a 2 72 ]
+[v log@exponent exponent `i  1 a 2 77 ]
 "5
-[v log@x x `d  1 p 3 69 ]
+[v log@x x `d  1 p 3 74 ]
 "9
 [v log@coeff coeff `C[9]d  1 s 27 coeff ]
 "36
 } 0
-"254 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\frexp.c
+"254 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\frexp.c
 [v _frexp frexp `(d  1 e 3 0 ]
 {
 [v frexp@value value `d  1 p 3 4 ]
 [v frexp@eptr eptr `*.30i  1 p 1 7 ]
 "274
 } 0
-"4 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\evalpoly.c
+"4 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\evalpoly.c
 [v _eval_poly eval_poly `(d  1 e 3 0 ]
 {
 "6
-[v eval_poly@res res `d  1 a 3 66 ]
+[v eval_poly@res res `d  1 a 3 71 ]
 "4
-[v eval_poly@x x `d  1 p 3 57 ]
-[v eval_poly@d d `*.25Cd  1 p 2 60 ]
-[v eval_poly@n n `i  1 p 2 62 ]
+[v eval_poly@x x `d  1 p 3 60 ]
+[v eval_poly@d d `*.32Cd  1 p 2 63 ]
+[v eval_poly@n n `i  1 p 2 65 ]
 "12
 } 0
-"15 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\Umul16.c
-[v ___wmul __wmul `(ui  1 e 2 0 ]
-{
-"17
-[v ___wmul@product product `ui  1 a 2 8 ]
-"15
-[v ___wmul@multiplier multiplier `ui  1 p 2 4 ]
-[v ___wmul@multiplicand multiplicand `ui  1 p 2 6 ]
-"53
-} 0
-"62 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\ftmul.c
+"62 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\ftmul.c
 [v ___ftmul __ftmul `(f  1 e 3 0 ]
 {
 "65
@@ -1169,7 +1169,7 @@ RISING 1
 [v ___ftmul@f2 f2 `f  1 p 3 21 ]
 "157
 } 0
-"32 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\awtoft.c
+"32 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\awtoft.c
 [v ___awtoft __awtoft `(f  1 e 3 0 ]
 {
 "34
@@ -1178,46 +1178,46 @@ RISING 1
 [v ___awtoft@c c `i  1 p 2 12 ]
 "42
 } 0
-"28 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\lwtoft.c
+"28 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\lwtoft.c
 [v ___lwtoft __lwtoft `(f  1 e 3 0 ]
 {
 [v ___lwtoft@c c `ui  1 p 2 12 ]
 "31
 } 0
-"19 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\ftsub.c
+"19 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\ftsub.c
 [v ___ftsub __ftsub `(f  1 e 3 0 ]
 {
-[v ___ftsub@f1 f1 `f  1 p 3 57 ]
-[v ___ftsub@f2 f2 `f  1 p 3 60 ]
+[v ___ftsub@f1 f1 `f  1 p 3 60 ]
+[v ___ftsub@f2 f2 `f  1 p 3 63 ]
 "26
 } 0
-"86 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\ftadd.c
+"86 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\ftadd.c
 [v ___ftadd __ftadd `(f  1 e 3 0 ]
 {
 "88
-[v ___ftadd@exp1 exp1 `uc  1 a 1 56 ]
-[v ___ftadd@exp2 exp2 `uc  1 a 1 55 ]
-[v ___ftadd@sign sign `uc  1 a 1 54 ]
+[v ___ftadd@exp1 exp1 `uc  1 a 1 59 ]
+[v ___ftadd@exp2 exp2 `uc  1 a 1 58 ]
+[v ___ftadd@sign sign `uc  1 a 1 57 ]
 "86
-[v ___ftadd@f1 f1 `f  1 p 3 45 ]
-[v ___ftadd@f2 f2 `f  1 p 3 48 ]
+[v ___ftadd@f1 f1 `f  1 p 3 48 ]
+[v ___ftadd@f2 f2 `f  1 p 3 51 ]
 "148
 } 0
-"54 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\ftdiv.c
+"54 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\ftdiv.c
 [v ___ftdiv __ftdiv `(f  1 e 3 0 ]
 {
 "60
-[v ___ftdiv@f3 f3 `f  1 a 3 25 ]
+[v ___ftdiv@f3 f3 `f  1 a 3 43 ]
 "59
-[v ___ftdiv@sign sign `uc  1 a 1 29 ]
-[v ___ftdiv@exp exp `uc  1 a 1 28 ]
-[v ___ftdiv@cntr cntr `uc  1 a 1 24 ]
+[v ___ftdiv@sign sign `uc  1 a 1 47 ]
+[v ___ftdiv@exp exp `uc  1 a 1 46 ]
+[v ___ftdiv@cntr cntr `uc  1 a 1 42 ]
 "54
-[v ___ftdiv@f1 f1 `f  1 p 3 15 ]
-[v ___ftdiv@f2 f2 `f  1 p 3 18 ]
+[v ___ftdiv@f1 f1 `f  1 p 3 33 ]
+[v ___ftdiv@f2 f2 `f  1 p 3 36 ]
 "86
 } 0
-"62 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c90\common\float.c
+"62 C:\Program Files\Microchip\xc8\v2.50\pic\sources\c90\common\float.c
 [v ___ftpack __ftpack `(f  1 e 3 0 ]
 {
 [v ___ftpack@arg arg `um  1 p 3 4 ]
@@ -1225,7 +1225,7 @@ RISING 1
 [v ___ftpack@sign sign `uc  1 p 1 8 ]
 "86
 } 0
-"137 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/GLCD.c
+"137 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/GLCD.c
 [v _GLCDinit GLCDinit `(v  1 e 1 0 ]
 {
 "143
@@ -1233,36 +1233,36 @@ RISING 1
 "99
 [v _setStartLine setStartLine `(v  1 e 1 0 ]
 {
-[v setStartLine@z z `uc  1 a 1 wreg ]
-[v setStartLine@z z `uc  1 a 1 wreg ]
+[v setStartLine@z z `uc  1 p 1 wreg ]
+[v setStartLine@z z `uc  1 p 1 wreg ]
 "101
-[v setStartLine@z z `uc  1 a 1 8 ]
+[v setStartLine@z z `uc  1 p 1 8 ]
 "103
 } 0
 "74
 [v _sendGLCDCommand sendGLCDCommand `(v  1 e 1 0 ]
 {
-[v sendGLCDCommand@val val `uc  1 a 1 wreg ]
-[v sendGLCDCommand@val val `uc  1 a 1 wreg ]
+[v sendGLCDCommand@val val `uc  1 p 1 wreg ]
+[v sendGLCDCommand@val val `uc  1 p 1 wreg ]
 [v sendGLCDCommand@CS CS `uc  1 p 1 6 ]
 "76
-[v sendGLCDCommand@val val `uc  1 a 1 7 ]
+[v sendGLCDCommand@val val `uc  1 p 1 7 ]
 "95
 } 0
 "43
 [v _GLCDBusyWait GLCDBusyWait `(v  1 e 1 0 ]
 {
 "44
-[v GLCDBusyWait@CS CS `uc  1 a 1 wreg ]
+[v GLCDBusyWait@CS CS `uc  1 p 1 wreg ]
 "45
 [v GLCDBusyWait@valor valor `uc  1 a 1 4 ]
 "44
-[v GLCDBusyWait@CS CS `uc  1 a 1 wreg ]
+[v GLCDBusyWait@CS CS `uc  1 p 1 wreg ]
 "46
-[v GLCDBusyWait@CS CS `uc  1 a 1 5 ]
+[v GLCDBusyWait@CS CS `uc  1 p 1 5 ]
 "69
 } 0
-"69 C:\Users\hector.fernandez.de.sevilla\Documents\CI\MomazosPIC18\PIC18F45K22_1/main.c
+"69 C:\Users\Angel\V\OneDrive\SYNC\UPC\Y2Q1\CI\labs\Lab 7\MomazosPIC18\PIC18F45K22_1/main.c
 [v _RSI RSI `II(v  1 e 1 0 ]
 {
 "106

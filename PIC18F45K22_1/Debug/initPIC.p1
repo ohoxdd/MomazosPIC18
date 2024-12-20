@@ -1,5 +1,5 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"13204 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f45k22.h
+"13204 C:\Program Files\Microchip\xc8\v2.50\pic\include\proc\pic18f45k22.h
 [s S619 :2 `uc 1 :1 `uc 1 :4 `uc 1 ]
 [n S619 . T2CKPS TMR2ON T2OUTPS ]
 "13209
@@ -60,11 +60,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _PORTD `Vuc ~T0 @X0 0 e@3971 ]
 "6565
 [v _PORTB `Vuc ~T0 @X0 0 e@3969 ]
-"18622
+"18626
 [v _IPEN `Vb ~T0 @X0 0 e@32391 ]
-"18451
+"18455
 [v _GIE `Vb ~T0 @X0 0 e@32663 ]
-"19312
+"19316
 [v _PEIE `Vb ~T0 @X0 0 e@32662 ]
 "13438
 [v _ADCON2 `Vuc ~T0 @X0 0 e@4032 ]
@@ -72,17 +72,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _ADCON1 `Vuc ~T0 @X0 0 e@4033 ]
 "13577
 [v _ADCON0 `Vuc ~T0 @X0 0 e@4034 ]
-"17446
+"17450
 [v _ADIE `Vb ~T0 @X0 0 e@31982 ]
-"17449
+"17453
 [v _ADIF `Vb ~T0 @X0 0 e@31990 ]
 "1389
 [v _CCPTMRS0 `Vuc ~T0 @X0 0 e@3913 ]
 "2546
 [v _CCP3CON `Vuc ~T0 @X0 0 e@3933 ]
-"20293
+"20297
 [v _TMR2IF `Vb ~T0 @X0 0 e@31985 ]
-"20290
+"20294
 [v _TMR2IE `Vb ~T0 @X0 0 e@31977 ]
 "13198
 [v _T2CON `Vuc ~T0 @X0 0 e@4026 ]
@@ -90,9 +90,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _PR2 `Vuc ~T0 @X0 0 e@4027 ]
 "2635
 [v _CCPR3L `Vuc ~T0 @X0 0 e@3934 ]
-"20248
+"20252
 [v _TMR0IF `Vb ~T0 @X0 0 e@32658 ]
-"20245
+"20249
 [v _TMR0IE `Vb ~T0 @X0 0 e@32661 ]
 "10345
 [v _RCSTA1 `Vuc ~T0 @X0 0 e@4011 ]
@@ -115,7 +115,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S432 . . . ]
 "9436
 [v _PIE1bits `VS432 ~T0 @X0 0 e@3997 ]
-"54 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f45k22.h
+"54 C:\Program Files\Microchip\xc8\v2.50\pic\include\proc\pic18f45k22.h
 [; <" ANSELA equ 0F38h ;# ">
 "99
 [; <" ANSELB equ 0F39h ;# ">

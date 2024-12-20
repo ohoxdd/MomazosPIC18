@@ -7,7 +7,7 @@ PROJECT =
 MCU = PIC18F45K22
 COMPILER = "MPLAB XC8"
 TARGET = Debug
-SHELL = C:\windows\system32\cmd.exe
+SHELL = C:\Windows\system32\cmd.exe
 
 ## Tools general options
 ASMFLAGS=-C --errformat="Error at file %%f line %%l column %%c: (%%n) %%s" --warnformat="Warning at file %%f line %%l column %%c: (%%n) %%s" --msgformat="Message at file %%f line %%l column %%c: (%%n) %%s" -G --chip=18F45K22
@@ -19,19 +19,19 @@ CC=xc8.exe
 ASM=xc8.exe
 LD=xc8.exe
 LIB=xc8.exe
-#  C:/Users/hector.fernandez.de.sevilla/Documents/CI/MomazosPIC18/PIC18F45K22_1/Debug/Debug.cof: TOOL=LD
+#  C:/Users/Angel/V/OneDrive/SYNC/UPC/Y2Q1/CI/labs/Lab 7/MomazosPIC18/PIC18F45K22_1/Debug/Debug.cof: TOOL=LD
 #  Post: rm startup.as
 #  Post: rm Debug.as
-#     C:/Users/hector.fernandez.de.sevilla/Documents/CI/MomazosPIC18/PIC18F45K22_1/Debug/main.p1: TOOL=CC
-#        C:/Users/hector.fernandez.de.sevilla/Documents/CI/MomazosPIC18/PIC18F45K22_1/main.c
-#     C:/Users/hector.fernandez.de.sevilla/Documents/CI/MomazosPIC18/PIC18F45K22_1/Debug/GLCD.p1: TOOL=CC
-#        C:/Users/hector.fernandez.de.sevilla/Documents/CI/MomazosPIC18/PIC18F45K22_1/GLCD.c
-#     C:/Users/hector.fernandez.de.sevilla/Documents/CI/MomazosPIC18/PIC18F45K22_1/Debug/test.p1: TOOL=CC
-#        C:/Users/hector.fernandez.de.sevilla/Documents/CI/MomazosPIC18/PIC18F45K22_1/test.c
-#     C:/Users/hector.fernandez.de.sevilla/Documents/CI/MomazosPIC18/PIC18F45K22_1/Debug/utils.p1: TOOL=CC
-#        C:/Users/hector.fernandez.de.sevilla/Documents/CI/MomazosPIC18/PIC18F45K22_1/utils.c
-#     C:/Users/hector.fernandez.de.sevilla/Documents/CI/MomazosPIC18/PIC18F45K22_1/Debug/initPIC.p1: TOOL=CC
-#        C:/Users/hector.fernandez.de.sevilla/Documents/CI/MomazosPIC18/PIC18F45K22_1/initPIC.c
+#     C:/Users/Angel/V/OneDrive/SYNC/UPC/Y2Q1/CI/labs/Lab 7/MomazosPIC18/PIC18F45K22_1/Debug/main.p1: TOOL=CC
+#        C:/Users/Angel/V/OneDrive/SYNC/UPC/Y2Q1/CI/labs/Lab 7/MomazosPIC18/PIC18F45K22_1/main.c
+#     C:/Users/Angel/V/OneDrive/SYNC/UPC/Y2Q1/CI/labs/Lab 7/MomazosPIC18/PIC18F45K22_1/Debug/GLCD.p1: TOOL=CC
+#        C:/Users/Angel/V/OneDrive/SYNC/UPC/Y2Q1/CI/labs/Lab 7/MomazosPIC18/PIC18F45K22_1/GLCD.c
+#     C:/Users/Angel/V/OneDrive/SYNC/UPC/Y2Q1/CI/labs/Lab 7/MomazosPIC18/PIC18F45K22_1/Debug/test.p1: TOOL=CC
+#        C:/Users/Angel/V/OneDrive/SYNC/UPC/Y2Q1/CI/labs/Lab 7/MomazosPIC18/PIC18F45K22_1/test.c
+#     C:/Users/Angel/V/OneDrive/SYNC/UPC/Y2Q1/CI/labs/Lab 7/MomazosPIC18/PIC18F45K22_1/Debug/utils.p1: TOOL=CC
+#        C:/Users/Angel/V/OneDrive/SYNC/UPC/Y2Q1/CI/labs/Lab 7/MomazosPIC18/PIC18F45K22_1/utils.c
+#     C:/Users/Angel/V/OneDrive/SYNC/UPC/Y2Q1/CI/labs/Lab 7/MomazosPIC18/PIC18F45K22_1/Debug/initPIC.p1: TOOL=CC
+#        C:/Users/Angel/V/OneDrive/SYNC/UPC/Y2Q1/CI/labs/Lab 7/MomazosPIC18/PIC18F45K22_1/initPIC.c
 
 # Build tree:
 all:	Debug

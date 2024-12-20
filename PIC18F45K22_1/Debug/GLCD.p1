@@ -1,5 +1,5 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"8726 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f45k22.h
+"8726 C:\Program Files\Microchip\xc8\v2.50\pic\include\proc\pic18f45k22.h
 [v _TRISD `Vuc ~T0 @X0 0 e@3989 ]
 "8282
 [v _TRISB `Vuc ~T0 @X0 0 e@3987 ]
@@ -32,12 +32,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S340 . . . . . . . . . ]
 "6635
 [v _PORTBbits `VS340 ~T0 @X0 0 e@3969 ]
-"50 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18.h
+"8 C:\Program Files\Microchip\xc8\v2.50\pic\include\builtins.h
 [v ___nop `(v ~T0 @X0 0 ef ]
 [p i ___nop ]
-"7142 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f45k22.h
+"7142 C:\Program Files\Microchip\xc8\v2.50\pic\include\proc\pic18f45k22.h
 [v _PORTD `Vuc ~T0 @X0 0 e@3971 ]
-"54 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f45k22.h
+"54 C:\Program Files\Microchip\xc8\v2.50\pic\include\proc\pic18f45k22.h
 [; <" ANSELA equ 0F38h ;# ">
 "99
 [; <" ANSELB equ 0F39h ;# ">
