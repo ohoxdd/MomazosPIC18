@@ -9953,7 +9953,24 @@ void ClearDot(byte x, byte y);
 
 void writeNum (byte p, byte y, int value);
 
-# 6 "../utils.h"
+# 3 "../typedefs.h"
+typedef enum{
+Ready,
+Running,
+Stopped
+}state_t;
+
+enum flanc_t {
+FALLING,
+RISING,
+};
+
+typedef struct{
+unsigned int segs;
+unsigned int dec;
+} format_t;
+
+# 7 "../utils.h"
 void putc_usart1 (char xc);
 void puts_usart1 (unsigned char *cptr);
 unsigned char getc_usart1 (void);
@@ -9964,11 +9981,6 @@ int calc_center_spacing(char * text);
 void writeTxt(byte page, byte y, char * s);
 
 void clearChars(byte page, byte y, int length);
-
-typedef struct{
-unsigned int segs;
-unsigned int dec;
-} format_t;
 
 format_t getFormatedTime(unsigned int deciseconds);
 
@@ -10086,162 +10098,24 @@ extern double fmod(double, double);
 extern double trunc(double);
 extern double round(double);
 
+# 4 "../initPIC.h"
+void configPIC();
+
 # 15 "C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\c90\stdbool.h"
 typedef unsigned char bool;
 
-# 30 "../main.c"
-typedef enum{
-Ready,
-Running,
-Stopped
-}state_t;
-
-
+# 32 "../main.c"
 unsigned int time_left = 100;
 unsigned char change_time = 1;
 unsigned int pressure_perc;
 unsigned int adjust_pressure;
-int duty_one_pc;
 uint16_t adc_value;
+int duty_one_pc;
 bool change_temp;
 bool w_pressed, a_pressed, s_pressed, d_pressed;
 
-void configPIC()
-{
-T0CONbits.TMR0ON = 0;
-T2CONbits.TMR2ON = 0;
-
-T0CONbits.TMR0ON = 0;
-
-
-
-ANSELA = 0x00;
-ANSELC = 0x00;
-ANSELB = 0x00;
-ANSELD = 0x00;
-ANSELE = 0xFF;
-
-
-
-TRISC = 0x87;
-TRISA = 0x00;
-TRISD = 0x00;
-TRISE = 0x02;
-TRISEbits.RE1 = 1;
-TRISB = 0x00;
-
-
-
-PORTA = 0x00;
-PORTC = 0x00;
-PORTD = 0x00;
-PORTB = 0x00;
-
-
-
-IPEN = 0;
-GIE = 1;
-PEIE = 1;
-
-
-
-ADCON2 = 0x89;
-
-# 94
-ADCON1 = 0;
-
-
-
-ADCON0 = 0x19;
-
-
-
-
-ADIE = 1;
-
-ADIF= 0;
-
-# 111
-T0CONbits.T08BIT = 0;
-T0CONbits.T0CS = 0;
-T0CONbits.PSA = 0;
-T0CONbits.T0SE = 0;
-T0CONbits.T0PS = 0b001;
-
-
-
-TRISEbits.RE0 = 0x01;
-CCPTMRS0 = 0x00;
-CCP3CON =0x0C;
-
-TMR2IF = 0;
-T2CON = 0x03;
-PR2 = 0x7C;
-
-# 133
-CCP3CON |= ( 0x2<< 4);
-CCPR3L = 0x3E;
-
-duty_one_pc = ((PR2 + 1)*4)/100;
-
-TMR2IE = 1;
-TMR0IF = 0;
-TMR0IE = 1;
-
-
-
-RCSTA1 = 0x90;
-
-
-
-BAUDCON = 0x08;
-
-TXSTA1 = 0x24;
-
-# 158
-SPBRGH = 0x00;
-SPBRG = 0x10;
-
-# 166
-PIE1bits.RC1IE = 1;
-}
-
-# 175
-void tic(void)
-{
-time_left--;
-change_time = 1;
-}
-
-void interrupt RSI(){
-if (TMR2IF == 1 && TMR2IE == 1) {
-TMR2IF = 0;
-TMR2IE = 0;
-}
-
-if (TMR0IF == 1 && TMR0IE == 1) {
-
-# 193
-TMR0H = 0x3C;
-TMR0L += 0xB0;
-
-tic();
-
-TMR0IF = 0;
-}
-
-if (ADIF == 1 && ADIE == 1) {
-ADIF = 0;
-
-uint16_t result = (ADRESH << 8) | ADRESL;
-
-change_temp = (result != adc_value);
-
-adc_value = result;
-}
-
-if (PIR1bits.RCIF && PIE1bits.RC1IE) {
-PIE1bits.RC1IE = 0;
+# 47
+void handleUsartInput() {
 unsigned char input = RCREG1;
 switch (input) {
 case 'w': {w_pressed = 1; break;}
@@ -10249,6 +10123,47 @@ case 'a': {a_pressed = 1; break;}
 case 's': {s_pressed = 1; break;}
 case 'd': {d_pressed = 1; break;}
 }
+}
+
+void tic(void)
+{
+time_left--;
+change_time = 1;
+}
+
+void handleADCresult() {
+uint16_t result = (ADRESH << 8) | ADRESL;
+change_temp = (result != adc_value);
+adc_value = result;
+}
+
+void interrupt RSI(){
+if (TMR2IF == 1 && TMR2IE == 1) {
+TMR2IF = 0;
+
+
+}
+
+if (TMR0IF == 1 && TMR0IE == 1) {
+TMR0IF = 0;
+
+# 85
+TMR0H = 0x3C;
+TMR0L += 0xB0;
+
+tic();
+}
+
+if (ADIF == 1 && ADIE == 1) {
+ADIF = 0;
+handleADCresult();
+}
+
+if (PIR1bits.RCIF && PIE1bits.RC1IE) {
+
+# 102
+PIE1bits.RC1IE = 0;
+handleUsartInput();
 PIE1bits.RC1IE = 1;
 }
 }
@@ -10376,7 +10291,7 @@ clearGLCD(0,7,0,127);
 
 double calculate_temp(const double precalc) {
 
-# 361
+# 245
 double result;
 result = (1023.0 / adc_value) - 1;
 result = 4050.0 / (precalc + log(result));
@@ -10419,10 +10334,6 @@ CCPR3L = pwm_high;
 return adjusted_pressure;
 }
 
-enum flanc_t {
-FALLING,
-RISING,
-};
 
 char inputDetector(uint8_t REG_ant, uint8_t REG_act, char num_pin, char flanc) {
 char ret = 0;
@@ -10485,6 +10396,7 @@ row += change;
 void main(void)
 {
 configPIC();
+duty_one_pc = ((PR2 + 1)*4)/100;
 GLCDinit();
 clearGLCD(0,7,0,127);
 setStartLine(0);
@@ -10529,7 +10441,7 @@ if (i == 1) continue;
 puts_usart1(splash_text[i]);
 }
 
-# 517
+# 398
 while (1)
 {
 

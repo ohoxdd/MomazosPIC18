@@ -1,1 +1,1 @@
- utils.d  utils.p1:  ../utils.c ../utils.h ../GLCD.h
+ utils.d  utils.p1:  ../utils.c ../utils.h ../GLCD.h ../typedefs.h

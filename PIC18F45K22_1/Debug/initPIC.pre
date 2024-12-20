@@ -1,110 +1,5 @@
 
-# 1 "../utils.c"
-
-# 7 "../GLCD.h"
-typedef unsigned char byte;
-
-# 11
-void sendGLCDCommand(byte val, byte CS);
-
-# 15
-void setStartLine(byte z);
-
-
-void setXAddress(byte x);
-
-
-void setYAddress(byte y);
-
-
-void GLCDinit(void);
-
-
-void writeByte(byte p, byte y, byte data);
-
-# 32
-void putchGLCD(byte p, byte y, char c);
-
-# 36
-void clearGLCD(byte ri, byte re, byte ci, byte ce);
-
-
-byte readByte(byte p, byte y);
-
-
-void SetDot(byte x, byte y);
-
-
-void ClearDot(byte x, byte y);
-
-
-void writeNum (byte p, byte y, int value);
-
-# 3 "../typedefs.h"
-typedef enum{
-Ready,
-Running,
-Stopped
-}state_t;
-
-enum flanc_t {
-FALLING,
-RISING,
-};
-
-typedef struct{
-unsigned int segs;
-unsigned int dec;
-} format_t;
-
-# 4 "C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\__size_t.h"
-typedef unsigned size_t;
-
-# 14 "C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\c90\string.h"
-extern void * memcpy(void *, const void *, size_t);
-extern void * memmove(void *, const void *, size_t);
-extern void * memset(void *, int, size_t);
-
-# 36
-extern char * strcat(char *, const char *);
-extern char * strcpy(char *, const char *);
-extern char * strncat(char *, const char *, size_t);
-extern char * strncpy(char *, const char *, size_t);
-extern char * strdup(const char *);
-extern char * strtok(char *, const char *);
-
-
-extern int memcmp(const void *, const void *, size_t);
-extern int strcmp(const char *, const char *);
-extern int stricmp(const char *, const char *);
-extern int strncmp(const char *, const char *, size_t);
-extern int strnicmp(const char *, const char *, size_t);
-extern void * memchr(const void *, int, size_t);
-extern size_t strcspn(const char *, const char *);
-extern char * strpbrk(const char *, const char *);
-extern size_t strspn(const char *, const char *);
-extern char * strstr(const char *, const char *);
-extern char * stristr(const char *, const char *);
-extern char * strerror(int);
-extern size_t strlen(const char *);
-extern char * strchr(const char *, int);
-extern char * strichr(const char *, int);
-extern char * strrchr(const char *, int);
-extern char * strrichr(const char *, int);
-
-# 7 "../utils.h"
-void putc_usart1 (char xc);
-void puts_usart1 (unsigned char *cptr);
-unsigned char getc_usart1 (void);
-void gets_usart1 (const char *cptr);
-
-int calc_center_spacing(char * text);
-
-void writeTxt(byte page, byte y, char * s);
-
-void clearChars(byte page, byte y, int length);
-
-format_t getFormatedTime(unsigned int deciseconds);
+# 1 "../initPIC.c"
 
 # 18 "C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\xc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -9685,68 +9580,101 @@ extern __nonreentrant void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __nonreentrant void _delay3(unsigned char);
 
-# 4 "../utils.c"
-void putc_usart1 (char xc)
+# 4 "../initPIC.h"
+void configPIC();
+
+# 2 "../initPIC.c"
+void configPIC()
 {
-while (!TXSTA1bits.TRMT);
-TXREG1 = xc;
-}
-
-void puts_usart1 (unsigned char *cptr)
-{
-while(*cptr)
-putc_usart1 (*cptr++);
-if (*cptr == '\0')
-putc_usart1(0x0D);
-}
-
-unsigned char getc_usart1 (void)
-{
-while (!PIR1bits.RCIF);
-return RCREG1;
-}
+T2CONbits.TMR2ON = 0;
+T0CONbits.TMR0ON = 0;
 
 
-void gets_usart1 (const char *cptr)
-{
-char* ptr = cptr;
-while (1)
-{
-char xx = getc_usart1();
-if (xx == 0x0D ) {
-*ptr++ = '\0';
-return;
-}
-*ptr++ = xx;
-}
-}
 
-int calc_center_spacing(char * string){
-return 13 - strlen(string)/2;
-}
+ANSELA = 0x00;
+ANSELC = 0x00;
+ANSELB = 0x00;
+ANSELD = 0x00;
+ANSELE = 0xFF;
 
-void writeTxt(char page, char y, char * s) {
-int i=0;
-while (*s!='\n' && *s!='\0')
-{
-putchGLCD(page, y+i, *(s++));
-i++;
-};
-}
 
-void clearChars(byte page, byte y, int length) {
-byte column = y * 5;
-byte column_end = column + length * 5 - 1;
-clearGLCD(page,page,column,column_end);
-}
 
-format_t getFormatedTime(unsigned int deciseconds) {
-format_t time;
+TRISC = 0x87;
+TRISA = 0x00;
+TRISD = 0x00;
+TRISE = 0x02;
+TRISEbits.RE1 = 1;
+TRISB = 0x00;
 
-time.dec = deciseconds % 10;
-deciseconds /= 10;
 
-time.segs = deciseconds;
 
-return time;
+PORTA = 0x00;
+PORTC = 0x00;
+PORTD = 0x00;
+PORTB = 0x00;
+
+
+
+IPEN = 0;
+GIE = 1;
+PEIE = 1;
+
+
+
+ADCON2 = 0x89;
+
+# 48
+ADCON1 = 0;
+
+
+
+ADCON0 = 0x19;
+
+# 61
+ADIE = 1;
+
+ADIF= 0;
+
+# 69
+T0CONbits.T08BIT = 0;
+T0CONbits.T0CS = 0;
+T0CONbits.PSA = 0;
+T0CONbits.T0SE = 0;
+T0CONbits.T0PS = 0b001;
+
+
+
+TRISEbits.RE0 = 0x01;
+CCPTMRS0 = 0x00;
+CCP3CON = 0x0C;
+
+TMR2IF = 0;
+TMR2IE = 1;
+T2CON = 0x03;
+PR2 = 0x7C;
+
+# 92
+CCP3CON |= ( 0x2<< 4);
+CCPR3L = 0x3E;
+
+
+TMR0IF = 0;
+TMR0IE = 1;
+
+
+
+RCSTA1 = 0x90;
+
+
+
+BAUDCON = 0x08;
+
+TXSTA1 = 0x24;
+
+# 115
+SPBRGH = 0x00;
+SPBRG = 0x10;
+
+# 123
+PIE1bits.RC1IE = 1;
 }
