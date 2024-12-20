@@ -1,3 +1,4 @@
 *.workspace
 'Project Backups'/
+PIC18F45K22_1/Debug/*
 
