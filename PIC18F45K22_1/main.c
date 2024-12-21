@@ -217,17 +217,20 @@ char* splash_text[] = {
 };
 
 void play_splash_screen() {
-	if (!splash_on) return;
-		writeMatrix(0, 0, 8, 128, splash_bitmap);
-		__delay_ms(2000);
-		clearGLCD(0, 8, 0, 128);
-		int n = sizeof(splash_text)/sizeof(splash_text[0]);
-		for (int i = 0; i < n; i++) {
-			int column = calc_center_spacing(splash_text[i]);
-			writeTxt(2+i, column, splash_text[i]); 
-		}
-		__delay_ms(2000);
-		clearGLCD(0,7,0,127); 
+	if (!splash_on) {
+        return;
+    }
+
+    writeMatrix(0, 0, 8, 128, splash_bitmap);
+    __delay_ms(2000);
+    clearGLCD(0, 8, 0, 128);
+    int n = sizeof(splash_text)/sizeof(splash_text[0]);
+    for (int i = 0; i < n; i++) {
+        int column = calc_center_spacing(splash_text[i]);
+        writeTxt(2+i, column, splash_text[i]); 
+    }
+    __delay_ms(2000);
+    clearGLCD(0,7,0,127); 
 }
 
  double calculate_temp(const double precalc, int adc_temp) {
@@ -400,7 +403,7 @@ void main(void)
 	state_t timer_state = Ready;
 	set_state(timer_state);
     updateStateTextTimer(timer_state);
-	bool timer_end = false;
+	// bool timer_end = false;
 	
 	// selecciona la presion y la pone a 50% por defecto junto al medidor
 	pressure_perc = 50;
@@ -506,23 +509,15 @@ void main(void)
 			RC1_update = true;
 		}
 
-		// Caso 1: RUNNING ---> STOPPED
-		// Timer llega a 0
-		if (timer_state == Running && time_left == 0) {
-			timer_end = true;
-		}
+
+		bool timer_end = timer_state == Running && time_left == 0;
 		
 		if (inputDetector(PREV_C, READ_C, 2, 0) || timer_end) {
-			if (timer_state == Running) {
-				timer_end = false;
-			}
-			// logica de los casos de transici�n del timer
 			timer_state = set_next_state(timer_state);
-            // Actualiza la GLCD cuando cambia de estado el Timer
             updateStateTextTimer(timer_state);
 		}
-		// Actualiza la GLCD si el estado esta en Running segun el contador
         updateRunningTimer(timer_state);
+		
 		// Actualiza el estado previo de los botones del PORTC
 		
 
