@@ -353,18 +353,18 @@ void update_medidor(int current_psi, int change_psi){
 	
 }
 
-	void write_adc_values(bool change_temp, bool change_press) {
+	void write_adc_values(bool change_temp, bool change_press, int adc_values_arr[28]) {
 		char buff[64];
 		int current_chan = ADCON0bits.CHS;
 
 		if (change_temp){
 			clearChars(6,11,11);
-			sprintf(buff, "ADC 6: %d\n", adc_channel_values[6]);
+			sprintf(buff, "ADC 6: %d\n", adc_values_arr[6]);
 			writeTxt(6, 11, buff);
 		}
 		if (change_press) {
 			clearChars(7,11,11);
-			sprintf(buff, "ADC 7: %d\n", adc_channel_values[7]);
+			sprintf(buff, "ADC 7: %d\n", adc_values_arr[7]);
 			writeTxt(7, 11, buff);
 		}
 		sprintf(buff, "ADC CHAN: %d\n", ADCON0bits.CHS);
@@ -374,12 +374,34 @@ void update_medidor(int current_psi, int change_psi){
 	void ADC_start(int channel) {
 
 		ADCON0bits.CHS = channel;
-		// start conversion
 		GO_nDONE = 1;    
 	}
 
-	int get_adc_channel(){
+	int ADC_selectedChannel(){
 		return ADCON0bits.CHS;
+	}
+
+
+	int ADC_ConversionLogic(int adc_values_arr[28]){
+		int updated_channel = -1;
+		// check if there is no ongoing conversion
+		if (!GO_nDONE) {
+			// check if the current channel was updated
+			int channel = ADC_selectedChannel();
+			bool new_val = adc_values_arr[channel] != adc_value;
+			// if it was, set the new value
+			if (new_val) {
+				adc_values_arr[channel] = adc_value;
+				updated_channel = channel;
+			}
+			// swap channels
+			int next_chan;
+			if (channel == 6) next_chan = 7;
+			else if (channel == 7) next_chan = 6;
+			// start conversion
+			ADC_start(next_chan);
+		}
+		return updated_channel;
 	}
 
 void main(void)
@@ -428,31 +450,21 @@ void main(void)
 	
 
 
+
 	while (1)
 	{   
 		// adc related update flags to 0
 		bool change_temp = false;
 		bool change_press = false;
 		// no hay conversion / ultima conversion ha acabado
-		if (!GO_nDONE) {
-			// check if there was a change in previous adc conversion
-			int channel = get_adc_channel();
-			if (adc_channel_values[channel] != adc_value) {
-				// for the updated channel, set the new value
-				adc_channel_values[channel] = adc_value;
-				// raise flag, update values in the current iteration
-				if (channel == 6) change_temp = true;
-				else if (channel == 7) change_press = true;
-			}
-			// swap channels
-			int next_chan;
-			if (channel == 6) next_chan = 7;
-			else if (channel == 7) next_chan = 6;
-			// start conversion
-			ADC_start(next_chan);
-		}
 
-		write_adc_values(change_temp, change_press);
+		int updated_channel = ADC_ConversionLogic(adc_channel_values);
+
+		if (updated_channel == 6) change_temp = true;
+		else if (updated_channel == 7) change_press = true;
+
+
+		write_adc_values(change_temp, change_press, adc_channel_values);
 		
 		if (change_temp) {
 			// escribe temperatura
