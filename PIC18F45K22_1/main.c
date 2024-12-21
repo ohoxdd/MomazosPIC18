@@ -108,6 +108,20 @@ void interrupt RSI(){
 	}
 }
 
+void updateRunningTimer(state_t timer_state){
+    if (timer_state == Running && change_time) {
+		format_t ftime;
+	    char buff[128];
+
+		ftime = getFormatedTime(time_left);
+		sprintf(buff, "%02d.%0d\n", ftime.segs, ftime.dec);
+		
+		writeTxt(0, 20, buff); 
+		
+		change_time = 0;
+    }
+}
+
 char updateTimerText(state_t timer_state, char timer_changed_state) {
     format_t ftime;
 
@@ -115,15 +129,15 @@ char updateTimerText(state_t timer_state, char timer_changed_state) {
 	char stateText[50];
   
 	// Update del contador si esta activo
-    if (timer_state == Running && change_time) {
+    // if (timer_state == Running && change_time) {
 		
-		ftime = getFormatedTime(time_left);
-		sprintf(countdown, "%02d.%0d\n", ftime.segs, ftime.dec);
+	// 	ftime = getFormatedTime(time_left);
+	// 	sprintf(countdown, "%02d.%0d\n", ftime.segs, ftime.dec);
 		
-		writeTxt(0, 20, countdown); 
+	// 	writeTxt(0, 20, countdown); 
 		
-		change_time = 0;
-    }
+	// 	change_time = 0;
+    // }
   
 	// Update segun los estados
 	if (timer_changed_state) {
@@ -563,9 +577,9 @@ void main(void)
 		// Actualiza la GLCD segun los estados del Timer, y el contador.
 		// Devuelve el nuevo booleano segun si se ha tratado o no el cambio o no.
 		timer_changed_state = updateTimerText(timer_state, timer_changed_state);
-
+        updateRunningTimer(timer_state);
 		// Actualiza el estado previo de los botones del PORTC
-		PREV_C = READ_C;
+		
 
 		// Actualiza los textos en pantalla para los botones RC0 RC1
 		// if (RC0_update) {
