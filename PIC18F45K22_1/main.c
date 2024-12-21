@@ -175,6 +175,7 @@ void set_state(state_t state) {
     switch (state) {
         case Running: 
             // READY ---> RUNNING
+			PORTA = 0x2;
             TRISEbits.RE0 = 0; // Enable output driver
             T2CONbits.TMR2ON = 1;
             T0CONbits.TMR0ON = 1;
@@ -182,6 +183,7 @@ void set_state(state_t state) {
             
         case Stopped: 
             // RUNNING ---> STOPPED
+			PORTA = 0x4;
             T2CONbits.TMR2ON = 0;
             T0CONbits.TMR0ON = 0;
             TRISEbits.RE0 = 1; // Disable output driver
@@ -189,6 +191,7 @@ void set_state(state_t state) {
             
         case Ready: 
             // STOPPED ---> READY
+			PORTA = 0x1;
             time_left = TIEMPO_INICIAL;
             TMR0H = TIMER_STARTH;
             TMR0L = TIMER_STARTL;
@@ -517,8 +520,6 @@ void main(void)
             updateStateTextTimer(timer_state);
 		}
         updateRunningTimer(timer_state);
-		
-		// Actualiza el estado previo de los botones del PORTC
 		
 
 		// Actualiza los textos en pantalla para los botones RC0 RC1
