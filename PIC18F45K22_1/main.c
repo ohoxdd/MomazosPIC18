@@ -502,7 +502,8 @@ void main(void)
 			write_pressure(adjusted_pressure);
 		}
 		
-		READ_C = PORTC;
+        PREV_C = READ_C; // PREVIO <- ACTUAL
+		READ_C = PORTC; // ACTUAL <- PORTC
 		
 		char buff[128];
 
