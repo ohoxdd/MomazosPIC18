@@ -182,6 +182,7 @@ state_t next_timer_state(state_t state) {
 		// READY ---> RUNNING
 		new_state = Running;
 		
+		TRISEbits.RE0 = 0; // Enable output driver
 		T2CONbits.TMR2ON = 1;
 		T0CONbits.TMR0ON = 1;
 		break;
@@ -194,6 +195,7 @@ state_t next_timer_state(state_t state) {
 		
 		T2CONbits.TMR2ON = 0;
 		T0CONbits.TMR0ON = 0;
+		TRISEbits.RE0 = 1; // Disable output driver
 		break;
 		
 	case Stopped: 
@@ -386,7 +388,7 @@ void main(void)
    
 	play_splash_screen();
 	
-	TRISEbits.RE0 = 0; // Enable output driver
+	// TRISEbits.RE0 = 0; // Enable output driver
 	
 	// variables responsables la detecci�n de flancos
    	uint8_t READ_C = PORTC;
