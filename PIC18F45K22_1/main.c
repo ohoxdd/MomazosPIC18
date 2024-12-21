@@ -211,6 +211,44 @@ state_t next_timer_state(state_t state) {
 	return new_state;
 }
 
+void set_state(state_t state) {
+    switch (state) {
+        case Running: 
+            // READY ---> RUNNING
+            TRISEbits.RE0 = 0; // Enable output driver
+            T2CONbits.TMR2ON = 1;
+            T0CONbits.TMR0ON = 1;
+            break;
+            
+        case Stopped: 
+            // RUNNING ---> STOPPED
+            T2CONbits.TMR2ON = 0;
+            T0CONbits.TMR0ON = 0;
+            TRISEbits.RE0 = 1; // Disable output driver
+            break;
+            
+        case Ready: 
+            // STOPPED ---> READY
+            time_left = TIEMPO_INICIAL;
+            TMR0H = TIMER_STARTH;
+            TMR0L = TIMER_STARTL;
+            break;
+    }
+}
+
+state_t set_next_state(state_t state){
+	state_t new_state;
+
+	switch (state) {
+		case Ready: 	{new_state = Running; break;}
+		case Running:	{new_state = Stopped; break;}
+		case Stopped: 	{new_state = Ready; break;}
+	}
+
+    set_state(new_state);
+	return new_state;
+}
+
 char* splash_text[] = {
 		TITOL,
 		"-------------\n",
@@ -388,7 +426,6 @@ void main(void)
    
 	play_splash_screen();
 	
-	// TRISEbits.RE0 = 0; // Enable output driver
 	
 	// variables responsables la detecci�n de flancos
    	uint8_t READ_C = PORTC;
@@ -401,9 +438,7 @@ void main(void)
 	bool RC1_update = true;
 	
 	state_t timer_state = Ready;
-	T0CONbits.TMR0ON = 0;
-	T2CONbits.TMR2ON = 0;
-	
+	set_state(timer_state);
 	bool timer_changed_state = true;
 	bool timer_end = false;
 	
@@ -521,7 +556,7 @@ void main(void)
 				timer_end = false;
 			}
 			// logica de los casos de transici�n del timer
-			timer_state = next_timer_state(timer_state);
+			timer_state = set_next_state(timer_state);
 			timer_changed_state = true;
 		}
 		// Actualiza la GLCD segun los estados del Timer, y el contador.
