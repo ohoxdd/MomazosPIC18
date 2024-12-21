@@ -189,41 +189,6 @@ char updateTimerText(state_t timer_state, char timer_changed_state) {
 	return timer_changed_state;
 }
 
-state_t next_timer_state(state_t state) {
-	state_t new_state;
-	switch (state) {
-	case Ready: 
-		// READY ---> RUNNING
-		new_state = Running;
-		
-		TRISEbits.RE0 = 0; // Enable output driver
-		T2CONbits.TMR2ON = 1;
-		T0CONbits.TMR0ON = 1;
-		break;
-		
-	case Running: 
-		// Caso 2: RUNNING ---> STOPPED
-		// Se presiona RC2 
-		new_state = Stopped;
-		// timer_end = false;
-		
-		T2CONbits.TMR2ON = 0;
-		T0CONbits.TMR0ON = 0;
-		TRISEbits.RE0 = 1; // Disable output driver
-		break;
-		
-	case Stopped: 
-		// STOPPED ---> READY
-		time_left = TIEMPO_INICIAL;
-		
-		TMR0H = TIMER_STARTH;
-		TMR0L = TIMER_STARTL;
-		
-		new_state = Ready;
-		break;
-	}
-	return new_state;
-}
 
 void set_state(state_t state) {
     switch (state) {
