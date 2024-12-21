@@ -122,71 +122,52 @@ void updateRunningTimer(state_t timer_state){
     }
 }
 
-char updateTimerText(state_t timer_state, char timer_changed_state) {
+void updateStateTextTimer(state_t timer_state) {
     format_t ftime;
 
 	char countdown[256];
 	char stateText[50];
   
-	// Update del contador si esta activo
-    // if (timer_state == Running && change_time) {
-		
-	// 	ftime = getFormatedTime(time_left);
-	// 	sprintf(countdown, "%02d.%0d\n", ftime.segs, ftime.dec);
-		
-	// 	writeTxt(0, 20, countdown); 
-		
-	// 	change_time = 0;
-    // }
-  
 	// Update segun los estados
-	if (timer_changed_state) {
-		clearGLCD(1,1,60,127); // Clear del texto "Ready"/"Running..."/"Stopped"
-		
-		// se ha tratado el cambio de estado
-		timer_changed_state = false;
-		
-		switch (timer_state) { // EL VALOR ACTUAL DEL STATUS
-			case Ready:
+    clearGLCD(1,1,60,127); // Clear del texto "Ready"/"Running..."/"Stopped"
+    
+    switch (timer_state) { // EL VALOR ACTUAL DEL STATUS
+        case Ready:
 
-				sprintf(stateText, "Ready\n");
-				
-				ftime = getFormatedTime(time_left);
-				sprintf(countdown, "%02d.%0d\n", ftime.segs, ftime.dec);
+            sprintf(stateText, "Ready\n");
+            
+            ftime = getFormatedTime(time_left);
+            sprintf(countdown, "%02d.%0d\n", ftime.segs, ftime.dec);
 
-				
-				writeTxt(0, 20, countdown); 
-				writeTxt(1,19, stateText); 
-				break;
-				
-			case Running:
-				// Aqui, como el countdown de running se tiene que actualizar cada decima de segundo
-				// solo nos preocupamos de escribir el texto del estado de "Running..."
-				
-				sprintf(stateText, "Running...\n"); 
-				
-				writeTxt(1,14, stateText);
-				break;
-				
-			case Stopped:
-				// Es necesario escribir el valor del timer en stopped 
-				// para tener el valor correcto en caso de pausa
+            
+            writeTxt(0, 20, countdown); 
+            writeTxt(1,19, stateText); 
+            break;
+            
+        case Running:
+            // Aqui, como el countdown de running se tiene que actualizar cada decima de segundo
+            // solo nos preocupamos de escribir el texto del estado de "Running..."
+            
+            sprintf(stateText, "Running...\n"); 
+            
+            writeTxt(1,14, stateText);
+            break;
+            
+        case Stopped:
+            // Es necesario escribir el valor del timer en stopped 
+            // para tener el valor correcto en caso de pausa
 
-				sprintf(stateText, "Stopped!\n");
-				
-				ftime = getFormatedTime(time_left);
-				sprintf(countdown, "%02d.%0d\n", ftime.segs, ftime.dec);
+            sprintf(stateText, "Stopped!\n");
+            
+            ftime = getFormatedTime(time_left);
+            sprintf(countdown, "%02d.%0d\n", ftime.segs, ftime.dec);
 
-				
-				writeTxt(0, 20, countdown); 
-				writeTxt(1,16, stateText);
-				
-				break;
-		}
-		
-	}
-	
-	return timer_changed_state;
+            
+            writeTxt(0, 20, countdown); 
+            writeTxt(1,16, stateText);
+            
+            break;
+    }
 }
 
 
@@ -418,7 +399,7 @@ void main(void)
 	
 	state_t timer_state = Ready;
 	set_state(timer_state);
-	bool timer_changed_state = true;
+    updateStateTextTimer(timer_state);
 	bool timer_end = false;
 	
 	// selecciona la presion y la pone a 50% por defecto junto al medidor
@@ -537,11 +518,10 @@ void main(void)
 			}
 			// logica de los casos de transici�n del timer
 			timer_state = set_next_state(timer_state);
-			timer_changed_state = true;
+            // Actualiza la GLCD cuando cambia de estado el Timer
+            updateStateTextTimer(timer_state);
 		}
-		// Actualiza la GLCD segun los estados del Timer, y el contador.
-		// Devuelve el nuevo booleano segun si se ha tratado o no el cambio o no.
-		timer_changed_state = updateTimerText(timer_state, timer_changed_state);
+		// Actualiza la GLCD si el estado esta en Running segun el contador
         updateRunningTimer(timer_state);
 		// Actualiza el estado previo de los botones del PORTC
 		
