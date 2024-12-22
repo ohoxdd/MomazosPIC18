@@ -14,7 +14,7 @@ void configPIC()
 	
 	// IO Driver config
 
-	TRISC = 0x87;   				// RC0 y RC1 y RC2 como input, RC6 output (TX1), RC7 input (RX1)
+	TRISC = 0x8F;   				// RC0 y RC1 y RC2 y RC3 como input, RC6 output (TX1), RC7 input (RX1)
 	TRISA = 0x00;   				// Port A como ouptut
 	TRISD = 0x00;   				// Port D como ouptut
 	TRISE = 0x06;   				// AN6 input, AN7 input, los dem�s output

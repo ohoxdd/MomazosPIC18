@@ -1,6 +1,8 @@
 #include "utils.h"
 #include <xc.h>
 
+
+
 void putc_usart1 (char xc)
 {
 	while (!TXSTA1bits.TRMT);

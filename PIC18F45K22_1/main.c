@@ -3,9 +3,10 @@
  * Compiler:  MPLAB XC8
  */
 
-//#include "xc.h"
-#include <xc.h>
-#include <string.h>
+#define _XTAL_FREQ 8000000  
+
+
+//#include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include "config.h"
@@ -18,7 +19,7 @@
 #include "initPIC.h"
 #include <stdbool.h>
 
-#define _XTAL_FREQ 8000000  
+
 #define TIMER_STARTL 0xB0
 #define TIMER_STARTH 0x3C
 #define TIEMPO_INICIAL 100
@@ -47,6 +48,8 @@ bool w_pressed, a_pressed, s_pressed, d_pressed;
 #define A_VALUE 0.0059257
 #define B_VALUE 4050.0
 #define K_ABS_ZERO 273.15
+
+const double precalc = 13.595; // el valor de ln(R2_VALUE/A_VALUE) = 13.595 truncado hacia arriba
 
 void handleUsartInput() {
 	unsigned char input = RCREG1; // esto levanta ya la flag
@@ -97,15 +100,29 @@ void interrupt RSI(){
 	}
 	
 	if (PIR1bits.RCIF && PIE1bits.RC1IE) {
-
-		// No soy consicente de hasta que punto es necesario 
-		// bajar el enable ya que ahora solo analizamos un char a la vez,
-		// el enable lo bajaba cuando estaba procesando string inputs del USART.
-
 		PIE1bits.RC1IE = 0;
 		handleUsartInput();
 		PIE1bits.RC1IE = 1;
 	}
+}
+
+char inputDetector(uint8_t REG_ant, uint8_t REG_act, char num_pin, char flanc) {
+	char ret = 0;
+
+	char pin_act = (REG_act >> num_pin) & 0x01;
+	
+	char pin_ant = (REG_ant >> num_pin) & 0x01;
+
+	if (flanc == RISING) {
+		ret = pin_act && !pin_ant;
+	} else {
+		ret = !pin_act && pin_ant;
+	}
+	
+	if (ret) __delay_ms(10);
+	
+	
+	return ret;
 }
 
 void updateRunningTimer(state_t timer_state){
@@ -238,20 +255,6 @@ void play_splash_screen() {
 
  double calculate_temp(const double precalc, int adc_temp) {
 	
-	// factorizamos R2/A
-	//
-	//    -1 * R2 * (1 - VCC/ VOUT) 
-	//  -------------------------------
-	//               A
-	// 		= R2/A * (VCC/VOUT - 1)
-
-	// por propiedades de logaritmos
-	//
-	// 		ln (R2/A * (VCC/VOUT - 1))
-	// 		= ln(R2/A) + ln(VCC/VOUT - 1)
-
-	// usamos ln(R2/A) previamente calculado
-
 	double result;
 	result = (VCC_VAL / adc_temp) - 1;
 	result = B_VALUE / (precalc + log(result));
@@ -294,27 +297,6 @@ int set_pwm_pressure(const int adjusted_pressure){
 	return adjusted_pressure;
 }
 
-
-char inputDetector(uint8_t REG_ant, uint8_t REG_act, char num_pin, char flanc) {
-	char ret = 0;
-
-	char pin_act = (REG_act >> num_pin) & 0x01;
-	
-	char pin_ant = (REG_ant >> num_pin) & 0x01;
-
-	if (flanc == RISING) {
-		ret = pin_act && !pin_ant;
-	} else {
-		ret = !pin_act && pin_ant;
-	}
-	
-	if (ret) __delay_ms(10);
-	
-	
-	return ret;
-}
-
-
 int medidor_base_f = 60;
 int medidor_base_c = 5;
 
@@ -353,56 +335,55 @@ void update_medidor(int current_psi, int change_psi){
 	
 }
 
-	void write_adc_values(bool change_temp, bool change_press, int adc_values_arr[28]) {
-		char buff[64];
-		int current_chan = ADCON0bits.CHS;
+void write_adc_values(bool change_temp, bool change_press, int adc_values_arr[28]) {
+	char buff[64];
+	int current_chan = ADCON0bits.CHS;
 
-		if (change_temp){
-			clearChars(6,11,11);
-			sprintf(buff, "ADC 6: %d\n", adc_values_arr[6]);
-			writeTxt(6, 11, buff);
+	if (change_temp){
+		clearChars(6,11,11);
+		sprintf(buff, "ADC 6: %d\n", adc_values_arr[6]);
+		writeTxt(6, 11, buff);
+	}
+	if (change_press) {
+		clearChars(7,11,11);
+		sprintf(buff, "ADC 7: %d\n", adc_values_arr[7]);
+		writeTxt(7, 11, buff);
+	}
+	sprintf(buff, "ADC CHAN: %d\n", ADCON0bits.CHS);
+	writeTxt(5, 11, buff);
+}
+
+void ADC_start(int channel) {
+
+	ADCON0bits.CHS = channel;
+	GO_nDONE = 1;    
+}
+
+int ADC_selectedChannel(){
+	return ADCON0bits.CHS;
+}
+
+int ADC_ConversionLogic(int adc_values_arr[28]){
+	int updated_channel = -1;
+	// check if there is no ongoing conversion
+	if (!GO_nDONE) {
+		// check if the current channel was updated
+		int channel = ADC_selectedChannel();
+		bool new_val = adc_values_arr[channel] != adc_value;
+		// if it was, set the new value
+		if (new_val) {
+			adc_values_arr[channel] = adc_value;
+			updated_channel = channel;
 		}
-		if (change_press) {
-			clearChars(7,11,11);
-			sprintf(buff, "ADC 7: %d\n", adc_values_arr[7]);
-			writeTxt(7, 11, buff);
-		}
-		sprintf(buff, "ADC CHAN: %d\n", ADCON0bits.CHS);
-		writeTxt(5, 11, buff);
+		// swap channels
+		int next_chan;
+		if (channel == 6) next_chan = 7;
+		else if (channel == 7) next_chan = 6;
+		// start conversion
+		ADC_start(next_chan);
 	}
-
-	void ADC_start(int channel) {
-
-		ADCON0bits.CHS = channel;
-		GO_nDONE = 1;    
-	}
-
-	int ADC_selectedChannel(){
-		return ADCON0bits.CHS;
-	}
-
-
-	int ADC_ConversionLogic(int adc_values_arr[28]){
-		int updated_channel = -1;
-		// check if there is no ongoing conversion
-		if (!GO_nDONE) {
-			// check if the current channel was updated
-			int channel = ADC_selectedChannel();
-			bool new_val = adc_values_arr[channel] != adc_value;
-			// if it was, set the new value
-			if (new_val) {
-				adc_values_arr[channel] = adc_value;
-				updated_channel = channel;
-			}
-			// swap channels
-			int next_chan;
-			if (channel == 6) next_chan = 7;
-			else if (channel == 7) next_chan = 6;
-			// start conversion
-			ADC_start(next_chan);
-		}
-		return updated_channel;
-	}
+	return updated_channel;
+}
 
 void main(void)
 { 
@@ -413,7 +394,6 @@ void main(void)
 	setStartLine(0);		//Definim linia d'inici
    
 	play_splash_screen();
-	
 	
 	// variables responsables la detecci�n de flancos
    	uint8_t READ_C = PORTC;
@@ -437,10 +417,9 @@ void main(void)
 	// Variable que dicta si se escribe la temperatura en pantalla 
 	// y se recalcula la presion ajustada a la temperatura
 	double temperature = 25.0;
+	// Podriamos usar un formato de coma fija?
 	int adjusted_pressure = pressure_perc;
 
-	// Valor constante precalculado para simplificar calculo de la temperatura
-	const double precalc = log( R2_VALUE / A_VALUE);
 	int val = 0;
 	
 	for (int i = 0; i < 4; i++) {
@@ -448,9 +427,6 @@ void main(void)
 		puts_usart1(splash_text[i]);
 	}
 	
-
-
-
 	while (1)
 	{   
 		// adc related update flags to 0
@@ -462,7 +438,6 @@ void main(void)
 
 		if (updated_channel == 6) change_temp = true;
 		else if (updated_channel == 7) change_press = true;
-
 
 		write_adc_values(change_temp, change_press, adc_channel_values);
 		
@@ -483,57 +458,80 @@ void main(void)
         PREV_C = READ_C; // PREVIO <- ACTUAL
 		READ_C = PORTC; // ACTUAL <- PORTC
 		
+		bool timer_end = (timer_state == Running && time_left == 0);
+
 		char buff[128];
 
-		if ((!RC0_pressed && inputDetector(PREV_C, READ_C,  0, FALLING)) || d_pressed ){
-			d_pressed = false;
-			RC0_pressed = true;
-			RC0_update = true;
-			
-			// cambio la presi�n seleccionada, la ajusta, y la establece
-			change_selected_pressure(1);
-			adjusted_pressure = get_adjusted_pressure(temperature);
-			set_pwm_pressure(adjusted_pressure);
-			// actualiza la pantalla en base a los cambios
-			update_medidor(pressure_perc, 1);
-			write_pressure(adjusted_pressure);
-
-
-		} else if (RC0_pressed && inputDetector(PREV_C, READ_C,  0, RISING)){
-			RC0_pressed = false;
-			RC0_update = true;
-		}
-
-		//RC1 button checking
-		if ((!RC1_pressed && inputDetector(PREV_C, READ_C,  1, RISING)) || a_pressed){
-			a_pressed = false;
-			RC1_pressed = true;
-			RC1_update = true;
-
-			// cambio la presi�n seleccionada, la ajusta, y la establece
-			change_selected_pressure(-1);
-			adjusted_pressure = get_adjusted_pressure(temperature);
-			set_pwm_pressure(adjusted_pressure);
-			// actualiza la pantalla en base a los cambios
-			update_medidor(pressure_perc,-1);
-			write_pressure(adjusted_pressure);
-
-
-		} else if (RC1_pressed && inputDetector(PREV_C, READ_C,  1, FALLING)){
-			RC1_pressed = false;
-			RC1_update = true;
-		}
-
-
-		bool timer_end = timer_state == Running && time_left == 0;
+		// bool punxada =  detectar_punx()
 		
-		if (inputDetector(PREV_C, READ_C, 2, 0) || timer_end) {
-			timer_state = set_next_state(timer_state);
-            updateStateTextTimer(timer_state);
-		}
+		// DETECTOR DE INPUTS
+		if (timer_state == Running)	{
+			// RUNNING -> STOPPED
+			if (inputDetector(PREV_C, READ_C, 3, 0) || w_pressed || timer_end) { // || punxada
+				w_pressed = false;
+				timer_state = set_next_state(timer_state);
+				updateStateTextTimer(timer_state);
+			}
+		} else {
+			// RC0 button checking
+			if ((!RC0_pressed && inputDetector(PREV_C, READ_C,  0, FALLING)) || d_pressed ){
+				d_pressed = false;
+				RC0_pressed = true;
+				RC0_update = true;
+				
+				// cambio la presi�n seleccionada, la ajusta, y la establece
+				change_selected_pressure(1);
+				adjusted_pressure = get_adjusted_pressure(temperature);
+				set_pwm_pressure(adjusted_pressure);
+				// actualiza la pantalla en base a los cambios
+				update_medidor(pressure_perc, 1);
+				write_pressure(adjusted_pressure);
+
+
+			} else if (RC0_pressed && inputDetector(PREV_C, READ_C,  0, RISING)){
+				RC0_pressed = false;
+				RC0_update = true;
+			}
+
+			//RC1 button checking
+			if ((!RC1_pressed && inputDetector(PREV_C, READ_C,  1, RISING)) || a_pressed){
+				a_pressed = false;
+				RC1_pressed = true;
+				RC1_update = true;
+
+				// cambio la presi�n seleccionada, la ajusta, y la establece
+				change_selected_pressure(-1);
+				adjusted_pressure = get_adjusted_pressure(temperature);
+				set_pwm_pressure(adjusted_pressure);
+				// actualiza la pantalla en base a los cambios
+				update_medidor(pressure_perc,-1);
+				write_pressure(adjusted_pressure);
+
+
+			} else if (RC1_pressed && inputDetector(PREV_C, READ_C,  1, FALLING) ){
+				RC1_pressed = false;
+				RC1_update = true;
+			}
+			
+			
+
+			// STOPPED -> RUNNING
+			// READY -> RUNNING
+			// Termina bajo condiciones normales
+
+			// SELECT
+			if (inputDetector(PREV_C, READ_C, 2, 0) || s_pressed) {
+				s_pressed = false;
+				timer_state = set_next_state(timer_state);
+				updateStateTextTimer(timer_state);
+			}
+
+		} 
+
+		
+
         updateRunningTimer(timer_state);
 		
-
 		// Actualiza los textos en pantalla para los botones RC0 RC1
 		// if (RC0_update) {
 		// 	RC0_update = false;

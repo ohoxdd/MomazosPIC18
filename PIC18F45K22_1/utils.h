@@ -3,10 +3,15 @@
 #include "GLCD.h"
 #include "typedefs.h"
 #include <string.h>
+#include <stdint.h>
+
 
 void putc_usart1 (char xc);
+
 void puts_usart1 (unsigned char *cptr);
+
 unsigned char getc_usart1 (void);
+
 void gets_usart1 (const char *cptr);
 
 int calc_center_spacing(char * text);
