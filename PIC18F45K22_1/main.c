@@ -5,7 +5,6 @@
 
 #define _XTAL_FREQ 8000000  
 
-
 //#include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -18,7 +17,8 @@
 #include <math.h>
 #include "initPIC.h"
 #include <stdbool.h>
-
+#include "ADC.h"
+#include "states.h"
 
 #define TIMER_STARTL 0xB0
 #define TIMER_STARTH 0x3C
@@ -187,48 +187,6 @@ void updateStateTextTimer(state_t timer_state) {
     }
 }
 
-
-void set_state(state_t state) {
-    switch (state) {
-        case Running: 
-            // READY ---> RUNNING
-			PORTA = 0x2;
-            TRISEbits.RE0 = 0; // Enable output driver
-            T2CONbits.TMR2ON = 1;
-            T0CONbits.TMR0ON = 1;
-            break;
-            
-        case Stopped: 
-            // RUNNING ---> STOPPED
-			PORTA = 0x4;
-            T2CONbits.TMR2ON = 0;
-            T0CONbits.TMR0ON = 0;
-            TRISEbits.RE0 = 1; // Disable output driver
-            break;
-            
-        case Ready: 
-            // STOPPED ---> READY
-			PORTA = 0x1;
-            time_left = TIEMPO_INICIAL;
-            TMR0H = TIMER_STARTH;
-            TMR0L = TIMER_STARTL;
-            break;
-    }
-}
-
-state_t set_next_state(state_t state){
-	state_t new_state;
-
-	switch (state) {
-		case Ready: 	{new_state = Running; break;}
-		case Running:	{new_state = Stopped; break;}
-		case Stopped: 	{new_state = Ready; break;}
-	}
-
-    set_state(new_state);
-	return new_state;
-}
-
 char* splash_text[] = {
 		TITOL,
 		"-------------\n",
@@ -351,38 +309,6 @@ void write_adc_values(bool change_temp, bool change_press, int adc_values_arr[28
 	}
 	sprintf(buff, "ADC CHAN: %d\n", ADCON0bits.CHS);
 	writeTxt(5, 11, buff);
-}
-
-void ADC_start(int channel) {
-
-	ADCON0bits.CHS = channel;
-	GO_nDONE = 1;    
-}
-
-int ADC_selectedChannel(){
-	return ADCON0bits.CHS;
-}
-
-int ADC_ConversionLogic(int adc_values_arr[28]){
-	int updated_channel = -1;
-	// check if there is no ongoing conversion
-	if (!GO_nDONE) {
-		// check if the current channel was updated
-		int channel = ADC_selectedChannel();
-		bool new_val = adc_values_arr[channel] != adc_value;
-		// if it was, set the new value
-		if (new_val) {
-			adc_values_arr[channel] = adc_value;
-			updated_channel = channel;
-		}
-		// swap channels
-		int next_chan;
-		if (channel == 6) next_chan = 7;
-		else if (channel == 7) next_chan = 6;
-		// start conversion
-		ADC_start(next_chan);
-	}
-	return updated_channel;
 }
 
 void main(void)

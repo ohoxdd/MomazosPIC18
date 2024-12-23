@@ -7,7 +7,7 @@ FUNCIONES
 [] Duración del compresor en base a la presión y la temperatura 
     Time = (PSIWanted - PSIcurrent)/2 - (Tambient - 25.0)
 [X] Deshabilitar inputs botones (cambio de +, -, select) cuando esta en progreso 
-[] Implementar boton de abortar/Emergencia RC3 
+[X] Implementar boton de abortar/Emergencia RC3 
 [] Implementar abortar cuando hay un pinchazo (si la presión baja mucho) 
 
 [] Evaluar si podriamos sustituir todos los datatypes de coma flotante
