@@ -5,33 +5,27 @@
 
 #define _XTAL_FREQ 8000000  
 
-//#include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include "config.h"
-#include "GLCD.h"
-#include "test.h"
-#include "splash.h"
-#include "utils.h"
-#include <stdint.h>
-#include <math.h>
-#include "initPIC.h"
-#include <stdbool.h>
 #include "ADC.h"
 #include "states.h"
 #include "UI.h"
+#include "config.h"
+#include "GLCD.h"
+#include "splash.h"
+#include "utils.h"
+#include "initPIC.h"
+
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <math.h>
 
 #define TIMER_STARTL 0xB0
 #define TIMER_STARTH 0x3C
 #define TIEMPO_INICIAL 100
 #define MIN_PRESSURE 15
 #define MAX_PRESSURE 100
-#define TITOL "L7 Projecte\n"
-#define NOM1 "Angel A. Quinones\n"
-#define NOM2 "Hector Fdez. de Sevilla\n"
 
 // Varibales globales
-bool splash_on = 0;
 // habilitar deshabilitar splash screen
 unsigned int time_left = TIEMPO_INICIAL;
 unsigned char change_time = 1;
@@ -107,25 +101,6 @@ void interrupt RSI(){
 	}
 }
 
-char inputDetector(uint8_t REG_ant, uint8_t REG_act, char num_pin, char flanc) {
-	char ret = 0;
-
-	char pin_act = (REG_act >> num_pin) & 0x01;
-	
-	char pin_ant = (REG_ant >> num_pin) & 0x01;
-
-	if (flanc == RISING) {
-		ret = pin_act && !pin_ant;
-	} else {
-		ret = !pin_act && pin_ant;
-	}
-	
-	if (ret) __delay_ms(10);
-	
-	
-	return ret;
-}
-
 void updateRunningTimer(state_t timer_state){
     if (timer_state == Running && change_time) {
 		format_t ftime;
@@ -186,30 +161,6 @@ void updateStateTextTimer(state_t timer_state) {
             
             break;
     }
-}
-
-char* splash_text[] = {
-		TITOL,
-		"-------------\n",
-		NOM1,
-		NOM2
-};
-
-void play_splash_screen() {
-	if (!splash_on) {
-        return;
-    }
-
-    writeMatrix(0, 0, 8, 128, splash_bitmap);
-    __delay_ms(2000);
-    clearGLCD(0, 8, 0, 128);
-    int n = sizeof(splash_text)/sizeof(splash_text[0]);
-    for (int i = 0; i < n; i++) {
-        int column = calc_center_spacing(splash_text[i]);
-        writeTxt(2+i, column, splash_text[i]); 
-    }
-    __delay_ms(2000);
-    clearGLCD(0,7,0,127); 
 }
 
  double calculate_temp(const double precalc, int adc_temp) {

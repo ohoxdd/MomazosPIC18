@@ -1,6 +1,26 @@
 #include "utils.h"
 #include <xc.h>
 
+#define _XTAL_FREQ 8000000  
+
+char inputDetector(uint8_t REG_ant, uint8_t REG_act, char num_pin, char flanc) {
+	char ret = 0;
+
+	char pin_act = (REG_act >> num_pin) & 0x01;
+	
+	char pin_ant = (REG_ant >> num_pin) & 0x01;
+
+	if (flanc == RISING) {
+		ret = pin_act && !pin_ant;
+	} else {
+		ret = !pin_act && pin_ant;
+	}
+	
+	if (ret) __delay_ms(10);
+	
+	
+	return ret;
+}
 
 
 void putc_usart1 (char xc)

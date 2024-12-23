@@ -6,6 +6,8 @@
 #include <stdint.h>
 
 
+char inputDetector(uint8_t REG_ant, uint8_t REG_act, char num_pin, char flanc);
+
 void putc_usart1 (char xc);
 
 void puts_usart1 (unsigned char *cptr);
