@@ -36,3 +36,14 @@ ORGANIZACIÓN DEL CÓDIGO
 
 [] ADC en su propio header 
 [] Cambio de estados en su propio header
+
+
+Objetivo de funcionamiento:
+
+-Si la pressió sol·licitada és més alta, el compressor requerirà més potència.
+-Si la diferència de pressió entre la inicial i la sol·licitada és alta, el compressor haurà
+d’estar més temps en marxa.
+-Si la temperatura ambient és més baixa, el compressor haurà d’estar més temps en marxa.
+-Si mentre s’infla la roda, es detecta una punxada, l’inflador emetrà un avís.
+-Si es prem el botó d’aturada d’emergència, l’inflador aturarà el procés i tornarà a l’estat
+inicial.

@@ -121,11 +121,11 @@ void interrupt RSI(){
 
 } 
 
-void write_pressure(const int adjusted_pressure){
+void write_pressure(){
 	char buff[256];
-    sprintf(buff,"%3d adj:%3d",pressure_perc, adjusted_pressure);
+    sprintf(buff,"%3d",pressure_perc);
 	
-	clearChars(0,0,11);
+	clearChars(0,0,5); // Sujeto a cambiar, ns como funciona esto
    	writeTxt(0,0,buff);
 }
 
@@ -243,7 +243,7 @@ void main(void)
 			// ajusta la presion segun la temperatura
 			adjusted_pressure = get_adjusted_pressure(temperature);
 			set_pwm_pressure(adjusted_pressure);
-			write_pressure(adjusted_pressure);
+			write_pressure();
 		}
 		
         PREV_C = READ_C; // PREVIO <- ACTUAL
@@ -275,7 +275,7 @@ void main(void)
 				set_pwm_pressure(adjusted_pressure);
 				// actualiza la pantalla en base a los cambios
 				update_medidor(pressure_perc, 1);
-				write_pressure(adjusted_pressure);
+				write_pressure();
 
 
 			} else if (RC0_pressed && inputDetector(PREV_C, READ_C,  0, RISING)){
@@ -295,7 +295,7 @@ void main(void)
 				set_pwm_pressure(adjusted_pressure);
 				// actualiza la pantalla en base a los cambios
 				update_medidor(pressure_perc,-1);
-				write_pressure(adjusted_pressure);
+				write_pressure();
 
 
 			} else if (RC1_pressed && inputDetector(PREV_C, READ_C,  1, FALLING) ){

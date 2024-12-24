@@ -22,7 +22,6 @@ char inputDetector(uint8_t REG_ant, uint8_t REG_act, char num_pin, char flanc) {
 	return ret;
 }
 
-
 void putc_usart1 (char xc)
 {
 	while (!TXSTA1bits.TRMT);
