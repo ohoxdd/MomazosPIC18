@@ -22,8 +22,8 @@
 #define TIMER_STARTL 0xB0
 #define TIMER_STARTH 0x3C
 #define TIEMPO_INICIAL 100
-#define MIN_PRESSURE 15
-#define MAX_PRESSURE 100
+#define MIN_PRESSURE 0
+#define MAX_PRESSURE 90
 
 #define VCC_VAL 1023.0
 #define R2_VALUE 4751.0
@@ -38,7 +38,6 @@ unsigned char change_time = 1;
 unsigned int pressure_perc;
 unsigned int adjust_pressure;
 uint16_t adc_value;
-int duty_one_pc;
 bool change_temp;
 bool adc_update;
 int adc_channel_values[28];
@@ -51,11 +50,14 @@ struct DC_values {
 	uint8_t LSb; // CPP3CON<5:4>
 };
 
+
 struct DC_values DC_configurations[3] = {
 	{0x32, 0x0}, // 40%
 	{0x54, 0x0}, // 80%
 	{0x76, 0xB}  // 95%
 };
+
+struct DC_values current_dc;
 
 void handleUsartInput() {
 	unsigned char input = RCREG1; // esto levanta ya la flag
@@ -129,31 +131,30 @@ void write_pressure(){
    	writeTxt(0,0,buff);
 }
 
+void change_pwm_values(struct DC_values values) {
+	CCP3CON |= (values.LSb << 4);
+	CCPR3L = values.MSb;
+}
+
 void change_selected_pressure(int change) {
+	int old_pressure = pressure_perc;
 	pressure_perc += change;
 	if (pressure_perc <= MIN_PRESSURE) pressure_perc = MIN_PRESSURE;
 	else if (pressure_perc >= MAX_PRESSURE) pressure_perc = MAX_PRESSURE;
-}
 
-int get_adjusted_pressure(const double temperature){
-	// + 0.5 para redondear, ya que se trunca al pasar a int
-	double change = 0.4 * (25.0 - temperature) + 0.5; 
-	int adjusted_pressure = pressure_perc + change;
-	return adjusted_pressure;
-}
-
-
-int set_pwm_pressure(const int adjusted_pressure){
-
-	int pwm_val = duty_one_pc * adjusted_pressure;
-
-	int pwm_high = pwm_val >> 2; 
-	int pwm_low = pwm_val & 0x3;
-
-	CCP3CON |= (pwm_low << 4);
-	CCPR3L = pwm_high;
-
-	return adjusted_pressure;
+	// Comprobar si la presion pasa de un intervalo a otro y, 
+	// si lo hace, cambiar los valores de los registros que controlan el duty cycle "potencia del compresor"
+	
+	if (old_pressure > 30 && pressure_perc <= 30) {
+		// Entra al intervalo <= 30 psi
+		change_pwm_values(DC_configurations[0]);
+	} else if ((old_pressure <= 30 && pressure_perc > 30) || (old_pressure > 60 && pressure_perc <= 60)) {
+		// Entra al intervalo <= 60 psi
+		change_pwm_values(DC_configurations[1]);
+	} else if (old_pressure <= 60 && pressure_perc > 60) {
+		// Entra al intervalo <= 90 psi
+		change_pwm_values(DC_configurations[2]);
+	}
 }
 
 void write_adc_values(bool change_temp, bool change_press, int adc_values_arr[28]) {
@@ -177,8 +178,6 @@ void write_adc_values(bool change_temp, bool change_press, int adc_values_arr[28
 void main(void)
 { 
 	configPIC();
-
-	duty_one_pc = ((PR2 + 1)*4)/100; // calculo para el valor de un porcentage del duty cycle
 	
 	GLCDinit();			//Inicialitzem la pantalla
 	clearGLCD(0,7,0,127);	//Esborrem pantalla
@@ -209,8 +208,7 @@ void main(void)
 	// y se recalcula la presion ajustada a la temperatura
 	double temperature = 25.0;
 	// Podriamos usar un formato de coma fija?
-	int adjusted_pressure = pressure_perc;
-
+	//
 	int val = 0;
 	
 	for (int i = 0; i < 4; i++) {
@@ -239,13 +237,10 @@ void main(void)
 			temperature = calculate_temp(precalc, adc_channel_values[6]);
 			sprintf(buff, "%.2f C", temperature);
 			writeTxt(2, 16, buff);
-
-			// ajusta la presion segun la temperatura
-			adjusted_pressure = get_adjusted_pressure(temperature);
-			set_pwm_pressure(adjusted_pressure);
+			
 			write_pressure();
 		}
-		
+
         PREV_C = READ_C; // PREVIO <- ACTUAL
 		READ_C = PORTC; // ACTUAL <- PORTC
 		
@@ -271,8 +266,7 @@ void main(void)
 				
 				// cambio la presi�n seleccionada, la ajusta, y la establece
 				change_selected_pressure(1);
-				adjusted_pressure = get_adjusted_pressure(temperature);
-				set_pwm_pressure(adjusted_pressure);
+
 				// actualiza la pantalla en base a los cambios
 				update_medidor(pressure_perc, 1);
 				write_pressure();
@@ -291,8 +285,7 @@ void main(void)
 
 				// cambio la presi�n seleccionada, la ajusta, y la establece
 				change_selected_pressure(-1);
-				adjusted_pressure = get_adjusted_pressure(temperature);
-				set_pwm_pressure(adjusted_pressure);
+
 				// actualiza la pantalla en base a los cambios
 				update_medidor(pressure_perc,-1);
 				write_pressure();
