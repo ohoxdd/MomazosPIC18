@@ -84,16 +84,18 @@ void configPIC()
 	TMR2IE = 1;						// Habilitamos el interrupt de timer2
 	T2CON = 0x03;    				// Configura el Timer2 con un preescalador de 1:16 y lo habilita
 	PR2 = 0x7C;       				// Periodo para 1kHz (con Fosc de 8MHz y preescalador 1:16)
-
+		
+		// Empezamos con un valor inicial de presion seleccionada de 50psi. Segun el pdf, esto
+		//		debe dejarnos con un duty cycle inicial del 80%
+	
 		// Duty Ratio = VAL / 4*(124+1)
-		// Duty Ratio = VAL / 500 = 50%
-		// VAL = 250 = 0xFA
-		// 2 LSb de 0xFA = 0x2
-		// 8 MSb de 0xFA = 0x3E
+		// Duty Ratio = VAL / 500 = 80%
+		// VAL = 400 = 0x190
+		// 2 LSb de 0xFA = 0x0
+		// 8 MSb de 0xFA = 0x54
 								
-	CCP3CON |= ( 0x2<< 4); 
-	CCPR3L = 0x3E;   				// Inicializa el duty cycle del PWM de CCP3 al 50%
-
+	CCP3CON |= ( 0x0<< 4); 
+	CCPR3L = 0x54;   				// Inicializa el duty cycle del PWM de CCP3 al 50%
 
 	TMR0IF = 0;						// Bajamos el flag de timer	
 	TMR0IE = 1;						// Habilitamos el interrupt de timer0

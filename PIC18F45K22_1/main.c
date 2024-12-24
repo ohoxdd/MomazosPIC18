@@ -25,6 +25,12 @@
 #define MIN_PRESSURE 15
 #define MAX_PRESSURE 100
 
+#define VCC_VAL 1023.0
+#define R2_VALUE 4751.0
+#define A_VALUE 0.0059257
+#define B_VALUE 4050.0
+#define K_ABS_ZERO 273.15
+
 // Varibales globales
 // habilitar deshabilitar splash screen
 unsigned int time_left = TIEMPO_INICIAL;
@@ -38,13 +44,18 @@ bool adc_update;
 int adc_channel_values[28];
 bool w_pressed, a_pressed, s_pressed, d_pressed;
 
-#define VCC_VAL 1023.0
-#define R2_VALUE 4751.0
-#define A_VALUE 0.0059257
-#define B_VALUE 4050.0
-#define K_ABS_ZERO 273.15
-
 const double precalc = 13.595; // el valor de ln(R2_VALUE/A_VALUE) = 13.595 truncado hacia arriba
+
+struct DC_values {
+	uint8_t MSb; // CPPR3L
+	uint8_t LSb; // CPP3CON<5:4>
+};
+
+struct DC_values DC_configurations[3] = {
+	{0x32, 0x0}, // 40%
+	{0x54, 0x0}, // 80%
+	{0x76, 0xB}  // 95%
+};
 
 void handleUsartInput() {
 	unsigned char input = RCREG1; // esto levanta ya la flag
@@ -131,6 +142,7 @@ int get_adjusted_pressure(const double temperature){
 	return adjusted_pressure;
 }
 
+
 int set_pwm_pressure(const int adjusted_pressure){
 
 	int pwm_val = duty_one_pc * adjusted_pressure;
@@ -165,7 +177,9 @@ void write_adc_values(bool change_temp, bool change_press, int adc_values_arr[28
 void main(void)
 { 
 	configPIC();
+
 	duty_one_pc = ((PR2 + 1)*4)/100; // calculo para el valor de un porcentage del duty cycle
+	
 	GLCDinit();			//Inicialitzem la pantalla
 	clearGLCD(0,7,0,127);	//Esborrem pantalla
 	setStartLine(0);		//Definim linia d'inici
@@ -236,7 +250,6 @@ void main(void)
 		READ_C = PORTC; // ACTUAL <- PORTC
 		
 		bool timer_end = (timer_state == Running && time_left == 0);
-
 
 		// bool punxada =  detectar_punx()
 		
