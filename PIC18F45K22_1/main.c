@@ -125,9 +125,9 @@ void interrupt RSI(){
 
 void write_pressure(){
 	char buff[256];
-    sprintf(buff,"%3d",pressure_perc);
+    sprintf(buff,"PSI selected: %3d",pressure_perc);
 	
-	clearChars(0,0,5); // Sujeto a cambiar, ns como funciona esto
+	clearChars(0,0,17); // Sujeto a cambiar, ns como funciona esto
    	writeTxt(0,0,buff);
 }
 
@@ -208,13 +208,6 @@ void main(void)
 	// y se recalcula la presion ajustada a la temperatura
 	double temperature = 25.0;
 	// Podriamos usar un formato de coma fija?
-	//
-	int val = 0;
-	
-	for (int i = 0; i < 4; i++) {
-		if (i == 1) continue;
-		puts_usart1(splash_text[i]);
-	}
 	
 	while (1)
 	{   
@@ -237,7 +230,6 @@ void main(void)
 			temperature = calculate_temp(precalc, adc_channel_values[6]);
 			sprintf(buff, "%.2f C", temperature);
 			writeTxt(2, 16, buff);
-			
 			write_pressure();
 		}
 

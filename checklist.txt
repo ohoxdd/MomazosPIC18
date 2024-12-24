@@ -1,6 +1,6 @@
 -------------
 FUNCIONES
-[] Duty cycle en base a la presión leida por el canal 7 
+[X] Duty cycle en base a la presión leida por el canal 7 
    <= 30 PSI (40%)
    <= 60 PSI (80%)
    <= 90 PSI (95%)

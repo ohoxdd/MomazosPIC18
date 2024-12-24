@@ -60,10 +60,11 @@ void configPIC()
 		// (1) ADON: ADC habilitat
 
 	ADCON0bits.CHS = 0x6;
-	ADIE = 1;
-		// Habilitem l'inerrupci� del ADC
+
 	ADIF= 0;
 		// Baixem el flag
+	ADIE = 1;
+		// Habilitem l'inerrupci� del ADC
 	
 	
 	// Timer0 config para el temporizador
