@@ -29,9 +29,7 @@
 #define B_VALUE 4050.0
 #define K_ABS_ZERO 273.15
 
-// Variables de la RSI
-unsigned char change_time = 1;
-unsigned int time_left = TIEMPO_INICIAL;
+
 
 // Variables globales de presion (habra que quitarlas)
 unsigned int pressure_perc;
@@ -49,13 +47,6 @@ struct DC_values DC_configurations[3] = {
 	{0x76, 0xB}  // 95%
 };
 
-
-
-void tic(void)
-{
-	time_left--;
-	change_time = 1;
-}
 
 void interrupt RSI(){
 	if (TMR2IF && TMR2IE) {TMR2IF = 0;}

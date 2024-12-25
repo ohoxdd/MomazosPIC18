@@ -6,7 +6,6 @@
 #include "typedefs.h"
 #include "initPIC.h"
 
-#define TIEMPO_INICIAL 100
 
 
 void states_set(state_t state);
