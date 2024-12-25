@@ -31,6 +31,7 @@
 
 // Variables de la RSI
 unsigned char change_time = 1;
+unsigned int time_left = TIEMPO_INICIAL;
 
 // Variables globales de presion (habra que quitarlas)
 unsigned int pressure_perc;
@@ -55,8 +56,6 @@ void tic(void)
 	time_left--;
 	change_time = 1;
 }
-
-
 
 void interrupt RSI(){
 	if (TMR2IF && TMR2IE) {TMR2IF = 0;}

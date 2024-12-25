@@ -5,5 +5,8 @@
 
 #define _XTAL_FREQ 8000000  
 
+#define TIMER_STARTL 0xB0
+#define TIMER_STARTH 0x3C
+
 void initPIC_config();
 #endif
