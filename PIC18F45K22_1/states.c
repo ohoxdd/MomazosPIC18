@@ -1,9 +1,11 @@
 #include "states.h"
-
+#include "compressor.h"
 void set_state(state_t state) {
     switch (state) {
         case Running: 
             // READY ---> RUNNING
+			
+
 			PORTA = 0x2;
             TRISEbits.RE0 = 0; // Enable output driver
             T2CONbits.TMR2ON = 1;

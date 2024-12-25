@@ -226,10 +226,6 @@ void main(void)
 		write_adc_values(change_temp, change_press, adc_channel_values);
 		
 		if (change_temp) {
-			// calcular la nueva cantidad de tiempo que debe estar
-			// encendido el compresor
-			
-			time_left = getCompressorTime(adc_channel_values);
 
 			// escribe temperatura
 			clearGLCD(2,2, 63, 127);
@@ -304,6 +300,15 @@ void main(void)
 			// SELECT
 			if (inputDetector(PREV_C, READ_C, 2, 0) || s_pressed) {
 				s_pressed = false;
+				if (timer_state == Ready) {
+					// next state == Running, calculamos el tiempo
+					// esto es un poco chapuza pq me da pereza organizar el codigo bien
+					//
+					// esto tmb lo hago aqui pq el propio set_state enciende los timers, 
+					// y se debe calcular el tiempo antes de encender el propio timer
+					
+					time_left = getCompressorTime(adc_channel_values);
+				}
 				timer_state = set_next_state(timer_state);
 				updateStateTextTimer(timer_state);
 			}
