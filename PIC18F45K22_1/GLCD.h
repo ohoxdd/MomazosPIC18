@@ -1,20 +1,20 @@
 
 
-/* La pantalla té dos xips de memòria. Un controla la meitat esquerra i
+/* La pantalla tï¿½ dos xips de memï¿½ria. Un controla la meitat esquerra i
 l'altre la meitat dreta. Cada meitat es divideix en 8 files i 64 columnes.
-Cada divisio d'aquestes és un byte i el bit de menor pes és el que està més amunt */
+Cada divisio d'aquestes ï¿½s un byte i el bit de menor pes ï¿½s el que estï¿½ mï¿½s amunt */
 
 typedef unsigned char byte;
 
-/* Envia una ordre al xip determinat per CS. L'ordre és un codi dels definits abans
+/* Envia una ordre al xip determinat per CS. L'ordre ï¿½s un codi dels definits abans
 OR el valor que es vol enviar */
 void sendGLCDCommand(byte val, byte CS);
 
-/* Estableix la línia que es mostra a la part de dalt de la pantalla (de 0 a 63)
-Serveix per a fer scroll sense moure els continguts de tota la memòria */
+/* Estableix la lï¿½nia que es mostra a la part de dalt de la pantalla (de 0 a 63)
+Serveix per a fer scroll sense moure els continguts de tota la memï¿½ria */
 void setStartLine(byte z);
 
-/* Estableix la pàgina actual (de 0 a 7) */
+/* Estableix la pï¿½gina actual (de 0 a 7) */
 void setXAddress(byte x);
 
 /* Estableix la columna actual (de 0 a 127) */
@@ -26,8 +26,8 @@ void GLCDinit(void);
 /* Escriu un byte a la pantalla a la pagina p (de 0 a 7), columna y (de 0 a 127) */
 void writeByte(byte p, byte y, byte data);
 
-/* Escriu el caràcter c a la pagina p (de 0 a 7), character column y (de 0 a 24)
-Cada columna de text té una amplada de 6 píxels.
+/* Escriu el carï¿½cter c a la pagina p (de 0 a 7), character column y (de 0 a 24)
+Cada columna de text tï¿½ una amplada de 6 pï¿½xels.
 Compte els caracters estan definits amb un font 7x5 (7 alt, 5 amplada) */
 void putchGLCD(byte p, byte y, char c);
 

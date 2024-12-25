@@ -21,6 +21,7 @@
 #include "GLCD.h"
 #include "splash.h"
 #include "utils.h"
+#include "usart.h"
 
 #define VCC_VAL 1023.0
 #define R2_VALUE 4751.0
@@ -272,7 +273,7 @@ void main(void)
 	// mover a Usart.h
 	for (int i = 0; i < 4; i++) {
 		if (i == 1) continue;
-		puts_usart1(splash_text[i]);
+		usart_1_puts(splash_text[i]);
 	}
 
 	while (1)

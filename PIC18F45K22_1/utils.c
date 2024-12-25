@@ -19,41 +19,6 @@ char inputDetector(uint8_t REG_ant, uint8_t REG_act, char num_pin, char flanc) {
 	return ret;
 }
 
-void putc_usart1 (char xc)
-{
-	while (!TXSTA1bits.TRMT);
-	TXREG1 = xc;
-}
-/* Transmit a null-terminated string using the previous function */
-void puts_usart1 (unsigned char *cptr)
-{
-	while(*cptr)
-	putc_usart1 (*cptr++);
-	if (*cptr == '\0')
-		putc_usart1(0x0D); // Carry return Ascii, para hacer un newline en la terminal
-}
-
-unsigned char getc_usart1 (void)
-{
-	while (!PIR1bits.RCIF);
-	return RCREG1; /* RCIF clears automatically */
-}
-
-// RECEIVE DATA
-void gets_usart1 (const char *cptr)
-{
-	char* ptr = cptr;
-	while (1)
-	{
-		char xx = getc_usart1(); /* read a character */
-		if (xx == 0x0D ) { /* is it a carriage return?*/ 
-			*ptr++ = '\0'; /* terminate the string with a NULL */
-			return; 
-		}
-		*ptr++ = xx; /* store the received character in the buffer */
-	}
-}
-
 int calc_center_spacing(char * string){
     return 13 - strlen(string)/2;
 }
