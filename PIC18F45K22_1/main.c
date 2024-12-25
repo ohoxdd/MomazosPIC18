@@ -5,7 +5,6 @@
 
 //  #include "defines.h" // comenta esto y descomenta lo de arriba pa q compile
 
-#define _XTAL_FREQ 8000000  
 
 #include <xc.h>
 #include <stdbool.h>
@@ -14,14 +13,14 @@
 #include <math.h>
 
 
+#include "config.h"
+#include "initPIC.h"
 #include "ADC.h"
 #include "states.h"
 #include "UI.h"
-#include "config.h"
 #include "GLCD.h"
 #include "splash.h"
 #include "utils.h"
-#include "initPIC.h"
 
 
 

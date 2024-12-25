@@ -4,9 +4,8 @@
 #include <xc.h>
 #include <stdbool.h>
 
+#include "initPIC.h"
 #include "utils.h"
-
-
 
 #define TITOL "L7 Projecte\n"
 #define NOM1 "Angel A. Quinones\n"

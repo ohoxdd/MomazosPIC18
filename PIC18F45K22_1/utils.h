@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdint.h>
 
+#include "initPIC.h"
 #include "GLCD.h"
 #include "typedefs.h"
 

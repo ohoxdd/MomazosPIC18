@@ -1,7 +1,5 @@
 #include "utils.h"
 
-#define _XTAL_FREQ 8000000  
-
 char inputDetector(uint8_t REG_ant, uint8_t REG_act, char num_pin, char flanc) {
 	char ret = 0;
 

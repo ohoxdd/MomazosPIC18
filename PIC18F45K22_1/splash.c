@@ -4,8 +4,6 @@
 
 bool splash_on = 0;
 
-#define _XTAL_FREQ 8000000  
-
 void play_splash_screen() {
 	if (!splash_on) {
         return;
