@@ -2,7 +2,6 @@
 #include "test.h"
 
 
-bool splash_on = 0;
 
 void play_splash_screen() {
 	if (!splash_on) {

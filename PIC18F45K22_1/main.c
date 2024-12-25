@@ -22,10 +22,6 @@
 #include "splash.h"
 #include "utils.h"
 
-
-
-
-
 #define VCC_VAL 1023.0
 #define R2_VALUE 4751.0
 #define A_VALUE 0.0059257
