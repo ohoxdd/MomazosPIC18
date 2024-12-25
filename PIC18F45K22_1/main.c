@@ -28,7 +28,6 @@
 #define B_VALUE 4050.0
 #define K_ABS_ZERO 273.15
 
-
 // Variable global temperatura precalculada
 const double precalc = 13.595; 
 
@@ -50,9 +49,16 @@ struct DC_values DC_configurations[3] = {
 // Variables de la RSI
 bool change_time = true;
 unsigned int time_left = TIEMPO_INICIAL;
+int counter_decimas = 0;
+bool check_pressure;
 
 void tic(void) {
 	time_left--;
+	counter_decimas++;
+	if (counter_decimas == 10) {
+		counter_decimas = 0;
+		check_pressure = true;
+	}
 	change_time = true;
 }
 
@@ -241,6 +247,33 @@ void updateStateTextTimer(state_t timer_state) {
     }
 }
 
+// Tasas a partir de las que consideramos
+// pinchazo
+#define THRESHOLD_HIGH -5	// 90-61 PSI
+#define THRESHOLD_MID -3	// 60-31 PSI
+#define THRESHOLD_LOW -1	// 30-0  PSI
+
+bool detectPuncture(unsigned int prev, unsigned int val) {
+	signed int diff_pressure = val - prev; // ponemos el signed explicito por si acaso
+	if (diff_pressure >= 0) return false;
+
+	// Evaluamos si lo detectamos como pinchazo o no
+	// en base a los thresholds definidos
+	
+	if (prev > 60) {
+		return diff_pressure <= THRESHOLD_HIGH;
+	}
+	else if (prev > 30) {
+		return diff_pressure <= THRESHOLD_MID;
+	}
+
+	return diff_pressure <= THRESHOLD_LOW;
+}
+
+//void displayPunctureWarning() {
+	// 
+//}
+
 void main(void)
 { 
 	initPIC_config();
@@ -281,6 +314,9 @@ void main(void)
 		usart_1_puts(splash_text[i]);
 	}
 
+	int prev_pressure = -1;
+	bool punxada = false;
+
 	while (1)
 	{   
 		// adc related update flags to 0
@@ -314,8 +350,8 @@ void main(void)
 			clearGLCD(3,3, 63, 127);
 			char buff[128];
 			unsigned int read_press = getReadPressure(adc_channel_values[7]);
-			sprintf(buff, "%2d P", read_press);
-			writeTxt(3, 19, buff);
+			sprintf(buff, "%2d PSI", read_press);
+			writeTxt(3, 16, buff);
 			write_pressure();
 		}
 
@@ -331,6 +367,7 @@ void main(void)
 		// DETECTOR DE INPUTS
 		if (timer_state == Running)	{
 
+
 			// RUNNING -> STOPPED
 			if (inputDetector(PREV_C, READ_C, 3, 0) || w_pressed || timer_end) { // || punxada
 				w_pressed = false;
@@ -338,8 +375,27 @@ void main(void)
 				updateStateTextTimer(timer_state);
 			}
 
-			// bool punxada =  detectar_punx()
-			// if (punxada) bla bla bla
+			if (check_pressure) {
+				if (prev_pressure == -1) prev_pressure = getReadPressure(adc_channel_values[7]);
+				else {
+					unsigned int actual_pressure = getReadPressure(adc_channel_values[7]);
+					punxada = detectPuncture(prev_pressure, actual_pressure);
+					prev_pressure = actual_pressure;
+				}
+
+			}
+
+			if (punxada) {
+				// displayPunctureWarning();
+				// Como funciona esto?
+				//
+
+				char buff[256];
+				sprintf(buff, "Pinchazo detectado!!!\n");
+				usart_1_puts(buff);
+				punxada = false;
+			} 
+
 
 		} else {
 			// RC0 button checking
@@ -406,13 +462,13 @@ void main(void)
 						char debug[128];
 						sprintf(debug, "Tiempo configurado a %02d.%d segundos\n", time_left/10, time_left%10);
 						usart_1_puts(debug);
-						unsigned int read_press = getReadPressure(adc_channel_values[7]);
-						sprintf(debug, "Diferencia de presion = %d - %d = %d\n", pressure_perc, read_press, pressure_perc - read_press);
-						usart_1_puts(debug);
-						sprintf(debug, "Formula:\n");
-						usart_1_puts(debug);
-						sprintf(debug, "s = (%d-%d)/2 - (%d - 25)\n", pressure_perc, read_press, (int)calculate_temp(adc_channel_values[6]));
-						usart_1_puts(debug);
+						//unsigned int read_press = getReadPressure(adc_channel_values[7]);
+						//sprintf(debug, "Diferencia de presion = %d - %d = %d\n", pressure_perc, read_press, pressure_perc - read_press);
+						//usart_1_puts(debug);
+						////sprintf(debug, "Formula:\n");
+						//usart_1_puts(debug);
+						//sprintf(debug, "s = (%d-%d)/2 - (%d - 25)\n", pressure_perc, read_press, (int)calculate_temp(adc_channel_values[6]));
+						//usart_1_puts(debug);
 
 					/* DEBUG USART LINES */
 					/* DEBUG USART LINES */

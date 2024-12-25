@@ -47,3 +47,23 @@ d’estar més temps en marxa.
 -Si mentre s’infla la roda, es detecta una punxada, l’inflador emetrà un avís.
 -Si es prem el botó d’aturada d’emergència, l’inflador aturarà el procés i tornarà a l’estat
 inicial.
+
+
+COMO DETECTAR PINCHAZO:
+
+Si al inflar una rueda se produce un pinchazo, la presión bajara con el tiempo (obvio). La cuestion esta
+en que esta tasa de desinflado no tiene que ser necesariamente fija. Una rueda que esta a presiones altas
+se desinflara mucho mas rapido que una que esta a baja presion, suponiendo que el pinchazo es del mismo tamaño.
+
+Propuesta: Cada segundo (cada 10 interrupts del Timer0), vemos como ha cambiado la presion leída por el ADC.
+Si este valor es negativo, tenemos un posible pinchazo, pero las variaciones de presion son posibles, asi que
+veremos si se cumplen las condiciones para que lo consideremos si o si un pinchazo.
+
+Consideraremos las siguientes tasas como thresholds en funcion del rango de la presion leída:
+
+	Presion alta (90-60 PSI): Pinchazo a partir de -5 PSI/s
+	Presion media (60-30 PSI): Pinchazo a partir de -3 PSI/s
+	Presion baja (30-0 PSI): Pinchazo a partir de -1 PSI/s
+
+Estos valores los he escogido un poco a ojo y buscando por google el promedio de la presion perdida tras un 
+pinchazo.
