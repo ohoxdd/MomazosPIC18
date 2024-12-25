@@ -5,6 +5,7 @@
 
 #define _XTAL_FREQ 8000000  
 
+#include <xc.h>
 #include "ADC.h"
 #include "states.h"
 #include "UI.h"
@@ -19,11 +20,7 @@
 #include <stdint.h>
 #include <math.h>
 
-#define TIMER_STARTL 0xB0
-#define TIMER_STARTH 0x3C
-#define TIEMPO_INICIAL 100
-#define MIN_PRESSURE 0
-#define MAX_PRESSURE 90
+
 
 #define VCC_VAL 1023.0
 #define R2_VALUE 4751.0
@@ -31,15 +28,13 @@
 #define B_VALUE 4050.0
 #define K_ABS_ZERO 273.15
 
-// Varibales globales
-// habilitar deshabilitar splash screen
-unsigned int time_left = TIEMPO_INICIAL;
+// Variables de la RSI
 unsigned char change_time = 1;
-unsigned int pressure_perc;
-unsigned int adjust_pressure;
-uint16_t adc_value;
 bool w_pressed, a_pressed, s_pressed, d_pressed;
 
+// Variables globales de presion (habra que quitarlas)
+unsigned int pressure_perc;
+unsigned int adjust_pressure;
 const double precalc = 13.595; // el valor de ln(R2_VALUE/A_VALUE) = 13.595 truncado hacia arriba
 
 struct DC_values {
@@ -91,7 +86,7 @@ void interrupt RSI(){
 	if (PIR1bits.RCIF && PIE1bits.RC1IE) {handleUsartInput();}
 }
 
- double calculate_temp(const double precalc, int adc_temp) {
+double calculate_temp(const double precalc, int adc_temp) {
 	
 	double result;
 	result = (VCC_VAL / adc_temp) - 1;
@@ -175,6 +170,71 @@ void write_adc_values(bool change_temp, bool change_press, int adc_values_arr[28
 	writeTxt(5, 11, buff);
 }
 
+
+
+void updateRunningTimer(state_t timer_state){
+    if (timer_state == Running && change_time) {
+		format_t ftime;
+	    char buff[128];
+
+		ftime = getFormatedTime(time_left);
+		sprintf(buff, "%02d.%0d\n", ftime.segs, ftime.dec);
+		
+		writeTxt(0, 20, buff); 
+		
+		change_time = 0;
+    }
+}
+
+
+void updateStateTextTimer(state_t timer_state) {
+    format_t ftime;
+
+	char countdown[256];
+	char stateText[50];
+  
+	// Update segun los estados
+    clearGLCD(1,1,60,127); // Clear del texto "Ready"/"Running..."/"Stopped"
+    
+    switch (timer_state) { // EL VALOR ACTUAL DEL STATUS
+        case Ready:
+
+            sprintf(stateText, "Ready\n");
+            
+            ftime = getFormatedTime(time_left);
+            sprintf(countdown, "%02d.%0d\n", ftime.segs, ftime.dec);
+
+            
+            writeTxt(0, 20, countdown); 
+            writeTxt(1,19, stateText); 
+            break;
+            
+        case Running:
+            // Aqui, como el countdown de running se tiene que actualizar cada decima de segundo
+            // solo nos preocupamos de escribir el texto del estado de "Running..."
+            
+            sprintf(stateText, "Running...\n"); 
+            
+            writeTxt(1,14, stateText);
+            break;
+            
+        case Stopped:
+            // Es necesario escribir el valor del timer en stopped 
+            // para tener el valor correcto en caso de pausa
+
+            sprintf(stateText, "Stopped!\n");
+            
+            ftime = getFormatedTime(time_left);
+            sprintf(countdown, "%02d.%0d\n", ftime.segs, ftime.dec);
+
+            
+            writeTxt(0, 20, countdown); 
+            writeTxt(1,16, stateText);
+            
+            break;
+    }
+}
+
 void main(void)
 { 
 	configPIC();
@@ -209,6 +269,12 @@ void main(void)
 
 	int adc_channel_values[28];
 
+	// mover a Usart.h
+	for (int i = 0; i < 4; i++) {
+		if (i == 1) continue;
+		puts_usart1(splash_text[i]);
+	}
+
 	while (1)
 	{   
 		// adc related update flags to 0
@@ -217,7 +283,8 @@ void main(void)
 		// no hay conversion / ultima conversion ha acabado
 		
 		// Si el canal de la conversion tiene un valor distinto del anterior, 
-		// last_updated_channel = CHS; else last_updated_channel = -1;
+		// last_updated_channel = CHS; 
+		// else last_updated_channel = -1;
 		int last_updated_channel = ADC_ConversionLogic(adc_channel_values);
 		
 		if (last_updated_channel == 6) change_temp = true;

@@ -22,10 +22,7 @@ void play_splash_screen() {
         writeTxt(2+i, column, splash_text[i]); 
     }
 
-	for (int i = 0; i < 4; i++) {
-		if (i == 1) continue;
-		puts_usart1(splash_text[i]);
-	}
+	
     __delay_ms(2000);
     clearGLCD(0,7,0,127); 
 }
