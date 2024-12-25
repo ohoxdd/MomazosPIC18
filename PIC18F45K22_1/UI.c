@@ -140,7 +140,7 @@ bool CheckUpdateButtonAnim(button_id id, bool pressed, int anim_state) {
 void setup_medidor(int fil, int col){
 	medidor_base_f = fil + 51;
 	medidor_base_c = col + 5;
-	writeCharMatrixRow(medidor,fil,col);
+	// writeCharMatrixRow(medidor,fil,col);
 }
 
 void invertDot(int row, int col) {

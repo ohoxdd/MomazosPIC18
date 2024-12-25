@@ -12,6 +12,7 @@ FUNCIONES
 
 [] Evaluar si podriamos sustituir todos los datatypes de coma flotante
 	por ints, y tratarlos nosotros como valores de **coma fija**
+[] Mejorar precisión en calculo del tiempo (temperatura con coma fija)
 
 --------
 INTERFAZ 
