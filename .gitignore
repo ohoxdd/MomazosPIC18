@@ -1,5 +1,12 @@
+# workspace proteus files
 *.workspace
-./.vscode/
+
+# stinky vscode volder
+.vscode
+
+# backups proteus
 'Project Backups'/
+
+# proteus debug info
 PIC18F45K22_1/Debug/*
 
