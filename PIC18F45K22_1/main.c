@@ -29,11 +29,12 @@
 #define K_ABS_ZERO 273.15
 
 
+// Variable global temperatura precalculada
+const double precalc = 13.595; 
 
 // Variables globales de presion (habra que quitarlas)
 unsigned int pressure_perc;
 unsigned int adjust_pressure;
-const double precalc = 13.595; // el valor de ln(R2_VALUE/A_VALUE) = 13.595 truncado hacia arriba
 
 struct DC_values {
 	uint8_t MSb; // CCPR3L
@@ -73,7 +74,24 @@ void interrupt RSI(){
 	if (PIR1bits.RCIF && PIE1bits.RC1IE) {usart_handle_input_RSI();}
 }
 
-double calculate_temp(const double precalc, int adc_temp) {
+/* factorizamos R2/A
+	
+	   -1 * R2 * (1 - VCC/ VOUT) 
+	 -------------------------------
+	              A
+	
+	= R2/A * (VCC/VOUT - 1)
+
+	por propiedades de logaritmos
+	
+			ln (R2/A * (VCC/VOUT - 1))
+			= ln(R2/A) + ln(VCC/VOUT - 1)
+
+	usamos ln(R2/A) previamente calculado 
+ 	precalc el valor redondeado de ln(R2/A) = 13.595  	
+*/
+
+double calculate_temp(int adc_temp) {
 	
 	double result;
 	result = (VCC_VAL / adc_temp) - 1;
@@ -98,7 +116,9 @@ unsigned int getCompressorTime(int adc_channel_values[28]) {
 	int result;
 	int adc_temp = adc_channel_values[6];
 	int read_press = getReadPressure(adc_channel_values[7]);
-	int t_ambient = (int)calculate_temp(precalc, adc_temp); // esto puede llegar a truncar bastante
+
+	double t_ambient_double = calculate_temp(adc_temp);
+	int t_ambient = (int)t_ambient_double; // esto puede llegar a truncar bastante
 	result = ((pressure_perc-read_press)/2) - (t_ambient - 25);
 	result *= 10; // esto para que este en decimas de segundo
 	if (result < 0) result = 0;
@@ -160,8 +180,7 @@ void write_adc_values(bool change_temp, bool change_press, int adc_values_arr[28
 
 
 
-void updateRunningTimer(state_t timer_state){
-    if (timer_state == Running && change_time) {
+void writeTimerCountdown(state_t timer_state){
 		format_t ftime;
 	    char buff[128];
 
@@ -171,7 +190,6 @@ void updateRunningTimer(state_t timer_state){
 		writeTxt(0, 20, buff); 
 		
 		change_time = false;
-    }
 }
 
 
@@ -285,7 +303,7 @@ void main(void)
 			// escribe temperatura
 			clearGLCD(2,2, 63, 127);
 			char buff[128];
-			temperature = calculate_temp(precalc, adc_channel_values[6]);
+			temperature = calculate_temp(adc_channel_values[6]);
 			sprintf(buff, "%.2f C", temperature);
 			writeTxt(2, 16, buff);
 			write_pressure();
@@ -296,9 +314,13 @@ void main(void)
 			clearGLCD(3,3, 63, 127);
 			char buff[128];
 			unsigned int read_press = getReadPressure(adc_channel_values[7]);
-			sprintf(buff, "%2d C", read_press);
+			sprintf(buff, "%2d P", read_press);
 			writeTxt(3, 19, buff);
 			write_pressure();
+		}
+
+		if (timer_state == Running && change_time) {
+			writeTimerCountdown(timer_state); 
 		}
 
         PREV_C = READ_C; // PREVIO <- ACTUAL
@@ -365,6 +387,9 @@ void main(void)
 			// SELECT
 			if (inputDetector(PREV_C, READ_C, 2, 0) || s_pressed) {
 				s_pressed = false;
+
+				
+
 				if (timer_state == Ready) {
 					// next state == Running, calculamos el tiempo
 					// esto es un poco chapuza pq me da pereza organizar el codigo bien
@@ -386,18 +411,18 @@ void main(void)
 						usart_1_puts(debug);
 						sprintf(debug, "Formula:\n");
 						usart_1_puts(debug);
-						sprintf(debug, "s = (%d-%d)/2 - (%d - 25)\n", pressure_perc, read_press, (int)calculate_temp(precalc, adc_channel_values[6]));
+						sprintf(debug, "s = (%d-%d)/2 - (%d - 25)\n", pressure_perc, read_press, (int)calculate_temp(adc_channel_values[6]));
 						usart_1_puts(debug);
 
 					/* DEBUG USART LINES */
 					/* DEBUG USART LINES */
 				}
+
 				timer_state = states_set_next(timer_state);
 				updateStateTextTimer(timer_state);
+				
 			}
 
 		} 
-
-        updateRunningTimer(timer_state);
 	}
 }
