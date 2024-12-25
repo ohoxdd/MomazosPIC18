@@ -23,7 +23,6 @@ void states_set(state_t state) {
         case Ready: 
             // STOPPED ---> READY
 			PORTA = 0x1;
-            time_left = TIEMPO_INICIAL;
             TMR0H = TIMER_STARTH;
             TMR0L = TIMER_STARTL;
             break;

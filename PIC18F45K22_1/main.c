@@ -47,6 +47,14 @@ struct DC_values DC_configurations[3] = {
 	{0x76, 0xB}  // 95%
 };
 
+// Variables de la RSI
+unsigned char change_time = 1;
+unsigned int time_left = TIEMPO_INICIAL;
+
+void tic(void) {
+	time_left--;
+	change_time = 1;
+}
 
 void interrupt RSI(){
 	if (TMR2IF && TMR2IE) {TMR2IF = 0;}
@@ -354,7 +362,8 @@ void main(void)
 					// esto tmb lo hago aqui pq el propio states_set enciende los timers, 
 					// y se debe calcular el tiempo antes de encender el propio timer
 					
-					time_left = getCompressorTime(adc_channel_values);
+					time_left = TIEMPO_INICIAL;
+					// time_left = getCompressorTime(adc_channel_values);
 				}
 				timer_state = states_set_next(timer_state);
 				updateStateTextTimer(timer_state);

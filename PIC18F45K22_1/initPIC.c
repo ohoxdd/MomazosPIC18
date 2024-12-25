@@ -1,9 +1,5 @@
 #include "initPIC.h"
 
-void tic(void) {
-	time_left--;
-	change_time = 1;
-}
 
 void initPIC_config()
 {
