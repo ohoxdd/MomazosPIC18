@@ -17,3 +17,10 @@ temperatura en calculate_temp():
 
 	 usamos ln(R2/A) previamente calculado
 
+
+// avanzamos el timer para que OVF ocurra en 0.1s
+// asignamos al buffer de TMR0H el valor de timer_starth
+// sumamos timer_startl a tmr0l, (el buffer high escribe en TMR0H)  
+// para tener en cuenta las instrucciones pasadas entre el OVF y la asignaci�n
+		
+

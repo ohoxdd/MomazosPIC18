@@ -38,26 +38,20 @@ unsigned char change_time = 1;
 unsigned int pressure_perc;
 unsigned int adjust_pressure;
 uint16_t adc_value;
-bool change_temp;
-bool adc_update;
-int adc_channel_values[28];
 bool w_pressed, a_pressed, s_pressed, d_pressed;
 
 const double precalc = 13.595; // el valor de ln(R2_VALUE/A_VALUE) = 13.595 truncado hacia arriba
 
 struct DC_values {
-	uint8_t MSb; // CPPR3L
-	uint8_t LSb; // CPP3CON<5:4>
+	uint8_t MSb; // CCPR3L
+	uint8_t LSb; // CCP3CON<5:4>
 };
 
-
 struct DC_values DC_configurations[3] = {
-	{0x32, 0x0}, // 40%
+	{0x32, 0x0},  // 40%
 	{0x54, 0x0}, // 80%
 	{0x76, 0xB}  // 95%
 };
-
-struct DC_values current_dc;
 
 void handleUsartInput() {
 	unsigned char input = RCREG1; // esto levanta ya la flag
@@ -80,37 +74,21 @@ void handleADCresult() {
 }
 
 void interrupt RSI(){
-	if (TMR2IF == 1 && TMR2IE == 1) {
-		TMR2IF = 0;
-		// TMR2IE = 0;
-		// Bajando el enable no he notado una diferencia de comportamiento
-	}
+	if (TMR2IF && TMR2IE) {TMR2IF = 0;}
 	
-	if (TMR0IF == 1 && TMR0IE == 1) {
+	if (TMR0IF && TMR0IE) {
 		TMR0IF = 0;
-
-		// avanzamos el timer para que OVF ocurra en 0.1s
-		// asignamos al buffer de TMR0H el valor de timer_starth
-		// sumamos timer_startl a tmr0l, (el buffer high escribe en TMR0H)  
-		// para tener en cuenta las instrucciones pasadas entre el OVF y la asignaci�n
-		
-		// Necesario mover esto a tic() ?
 		TMR0H = TIMER_STARTH;
 		TMR0L += TIMER_STARTL;
-
 		tic();
 	}
 	
-	if (ADIF == 1 && ADIE == 1) {
+	if (ADIF && ADIE) {
 		ADIF = 0;
 		handleADCresult();
 	}
 	
-	if (PIR1bits.RCIF && PIE1bits.RC1IE) {
-		PIE1bits.RC1IE = 0;
-		handleUsartInput();
-		PIE1bits.RC1IE = 1;
-	}
+	if (PIR1bits.RCIF && PIE1bits.RC1IE) {handleUsartInput();}
 }
 
  double calculate_temp(const double precalc, int adc_temp) {
@@ -122,6 +100,28 @@ void interrupt RSI(){
 	return result; 
 
 } 
+
+// Para hacer la conversion del valor del adc a la presion (0:1023) --> (0:90)
+// Lo que hacemos es escalar el valor 90/1023 a 58982/2^16 para poder hacer
+// una division por potencia de 2.  
+
+unsigned int getReadPressure(int adc_press) {
+	unsigned int pressure;
+	return ((adc_press*58982)/65536);
+	// return ((adc_press*58982) >> 16) no estoy seguro de que esto funcione
+	// a lo mejor el compilador hace su magia pero meh, no me quiero arriesgar
+}
+
+// Podriamos pasar solo los valores del channel 6 y 7, no hay necesidad de copiar el array entero
+unsigned int getCompressorTime(int adc_channel_values[28]) {
+	unsigned int result;
+	int adc_temp = adc_channel_values[6];
+	int read_press = getReadPressure(adc_channel_values[7]);
+	int t_ambient = (int)calculate_temp(precalc, adc_temp); // esto puede llegar a truncar bastante
+	result = ((pressure_perc-read_press)/2) - (25 - t_ambient);
+	result *= 10; // esto para que este en decimas de segundo
+	return result;
+}
 
 void write_pressure(){
 	char buff[256];
@@ -198,7 +198,6 @@ void main(void)
 	state_t timer_state = Ready;
 	set_state(timer_state);
     updateStateTextTimer(timer_state);
-	// bool timer_end = false;
 	
 	// selecciona la presion y la pone a 50% por defecto junto al medidor
 	pressure_perc = 50;
@@ -207,23 +206,31 @@ void main(void)
 	// Variable que dicta si se escribe la temperatura en pantalla 
 	// y se recalcula la presion ajustada a la temperatura
 	double temperature = 25.0;
-	// Podriamos usar un formato de coma fija?
-	
+
+	int adc_channel_values[28];
+
 	while (1)
 	{   
 		// adc related update flags to 0
 		bool change_temp = false;
 		bool change_press = false;
 		// no hay conversion / ultima conversion ha acabado
-
-		int updated_channel = ADC_ConversionLogic(adc_channel_values);
-
-		if (updated_channel == 6) change_temp = true;
-		else if (updated_channel == 7) change_press = true;
+		
+		// Si el canal de la conversion tiene un valor distinto del anterior, 
+		// last_updated_channel = CHS; else last_updated_channel = -1;
+		int last_updated_channel = ADC_ConversionLogic(adc_channel_values);
+		
+		if (last_updated_channel == 6) change_temp = true;
+		else if (last_updated_channel == 7) change_press = true;
 
 		write_adc_values(change_temp, change_press, adc_channel_values);
 		
 		if (change_temp) {
+			// calcular la nueva cantidad de tiempo que debe estar
+			// encendido el compresor
+			
+			time_left = getCompressorTime(adc_channel_values);
+
 			// escribe temperatura
 			clearGLCD(2,2, 63, 127);
 			char buff[128];
@@ -238,17 +245,19 @@ void main(void)
 		
 		bool timer_end = (timer_state == Running && time_left == 0);
 
-		// bool punxada =  detectar_punx()
-		
-		char buff[128];
 		// DETECTOR DE INPUTS
 		if (timer_state == Running)	{
+
 			// RUNNING -> STOPPED
 			if (inputDetector(PREV_C, READ_C, 3, 0) || w_pressed || timer_end) { // || punxada
 				w_pressed = false;
 				timer_state = set_next_state(timer_state);
 				updateStateTextTimer(timer_state);
 			}
+
+			// bool punxada =  detectar_punx()
+			// if (punxada) bla bla bla
+
 		} else {
 			// RC0 button checking
 			if ((!RC0_pressed && inputDetector(PREV_C, READ_C,  0, FALLING)) || d_pressed ){
