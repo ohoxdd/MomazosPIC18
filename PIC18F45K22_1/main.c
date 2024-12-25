@@ -48,12 +48,12 @@ struct DC_values DC_configurations[3] = {
 };
 
 // Variables de la RSI
-unsigned char change_time = 1;
+bool change_time = true;
 unsigned int time_left = TIEMPO_INICIAL;
 
 void tic(void) {
 	time_left--;
-	change_time = 1;
+	change_time = true;
 }
 
 void interrupt RSI(){
@@ -83,27 +83,27 @@ double calculate_temp(const double precalc, int adc_temp) {
 	return result; 
 
 } 
-
 // Para hacer la conversion del valor del adc a la presion (0:1023) --> (0:90)
 // Lo que hacemos es escalar el valor 90/1023 a 58982/2^16 para poder hacer
 // una division por potencia de 2.  
 
-unsigned int getReadPressure(int adc_press) {
-	unsigned int pressure;
-	return ((adc_press*58982)/65536);
+unsigned int getReadPressure(unsigned long int adc_press) {
+	//return ((adc_press*58982)/65536);
+	return (adc_press*88)/1000;
 	// return ((adc_press*58982) >> 16) no estoy seguro de que esto funcione
 	// a lo mejor el compilador hace su magia pero meh, no me quiero arriesgar
 }
 
 // Podriamos pasar solo los valores del channel 6 y 7, no hay necesidad de copiar el array entero
 unsigned int getCompressorTime(int adc_channel_values[28]) {
-	unsigned int result;
+	int result;
 	int adc_temp = adc_channel_values[6];
 	int read_press = getReadPressure(adc_channel_values[7]);
 	int t_ambient = (int)calculate_temp(precalc, adc_temp); // esto puede llegar a truncar bastante
-	result = ((pressure_perc-read_press)/2) - (25 - t_ambient);
+	result = ((pressure_perc-read_press)/2) - (t_ambient - 25);
 	result *= 10; // esto para que este en decimas de segundo
-	return result;
+	if (result < 0) result = 0;
+	return (unsigned int)result;
 }
 
 void write_pressure(){
@@ -151,11 +151,12 @@ void write_adc_values(bool change_temp, bool change_press, int adc_values_arr[28
 	}
 	if (change_press) {
 		clearChars(7,11,11);
+		//read_press = getReadPressure(adc_values_arr[7]);
 		sprintf(buff, "ADC 7: %d\n", adc_values_arr[7]);
 		writeTxt(7, 11, buff);
 	}
-	sprintf(buff, "ADC CHAN: %d\n", ADCON0bits.CHS);
-	writeTxt(5, 11, buff);
+	//sprintf(buff, "ADC CHAN: %d\n", ADCON0bits.CHS);
+	//writeTxt(5, 11, buff);
 }
 
 
@@ -170,7 +171,7 @@ void updateRunningTimer(state_t timer_state){
 		
 		writeTxt(0, 20, buff); 
 		
-		change_time = 0;
+		change_time = false;
     }
 }
 
@@ -290,6 +291,16 @@ void main(void)
 			writeTxt(2, 16, buff);
 			write_pressure();
 		}
+		
+		if (change_press) {
+			// escribe presion
+			clearGLCD(3,3, 63, 127);
+			char buff[128];
+			unsigned int read_press = getReadPressure(adc_channel_values[7]);
+			sprintf(buff, "%2d C", read_press);
+			writeTxt(3, 19, buff);
+			write_pressure();
+		}
 
         PREV_C = READ_C; // PREVIO <- ACTUAL
 		READ_C = PORTC; // ACTUAL <- PORTC
@@ -362,8 +373,25 @@ void main(void)
 					// esto tmb lo hago aqui pq el propio states_set enciende los timers, 
 					// y se debe calcular el tiempo antes de encender el propio timer
 					
-					time_left = TIEMPO_INICIAL;
-					// time_left = getCompressorTime(adc_channel_values);
+					//time_left = TIEMPO_INICIAL;
+					time_left = getCompressorTime(adc_channel_values);
+					
+					/* DEBUG USART LINES */
+					/* DEBUG USART LINES */
+
+						char debug[128];
+						sprintf(debug, "Tiempo configurado a %02d.%d segundos\n", time_left/10, time_left%10);
+						usart_1_puts(debug);
+						unsigned int read_press = getReadPressure(adc_channel_values[7]);
+						sprintf(debug, "Diferencia de presion = %d - %d = %d\n", pressure_perc, read_press, pressure_perc - read_press);
+						usart_1_puts(debug);
+						sprintf(debug, "Formula:\n");
+						usart_1_puts(debug);
+						sprintf(debug, "s = (%d-%d)/2 - (%d - 25)\n", pressure_perc, read_press, (int)calculate_temp(precalc, adc_channel_values[6]));
+						usart_1_puts(debug);
+
+					/* DEBUG USART LINES */
+					/* DEBUG USART LINES */
 				}
 				timer_state = states_set_next(timer_state);
 				updateStateTextTimer(timer_state);

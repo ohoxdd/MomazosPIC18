@@ -4,7 +4,7 @@ FUNCIONES
    <= 30 PSI (40%)
    <= 60 PSI (80%)
    <= 90 PSI (95%)
-[] Duración del compresor en base a la presión y la temperatura 
+[X] Duración del compresor en base a la presión y la temperatura 
     Time = (PSIWanted - PSIcurrent)/2 - (Tambient - 25.0)
 [X] Deshabilitar inputs botones (cambio de +, -, select) cuando esta en progreso 
 [X] Implementar boton de abortar/Emergencia RC3 
@@ -34,8 +34,8 @@ Elementos
 -----------------------
 ORGANIZACIÓN DEL CÓDIGO
 
-[] ADC en su propio header 
-[] Cambio de estados en su propio header
+[X] ADC en su propio header 
+[X] Cambio de estados en su propio header
 
 
 Objetivo de funcionamiento:
