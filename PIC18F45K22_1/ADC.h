@@ -7,6 +7,8 @@
 
 uint16_t adc_value;
 
+void ADC_handle_result_RSI();
+
 void ADC_start(int channel);
 
 int ADC_selectedChannel();

@@ -1,5 +1,16 @@
 #include "usart.h"
 
+
+void usart_handle_input_RSI() {
+	unsigned char input = RCREG1; // esto levanta ya la flag
+	switch (input) {
+		case 'w': {w_pressed = true; break;}
+		case 'a': {a_pressed = true; break;}
+		case 's': {s_pressed = true; break;}
+		case 'd': {d_pressed = true; break;}
+	}
+}
+
 void usart_1_putc (char xc)
 {
 	while (!TXSTA1bits.TRMT);

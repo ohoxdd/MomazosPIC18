@@ -3,8 +3,13 @@
 
 #include <xc.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "initPIC.h"
+
+bool w_pressed, a_pressed, s_pressed, d_pressed;
+
+void usart_handle_input_RSI();
 
 void usart_1_putc (char xc);
 

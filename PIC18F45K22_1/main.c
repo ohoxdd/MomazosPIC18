@@ -31,7 +31,6 @@
 
 // Variables de la RSI
 unsigned char change_time = 1;
-bool w_pressed, a_pressed, s_pressed, d_pressed;
 
 // Variables globales de presion (habra que quitarlas)
 unsigned int pressure_perc;
@@ -49,15 +48,7 @@ struct DC_values DC_configurations[3] = {
 	{0x76, 0xB}  // 95%
 };
 
-void handleUsartInput() {
-	unsigned char input = RCREG1; // esto levanta ya la flag
-	switch (input) {
-		case 'w': {w_pressed = true; break;}
-		case 'a': {a_pressed = true; break;}
-		case 's': {s_pressed = true; break;}
-		case 'd': {d_pressed = true; break;}
-	}
-}
+
 
 void tic(void)
 {
@@ -65,9 +56,7 @@ void tic(void)
 	change_time = 1;
 }
 
-void handleADCresult() {
-	adc_value = (ADRESH << 8) | ADRESL;
-}
+
 
 void interrupt RSI(){
 	if (TMR2IF && TMR2IE) {TMR2IF = 0;}
@@ -81,10 +70,10 @@ void interrupt RSI(){
 	
 	if (ADIF && ADIE) {
 		ADIF = 0;
-		handleADCresult();
+		ADC_handle_result_RSI();
 	}
 	
-	if (PIR1bits.RCIF && PIE1bits.RC1IE) {handleUsartInput();}
+	if (PIR1bits.RCIF && PIE1bits.RC1IE) {usart_handle_input_RSI();}
 }
 
 double calculate_temp(const double precalc, int adc_temp) {

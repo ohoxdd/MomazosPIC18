@@ -1,5 +1,9 @@
 #include "ADC.h"
 
+void ADC_handle_result_RSI() {
+	adc_value = (ADRESH << 8) | ADRESL;
+}
+
 void ADC_start(int channel) {
 	ADCON0bits.CHS = channel;
 	GO_nDONE = 1;    
