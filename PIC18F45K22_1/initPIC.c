@@ -1,5 +1,5 @@
 #include "initPIC.h"
-void configPIC()
+void initPIC_config()
 {
 	T2CONbits.TMR2ON = 0;
 	T0CONbits.TMR0ON = 0;

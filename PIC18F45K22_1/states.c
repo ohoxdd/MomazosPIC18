@@ -1,6 +1,6 @@
 #include "states.h"
 
-void set_state(state_t state) {
+void states_set(state_t state) {
     switch (state) {
         case Running: 
             // READY ---> RUNNING
@@ -30,7 +30,7 @@ void set_state(state_t state) {
     }
 }
 
-state_t set_next_state(state_t state){
+state_t states_set_next(state_t state){
 	state_t new_state;
 
 	switch (state) {
@@ -39,6 +39,6 @@ state_t set_next_state(state_t state){
 		case Stopped: 	{new_state = Ready; break;}
 	}
 
-    set_state(new_state);
+    states_set(new_state);
 	return new_state;
 }

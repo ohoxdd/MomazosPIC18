@@ -11,7 +11,7 @@
 
 unsigned int time_left = TIEMPO_INICIAL;
 
-void set_state(state_t state);
-state_t set_next_state(state_t state);
+void states_set(state_t state);
+state_t states_set_next(state_t state);
 
 #endif

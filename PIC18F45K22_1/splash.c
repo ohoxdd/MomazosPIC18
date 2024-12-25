@@ -3,7 +3,7 @@
 
 
 
-void play_splash_screen() {
+void splash_play() {
 	if (!splash_on) {
         return;
     }

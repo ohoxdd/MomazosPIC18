@@ -237,13 +237,13 @@ void updateStateTextTimer(state_t timer_state) {
 
 void main(void)
 { 
-	configPIC();
+	initPIC_config();
 	
 	GLCDinit();			//Inicialitzem la pantalla
 	clearGLCD(0,7,0,127);	//Esborrem pantalla
 	setStartLine(0);		//Definim linia d'inici
    
-	play_splash_screen();
+	splash_play();
 	
 	// variables responsables la detecci�n de flancos
    	uint8_t READ_C = PORTC;
@@ -256,7 +256,7 @@ void main(void)
 	bool RC1_update = true;
 	
 	state_t timer_state = Ready;
-	set_state(timer_state);
+	states_set(timer_state);
     updateStateTextTimer(timer_state);
 	
 	// selecciona la presion y la pone a 50% por defecto junto al medidor
@@ -314,7 +314,7 @@ void main(void)
 			// RUNNING -> STOPPED
 			if (inputDetector(PREV_C, READ_C, 3, 0) || w_pressed || timer_end) { // || punxada
 				w_pressed = false;
-				timer_state = set_next_state(timer_state);
+				timer_state = states_set_next(timer_state);
 				updateStateTextTimer(timer_state);
 			}
 
@@ -371,12 +371,12 @@ void main(void)
 					// next state == Running, calculamos el tiempo
 					// esto es un poco chapuza pq me da pereza organizar el codigo bien
 					//
-					// esto tmb lo hago aqui pq el propio set_state enciende los timers, 
+					// esto tmb lo hago aqui pq el propio states_set enciende los timers, 
 					// y se debe calcular el tiempo antes de encender el propio timer
 					
 					time_left = getCompressorTime(adc_channel_values);
 				}
-				timer_state = set_next_state(timer_state);
+				timer_state = states_set_next(timer_state);
 				updateStateTextTimer(timer_state);
 			}
 

@@ -5,5 +5,5 @@
 
 #define _XTAL_FREQ 8000000  
 
-void configPIC();
+void initPIC_config();
 #endif
