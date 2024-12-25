@@ -3,9 +3,17 @@
  * Compiler:  MPLAB XC8
  */
 
+//  #include "defines.h" // comenta esto y descomenta lo de arriba pa q compile
+
 #define _XTAL_FREQ 8000000  
 
 #include <xc.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <math.h>
+
+
 #include "ADC.h"
 #include "states.h"
 #include "UI.h"
@@ -15,10 +23,7 @@
 #include "utils.h"
 #include "initPIC.h"
 
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdint.h>
-#include <math.h>
+
 
 
 

@@ -1,5 +1,4 @@
 #include "utils.h"
-#include <xc.h>
 
 #define _XTAL_FREQ 8000000  
 

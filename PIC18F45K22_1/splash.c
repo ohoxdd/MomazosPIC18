@@ -1,8 +1,6 @@
 #include "splash.h"
 #include "test.h"
-#include "utils.h"
-#include <stdbool.h>
-#include <xc.h>
+
 
 bool splash_on = 0;
 

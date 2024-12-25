@@ -1,5 +1,8 @@
 #ifndef STATES_H
 #define STATES_H
+
+#include <xc.h>
+
 #include "typedefs.h"
 
 #define TIMER_STARTL 0xB0

@@ -1,5 +1,5 @@
 #include "states.h"
-#include <xc.h>
+
 void set_state(state_t state) {
     switch (state) {
         case Running: 

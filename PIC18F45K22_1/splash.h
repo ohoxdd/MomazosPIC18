@@ -1,6 +1,13 @@
 #ifndef SPLASH_H
 #define SPLASH_H
 
+#include <xc.h>
+#include <stdbool.h>
+
+#include "utils.h"
+
+
+
 #define TITOL "L7 Projecte\n"
 #define NOM1 "Angel A. Quinones\n"
 #define NOM2 "Hector Fdez. de Sevilla\n"

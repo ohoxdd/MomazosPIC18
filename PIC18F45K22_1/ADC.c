@@ -1,7 +1,4 @@
 #include "ADC.h"
-#include <stdbool.h>
-#include <xc.h>
-
 
 void ADC_start(int channel) {
 	ADCON0bits.CHS = channel;

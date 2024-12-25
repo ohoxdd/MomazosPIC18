@@ -1,5 +1,6 @@
 #ifndef TYPEDEFS_H
 #define TYPEDEFS_H
+
 typedef enum{
  Ready,
  Running,

@@ -1,6 +1,9 @@
 #ifndef ADC_H
 #define ADC_H
+
+#include <xc.h>
 #include <stdint.h>
+#include <stdbool.h>
 
 uint16_t adc_value;
 

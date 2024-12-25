@@ -1,8 +1,5 @@
 #include "UI.h"
-#include <stdlib.h>
-#include <stdbool.h>
-#include "GLCD.h"
-#include <stdio.h>
+
 
 int medidor_base_f = 60;
 int medidor_base_c = 5;
