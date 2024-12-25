@@ -21,6 +21,7 @@
 #include "splash.h"
 #include "utils.h"
 #include "usart.h"
+#include "typedefs.h"
 
 #define VCC_VAL 1023.0
 #define R2_VALUE 4751.0
@@ -34,11 +35,6 @@ const double precalc = 13.595;
 // Variables globales de presion (habra que quitarlas)
 unsigned int pressure_perc;
 unsigned int adjust_pressure;
-
-struct DC_values {
-	uint8_t MSb; // CCPR3L
-	uint8_t LSb; // CCP3CON<5:4>
-};
 
 struct DC_values DC_configurations[3] = {
 	{0x32, 0x0},  // 40%
