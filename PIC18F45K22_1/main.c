@@ -133,18 +133,23 @@ void change_pwm_values(struct DC_values values) {
 	CCPR3L = values.MSb;
 }
 
-int change_selected_pressure(int change, int selected_pressure) {
-	int old_pressure = selected_pressure;
-	selected_pressure += change;
-
-	if (selected_pressure <= MIN_PRESSURE) {
-		selected_pressure = MIN_PRESSURE;
-	} else if (selected_pressure >= MAX_PRESSURE) {
-		selected_pressure = MAX_PRESSURE;
-	}
-
+bool change_selected_pressure(int change, int* pselected) {
 	
-	return selected_pressure;
+	int old_pressure = *pselected;
+	int new_pressure = old_pressure + change;
+
+	if (new_pressure <= MIN_PRESSURE) {
+		new_pressure = MIN_PRESSURE;
+	} else if (new_pressure >= MAX_PRESSURE) {
+		new_pressure = MAX_PRESSURE;
+	}
+	bool has_changed = old_pressure != new_pressure;
+
+	if (has_changed) {
+		*pselected = new_pressure;
+	}
+	
+	return has_changed;
 }
 
 void change_pwm_profile(int selected_pressure) {
@@ -215,7 +220,7 @@ void updateStateTextTimer(state_t timer_state) {
 
             sprintf(stateText, "Ready\n");
             
-            writeTimerCountdown(time_left);
+            // writeTimerCountdown(time_left);
             writeTxt(fil,col, stateText); 
             break;
             
@@ -234,7 +239,7 @@ void updateStateTextTimer(state_t timer_state) {
 
             sprintf(stateText, "Stopped!\n");
             
-			writeTimerCountdown(time_left);
+			// writeTimerCountdown(time_left);
             writeTxt(fil,col, stateText);
             
             break;
@@ -389,7 +394,7 @@ void main(void)
 			
 			// actualiza texto de countdown
 			if (change_time) {
-				writeTimerCountdown(timer_state); 
+				writeTimerCountdown(time_left); 
 			}
 
 			// actualiza barra de progreso
@@ -397,7 +402,9 @@ void main(void)
 
 			/* RUNNING -> STOPPED */
 			bool timer_end = time_left == 0;
+
 			if (button_stop_pressed || timer_end) {
+				writeTimerCountdown(time_left);
 				timer_state = states_set_next(timer_state);
 				updateStateTextTimer(timer_state);
 			}
@@ -429,17 +436,23 @@ void main(void)
 		/* ESTADO READY */
 
 		else if (timer_state == READY) {
-
+			bool new_selected_press = false;
 			// Aumenta presión
 			if (button_add_pressed){
-				selected_press = change_selected_pressure(1, selected_press);
+				new_selected_press = change_selected_pressure(1, &selected_press);
 				write_pressure(selected_press);
 			} 
 
 			// Disminuye presión
 			if (button_sub_pressed){
-				selected_press = change_selected_pressure(-1, selected_press);
+				new_selected_press = change_selected_pressure(-1, &selected_press);
 				write_pressure(selected_press);
+			}
+
+			// actualiza el valor del contador si es necesario
+			if (new_selected_press || change_temp || change_press) {
+				time_left = getCompressorTime(adc_channel_values, selected_press);
+				writeTimerCountdown(time_left); 
 			}
 
 			/* READY -> RUNNING */
@@ -480,6 +493,9 @@ void main(void)
 				clear_medidor();
 				timer_state = states_set_next(timer_state);
 				updateStateTextTimer(timer_state);
+
+				// reinicia el tiempo del contador
+				writeTimerCountdown(time_max);
 			} 
 		}
 	}
