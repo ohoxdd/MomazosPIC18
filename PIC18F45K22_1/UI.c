@@ -2,7 +2,7 @@
 
 
 
-void writeCharMatrixRow(sprite_t sprite, int start_row, int start_col) {
+void writeSpriteAnywhere(sprite_t sprite, int start_row, int start_col) {
 	int fil = sprite.fil;
 	int col = sprite.col;
 	char* matrix = sprite.matrix;
@@ -10,46 +10,18 @@ void writeCharMatrixRow(sprite_t sprite, int start_row, int start_col) {
 	int start_page = start_row/8;
 	int bit_offset = start_row % 8;
 
-	if (bit_offset == 0){
-		int array_ind = 0;
-		for (int i = 0; i < fil; ++i) {
-			for (int j = 0; j < col; ++j) {
-				writeByte(start_page + i, start_col + j, matrix[array_ind]);
-				array_ind++;
-			}
-		}
-	} else {
-
-		uint8_t mask = 0xFF >> (8 - bit_offset); 	
-		
+	// if (bit_offset == 0){  
+	int array_ind = 0;
+	for (int i = 0; i < fil; ++i) {
 		for (int j = 0; j < col; ++j) {
-			int array_index = j;
-			uint8_t read = readByte(start_page, start_col + j); 	//
-			uint8_t prev = read & mask; 			
-			
-			uint8_t draw, res; 
-
-			for (int i = 0; i < fil; ++i ){
-				draw = matrix[array_index]; 
-				res = draw << bit_offset; 
-				res |= prev; 
-				writeByte(start_page + i, start_col + j, res);
-				array_index += col;
-
-				prev = draw >> (8 - bit_offset); 
-				
-			}
-
-			int final_page = start_page + fil;
-			read = readByte(final_page, start_col + j); 
-			read = read & (~mask); 
-			res = read | prev; 
-			writeByte(final_page, start_col + j, res);
+			writeByteAnywhere(start_row + fil*8, start_col + j, matrix[array_ind]);
+			array_ind++;
 		}
-	}
+	} 
+	
 }
 
-writeByteAnywhere(int start_row, int start_col, int draw) {
+void writeByteAnywhere(int start_row, int start_col, int draw) {
 
 	int start_page = start_row/8;
 	int bit_offset = start_row % 8;

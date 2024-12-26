@@ -310,7 +310,7 @@ void main(void)
 	bool RC1_update = true; */
 	
 	
-
+	// writeSpriteAnywhere(stateReady, 45, 60);
 	
 	
 	// selecciona la presion y la pone a 50% por defecto junto al medidor
