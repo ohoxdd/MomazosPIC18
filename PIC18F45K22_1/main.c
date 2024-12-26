@@ -35,11 +35,7 @@ const double precalc = 13.595;
 // Variables globales de presion (habra que quitarlas)
 unsigned int adjust_pressure;
 
-struct DC_values DC_configurations[3] = {
-	{0x32, 0x0},  // 40%
-	{0x54, 0x0}, // 80%
-	{0x76, 0xB}  // 95%
-};
+
 
 // Variables de la RSI
 bool change_time = true;
@@ -142,27 +138,35 @@ void change_pwm_values(struct DC_values values) {
 int change_selected_pressure(int change, int selected_pressure) {
 	int old_pressure = selected_pressure;
 	selected_pressure += change;
+
 	if (selected_pressure <= MIN_PRESSURE) {
 		selected_pressure = MIN_PRESSURE;
 	} else if (selected_pressure >= MAX_PRESSURE) {
 		selected_pressure = MAX_PRESSURE;
 	}
 
-	// Comprobar si la presion pasa de un intervalo a otro y, 
-	// si lo hace, cambiar los valores de los registros que controlan el duty cycle "potencia del compresor"
 	
-	if (old_pressure > 30 && selected_pressure <= 30) {
+	return selected_pressure;
+}
+
+void change_pwm_profile(int selected_pressure) {
+	
+	struct DC_values DC_configurations[3] = {
+		{0x32, 0x0}, // 40%
+		{0x54, 0x0}, // 80%
+		{0x76, 0xB}  // 95%
+	};
+
+	if (selected_pressure <= 30) {
 		// Entra al intervalo <= 30 psi
 		change_pwm_values(DC_configurations[0]);
-	} else if ((old_pressure <= 30 && selected_pressure > 30) || (old_pressure > 60 && selected_pressure <= 60)) {
+	} else if (selected_pressure <= 60) {
 		// Entra al intervalo <= 60 psi
 		change_pwm_values(DC_configurations[1]);
-	} else if (old_pressure <= 60 && selected_pressure > 60) {
+	} else {
 		// Entra al intervalo <= 90 psi
 		change_pwm_values(DC_configurations[2]);
 	}
-
-	return selected_pressure;
 }
 
 void write_adc_values(bool change_temp, bool change_press, int adc_values_arr[28]) {
@@ -463,6 +467,7 @@ void main(void)
 					//time_left = TIEMPO_INICIAL;
 					time_left = getCompressorTime(adc_channel_values, selected_press);
 					time_max = time_left;
+					change_pwm_profile(selected_press);
 					
 					/* DEBUG USART LINES */
 					/* DEBUG USART LINES */
@@ -481,7 +486,6 @@ void main(void)
 					/* DEBUG USART LINES */
 					/* DEBUG USART LINES */
 				}
-
 				timer_state = states_set_next(timer_state);
 				updateStateTextTimer(timer_state);
 				
