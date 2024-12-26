@@ -211,7 +211,7 @@ void updateStateTextTimer(state_t timer_state) {
     clearGLCD(1,1,60,127); // Clear del texto "Ready"/"Running..."/"Stopped"
     
     switch (timer_state) { // EL VALOR ACTUAL DEL STATUS
-        case Ready:
+        case READY:
 
             sprintf(stateText, "Ready\n");
             
@@ -219,7 +219,7 @@ void updateStateTextTimer(state_t timer_state) {
             writeTxt(1,19, stateText); 
             break;
             
-        case Running:
+        case RUNNING:
             // Aqui, como el countdown de running se tiene que actualizar cada decima de segundo
             // solo nos preocupamos de escribir el texto del estado de "Running..."
             
@@ -228,7 +228,7 @@ void updateStateTextTimer(state_t timer_state) {
             writeTxt(1,14, stateText);
             break;
             
-        case Stopped:
+        case STOPPED:
             // Es necesario escribir el valor del timer en stopped 
             // para tener el valor correcto en caso de pausa
 
@@ -327,7 +327,7 @@ void main(void)
 	setup_medidor(48, 1, 50, 0);
 	
 	// inicializa el estado
-	state_t timer_state = Ready;
+	state_t timer_state = READY;
 	states_set(timer_state);
 	// inicializa texto de estado
     updateStateTextTimer(timer_state);
@@ -385,7 +385,7 @@ void main(void)
 
 		/* ESTADO RUNNING */
 		/* ESTADO RUNNING */
-		if (timer_state == Running)	{
+		if (timer_state == RUNNING)	{
 			
 			// actualiza texto de countdown
 			if (change_time) {
@@ -428,7 +428,7 @@ void main(void)
 		/* ESTADO READY */
 		/* ESTADO READY */
 
-		else if (timer_state == Ready) {
+		else if (timer_state == READY) {
 
 			// Aumenta presión
 			if (button_add_pressed){
@@ -472,7 +472,7 @@ void main(void)
 		/* ESTADO STOPPED */
 		/* ESTADO STOPPED */
 
-		else if (timer_state == Stopped){
+		else if (timer_state == STOPPED){
 
 			/* STOPPED -> READY */
 

@@ -2,7 +2,7 @@
 
 void states_set(state_t state) {
     switch (state) {
-        case Running: 
+        case RUNNING: 
             // READY ---> RUNNING
 			
 
@@ -12,7 +12,7 @@ void states_set(state_t state) {
             T0CONbits.TMR0ON = 1;
             break;
             
-        case Stopped: 
+        case STOPPED: 
             // RUNNING ---> STOPPED
 			PORTA = 0x4;
             T2CONbits.TMR2ON = 0;
@@ -20,7 +20,7 @@ void states_set(state_t state) {
             TRISEbits.RE0 = 1; // Disable output driver
             break;
             
-        case Ready: 
+        case READY: 
             // STOPPED ---> READY
 			PORTA = 0x1;
             TMR0H = TIMER_STARTH;
@@ -33,9 +33,9 @@ state_t states_set_next(state_t state){
 	state_t new_state;
 
 	switch (state) {
-		case Ready: 	{new_state = Running; break;}
-		case Running:	{new_state = Stopped; break;}
-		case Stopped: 	{new_state = Ready; break;}
+		case READY: 	{new_state = RUNNING; break;}
+		case RUNNING:	{new_state = STOPPED; break;}
+		case STOPPED: 	{new_state = READY; break;}
 	}
 
     states_set(new_state);

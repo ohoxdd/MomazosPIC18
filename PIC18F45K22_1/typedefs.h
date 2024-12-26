@@ -4,9 +4,9 @@
 #include <stdint.h>
 
 typedef enum{
- Ready,
- Running,
- Stopped
+ READY,
+ RUNNING,
+ STOPPED
 }state_t;
 
 enum flanc_t {
