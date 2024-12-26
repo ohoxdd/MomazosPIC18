@@ -3,22 +3,19 @@
 
 
 void writeSpriteAnywhere(sprite_t sprite, int start_row, int start_col) {
-	int fil = sprite.fil;
-	int col = sprite.col;
+	int filas = sprite.fil;
+	int columnas = sprite.col;
 	char* matrix = sprite.matrix;
 
-	int start_page = start_row/8;
-	int bit_offset = start_row % 8;
-
-	// if (bit_offset == 0){  
 	int array_ind = 0;
-	for (int i = 0; i < fil; ++i) {
-		for (int j = 0; j < col; ++j) {
-			writeByteAnywhere(start_row + fil*8, start_col + j, matrix[array_ind]);
+	int written_rows = 0;
+	for (int i = 0; i < filas; ++i) {
+		for (int j = 0; j < columnas; ++j) {
+			writeByteAnywhere(start_row + written_rows, start_col + j, matrix[array_ind]);
 			array_ind++;
 		}
+		written_rows += 8;
 	} 
-	
 }
 
 void writeByteAnywhere(int start_row, int start_col, int draw) {
