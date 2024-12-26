@@ -37,6 +37,8 @@ void update_medidor(int current_psi, int change_psi);
 
 void writeCharMatrixRow(sprite_t sprite, int start_row, int start_col);
 
+writeByteAnywhere(int start_row, int start_col, int draw);
+
 button_id setup_button(button_frame_t button_frames, int fil, int col);
 
 void draw_button(button_id id);

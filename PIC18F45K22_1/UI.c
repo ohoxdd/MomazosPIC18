@@ -82,6 +82,39 @@ void writeCharMatrixRow(sprite_t sprite, int start_row, int start_col) {
 	}
 }
 
+writeByteAnywhere(int start_row, int start_col, int draw) {
+
+	int start_page = start_row/8;
+	int bit_offset = start_row % 8;
+
+	if (bit_offset == 0){
+		writeByte(start_page, start_col, draw);
+	} else {
+		
+		// mascara selecciona bits arriba
+		uint8_t mask = 0xFF >> (8 - bit_offset); 	
+		
+		// -- pagina superior
+		// lee bits que habia, los junta con la parte de draw que cabe en la pagina
+		uint8_t read = readByte(start_page, start_col); 	
+		uint8_t prev = read & mask; 			
+		
+		
+		uint8_t res; 
+		res = draw << bit_offset; 
+		res |= prev; 
+		writeByte(start_page, start_col, res);
+
+		// -- pagina inferior
+		// combina los bits desplazados de draw con lo que hay en la pagina inferior
+		uint8_t final_page = start_page + 1;
+		prev = draw >> (8 - bit_offset); 
+		read = readByte(final_page, start_col); 
+		read = read & (~mask); 
+		res = read | prev; 
+		writeByte(final_page, start_col, res);
+	}
+}
 button_id setup_button(button_frame_t button_frames, int fil, int col){
 	if (num_buttons == MAX_BUTTONS) return;
 	idbutton_frames[num_buttons] = button_frames;
