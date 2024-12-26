@@ -33,7 +33,7 @@
 const double precalc = 13.595; 
 
 // Variables globales de presion (habra que quitarlas)
-unsigned int pressure_perc;
+unsigned int selected_press;
 unsigned int adjust_pressure;
 
 struct DC_values DC_configurations[3] = {
@@ -121,7 +121,7 @@ unsigned int getCompressorTime(int adc_channel_values[28]) {
 
 	double t_ambient_double = calculate_temp(adc_temp);
 	int t_ambient = (int)t_ambient_double; // esto puede llegar a truncar bastante
-	result = ((pressure_perc-read_press)/2) - (t_ambient - 25);
+	result = ((selected_press-read_press)/2) - (t_ambient - 25);
 	result *= 10; // esto para que este en decimas de segundo
 	if (result < 0) result = 0;
 	return (unsigned int)result;
@@ -129,7 +129,7 @@ unsigned int getCompressorTime(int adc_channel_values[28]) {
 
 void write_pressure(){
 	char buff[256];
-    sprintf(buff,"PSI selected: %3d",pressure_perc);
+    sprintf(buff,"PSI selected: %3d",selected_press);
 	
 	clearChars(0,0,17); // Sujeto a cambiar, ns como funciona esto
    	writeTxt(0,0,buff);
@@ -141,21 +141,21 @@ void change_pwm_values(struct DC_values values) {
 }
 
 void change_selected_pressure(int change) {
-	int old_pressure = pressure_perc;
-	pressure_perc += change;
-	if (pressure_perc <= MIN_PRESSURE) pressure_perc = MIN_PRESSURE;
-	else if (pressure_perc >= MAX_PRESSURE) pressure_perc = MAX_PRESSURE;
+	int old_pressure = selected_press;
+	selected_press += change;
+	if (selected_press <= MIN_PRESSURE) selected_press = MIN_PRESSURE;
+	else if (selected_press >= MAX_PRESSURE) selected_press = MAX_PRESSURE;
 
 	// Comprobar si la presion pasa de un intervalo a otro y, 
 	// si lo hace, cambiar los valores de los registros que controlan el duty cycle "potencia del compresor"
 	
-	if (old_pressure > 30 && pressure_perc <= 30) {
+	if (old_pressure > 30 && selected_press <= 30) {
 		// Entra al intervalo <= 30 psi
 		change_pwm_values(DC_configurations[0]);
-	} else if ((old_pressure <= 30 && pressure_perc > 30) || (old_pressure > 60 && pressure_perc <= 60)) {
+	} else if ((old_pressure <= 30 && selected_press > 30) || (old_pressure > 60 && selected_press <= 60)) {
 		// Entra al intervalo <= 60 psi
 		change_pwm_values(DC_configurations[1]);
-	} else if (old_pressure <= 60 && pressure_perc > 60) {
+	} else if (old_pressure <= 60 && selected_press > 60) {
 		// Entra al intervalo <= 90 psi
 		change_pwm_values(DC_configurations[2]);
 	}
@@ -299,11 +299,7 @@ void main(void)
 	
 	
 	// selecciona la presion y la pone a 50% por defecto junto al medidor
-	pressure_perc = 50;
-
-	// Variable que dicta si se escribe la temperatura en pantalla 
-	// y se recalcula la presion ajustada a la temperatura
-	// double temperature = 25.0;
+	selected_press = 50;
 
 	int adc_channel_values[28];
 
@@ -313,13 +309,17 @@ void main(void)
 		usart_1_puts(splash_text[i]);
 	}
 
+	// variables detección pinchazo
 	int prev_pressure = -1;
 	bool punxada = false;
 
+	// inicializa la barra de progreso
 	setup_medidor(48, 1, 50, 0);
 	
+	// inicializa el estado
 	state_t timer_state = Ready;
 	states_set(timer_state);
+	// inicializa texto de estado
     updateStateTextTimer(timer_state);
 
 	int time_max;
@@ -330,20 +330,20 @@ void main(void)
 	write_ambient_pressure(0);
 	while (1)
 	{   
+		/* ESTADO ALWAYS */
+		/* ESTADO ALWAYS */
+
 		// adc related update flags to 0
 		bool change_temp = false;
 		bool change_press = false;
-		// no hay conversion / ultima conversion ha acabado
 		
-		// Si el canal de la conversion tiene un valor distinto del anterior, 
-		// last_updated_channel = CHS; 
-		// else last_updated_channel = -1;
+		// vale -1 si no ha habido actualizaciones, 
+		// valor del canal actualizado en caso de haberlas
 		int last_updated_channel = ADC_ConversionLogic(adc_channel_values);
 		
 		if (last_updated_channel == 6) change_temp = true;
 		else if (last_updated_channel == 7) change_press = true;
 
-		// write_adc_values(change_temp, change_press, adc_channel_values);
 		
 		if (change_temp) {
 			double temperature = calculate_temp(adc_channel_values[6]);
@@ -355,37 +355,40 @@ void main(void)
 			write_ambient_pressure(read_press);
 		}
 
-		if (timer_state == Running && change_time) {
-			writeTimerCountdown(timer_state); 
-		}
-
         PREV_C = READ_C; // PREVIO <- ACTUAL
 		READ_C = PORTC; // ACTUAL <- PORTC
 		
-		bool timer_end = (timer_state == Running && time_left == 0);
-
-		// DETECTOR DE INPUTS
+		/* ESTADO RUNNING */
+		/* ESTADO RUNNING */
 		if (timer_state == Running)	{
+			
+			// actualiza texto de countdown
+			if (change_time) {
+				writeTimerCountdown(timer_state); 
+			}
 
+			// actualiza barra de progreso
+			new_update_medidor(time_max - time_left, time_max, 0);
 
-			// RUNNING -> STOPPED
-			if (inputDetector(PREV_C, READ_C, 3, 0) || w_pressed || timer_end) { // || punxada
+			/* RUNNING -> STOPPED */
+			bool timer_end = time_left == 0;
+
+			if (inputDetector(PREV_C, READ_C, 3, 0) || w_pressed || timer_end) {
 				w_pressed = false;
 				timer_state = states_set_next(timer_state);
 				updateStateTextTimer(timer_state);
 			}
 
+			// detección y aviso pinchazo
 			if (check_pressure) {
-				if (prev_pressure == -1) prev_pressure = getReadPressure(adc_channel_values[7]);
-				else {
+				if (prev_pressure == -1) {
+					prev_pressure = getReadPressure(adc_channel_values[7]);
+				} else {
 					unsigned int actual_pressure = getReadPressure(adc_channel_values[7]);
 					punxada = detectPuncture(prev_pressure, actual_pressure);
 					prev_pressure = actual_pressure;
 				}
-
 			}
-
-			new_update_medidor(time_max - time_left, time_max, 0);
 
 			if (punxada) {
 				// displayPunctureWarning();
