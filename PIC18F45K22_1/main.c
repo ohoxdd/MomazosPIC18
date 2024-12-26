@@ -166,15 +166,15 @@ void write_adc_values(bool change_temp, bool change_press, int adc_values_arr[28
 	int current_chan = ADCON0bits.CHS;
 
 	if (change_temp){
-		clearChars(6,11,11);
+		clearChars(6,15,11);
 		sprintf(buff, "ADC 6: %d\n", adc_values_arr[6]);
-		writeTxt(6, 11, buff);
+		writeTxt(6, 15, buff);
 	}
 	if (change_press) {
-		clearChars(7,11,11);
+		clearChars(7,15,11);
 		//read_press = getReadPressure(adc_values_arr[7]);
 		sprintf(buff, "ADC 7: %d\n", adc_values_arr[7]);
-		writeTxt(7, 11, buff);
+		writeTxt(7, 15, buff);
 	}
 	//sprintf(buff, "ADC CHAN: %d\n", ADCON0bits.CHS);
 	//writeTxt(5, 11, buff);
@@ -296,7 +296,6 @@ void main(void)
 	
 	// selecciona la presion y la pone a 50% por defecto junto al medidor
 	pressure_perc = 50;
-	update_medidor(0, 50);
 
 	// Variable que dicta si se escribe la temperatura en pantalla 
 	// y se recalcula la presion ajustada a la temperatura
@@ -313,6 +312,8 @@ void main(void)
 	int prev_pressure = -1;
 	bool punxada = false;
 
+	setup_medidor(6, 2, 50, 0);
+	int time_max;
 	while (1)
 	{   
 		// adc related update flags to 0
@@ -381,6 +382,8 @@ void main(void)
 
 			}
 
+			new_update_medidor(time_max - time_left, time_max, 0);
+
 			if (punxada) {
 				// displayPunctureWarning();
 				// Como funciona esto?
@@ -404,7 +407,6 @@ void main(void)
 				change_selected_pressure(1);
 
 				// actualiza la pantalla en base a los cambios
-				update_medidor(pressure_perc, 1);
 				write_pressure();
 
 
@@ -423,7 +425,6 @@ void main(void)
 				change_selected_pressure(-1);
 
 				// actualiza la pantalla en base a los cambios
-				update_medidor(pressure_perc,-1);
 				write_pressure();
 
 
@@ -451,6 +452,7 @@ void main(void)
 					
 					//time_left = TIEMPO_INICIAL;
 					time_left = getCompressorTime(adc_channel_values);
+					time_max = time_left;
 					
 					/* DEBUG USART LINES */
 					/* DEBUG USART LINES */

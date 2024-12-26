@@ -13,8 +13,9 @@
 #define MIN_PRESSURE 0
 #define MAX_PRESSURE 90
 #define ANCHURA_MEDIDOR 10
+#define LONGITUD_MEDIDOR 50
 
-#define MAX_BUTTONS 10
+#define MAX_BUTTONS 4
 
 typedef int button_id;
 enum states_animation {
@@ -28,10 +29,17 @@ button_frame_t idbutton_frames[MAX_BUTTONS];
 int idbutton_row[MAX_BUTTONS];
 int idbutton_col[MAX_BUTTONS];
 
+typedef struct{
+	int base_f;
+    int base_c;
+    int longitud;
+    int pintados;
+} datos_medidor_t;
+
+datos_medidor_t datos_medidor;
+
 int medidor_base_f;
 int medidor_base_c;
-
-
 
 void update_medidor(int current_psi, int change_psi);
 
@@ -45,11 +53,11 @@ void draw_button(button_id id);
 
 bool CheckUpdateButtonAnim(button_id id, bool pressed, int anim_state);
 
-void setup_medidor(int fil, int col);
+void setup_medidor(int fil, int col, int longit, int pintar);
 
 void invertDot(int row, int col);
 
-void new_update_medidor(int current_psi, int change_psi);
+void new_update_medidor(const int valor, const int max_valor, const int min_valor);
 
 #endif 
 

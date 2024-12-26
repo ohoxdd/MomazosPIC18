@@ -170,10 +170,32 @@ bool CheckUpdateButtonAnim(button_id id, bool pressed, int anim_state) {
 	return anim_state;
 }
 
-void setup_medidor(int fil, int col){
-	medidor_base_f = fil + 51;
-	medidor_base_c = col + 5;
-	// writeCharMatrixRow(medidor,fil,col);
+void setup_medidor(int fil, int col, int longit, int pintar){
+	datos_medidor.base_f = fil;
+	datos_medidor.base_c = col;
+	datos_medidor.longitud = longit;
+	datos_medidor.pintados = 0;
+	// new_update_medidor(pintar, longit, 0);
+	int borde_izq = datos_medidor.base_c - 1;
+	int borde_der = datos_medidor.base_c + datos_medidor.longitud + 2;
+	int borde_sup = datos_medidor.base_f - 1;
+	int borde_inf = datos_medidor.base_f + 1;
+
+	writeByte(borde_sup,  borde_izq, 0x80);
+	writeByte(borde_sup,  borde_der, 0x80);
+	for (int i = borde_izq + 1; i < borde_der; ++i) {
+		writeByte(borde_sup,  i, 0x40);
+	}
+	writeByte(datos_medidor.base_f, borde_izq, 0xFF);
+	writeByte(datos_medidor.base_f, borde_der, 0xFF);
+
+	writeByte(borde_inf,  borde_izq, 0x01);
+	writeByte(borde_inf,  borde_der, 0x01);
+	for (int i = borde_izq + 1; i < borde_der; ++i) {
+		writeByte(borde_inf,  i, 0x02);
+	}
+
+
 }
 
 void invertDot(int row, int col) {
@@ -187,36 +209,34 @@ void invertDot(int row, int col) {
 		SetDot(row, col);	
 	}
 }
-void new_update_medidor(int current_psi, int change_psi){
-	int new_psi = current_psi + change_psi;
-	if ((new_psi > MAX_PRESSURE) || (new_psi < MIN_PRESSURE)) return;
 
-	int height = current_psi/2;
-	int new_height = new_psi/2;
+void new_update_medidor(const int valor, const int max_valor, const int min_valor){
+	if ((valor > max_valor) || (valor < min_valor)) return;
+	int range = max_valor - min_valor;
+	int new_height = (datos_medidor.longitud * valor) / range;
 	
-	int diff = new_height - height;
+	int diff = new_height - datos_medidor.pintados;
 
 	int num_its = abs(diff);
-	int row = medidor_base_f - height;
+	int col = datos_medidor.base_c + datos_medidor.pintados;
 
-	int change;
-	bool increase;
+	byte draw;
+	int change;	
 	if (diff > 0) {
-		increase = true; // negative means one row up
-		change = -1;
-		row--; // we don't need to change the current row
+		draw = 0xFF;
+		change = 1; // positive means one row right
+		col++; // we don't need to change the current row
 	} else if (diff < 0) {
-		increase = false; // positive means one row down
-		change = 1;
+		draw = 0x00;
+		change = -1; // negative means one row left
 	} else return; // return if diff = 0
 
 	for (int i = 0; i < num_its; ++i) {
-		for (int j = 0; j < 18; j++) {
-			invertDot(row, medidor_base_c+j);
-		}
-		row += change;
+		writeByte(datos_medidor.base_f, col, draw);
+		col += change;
 	}
-	
+
+	datos_medidor.pintados = new_height;
 }
 
 
