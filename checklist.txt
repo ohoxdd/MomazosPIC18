@@ -16,21 +16,21 @@ FUNCIONES
 
 --------
 INTERFAZ 
-[] Incluir funciones L5 en su propia libreria
+[X] Incluir funciones L5 en su propia libreria
 
 [] Esquema de la interfaz 
 Elementos
-- Estado inflador (3)
-- valores de Temp y presión medida
-- Barra de progreso de tiempo 
-- animación mientras se infla 
-- animación botones (4)
-- info de PSI selecciónado
+[ ] Estado inflador (3)
+[ ] valores de Temp y presión medida
+[X] Barra de progreso de tiempo 
+[ ] animación mientras se infla 
+[ ] animación botones (4)
+[ ] info de PSI selecciónado
 
 [] animaciones
 - animación aviso de pinchazo 
 - animación finalización trabajo
-- animación	previa
+[X] animación	previa
 
 -----------------------
 ORGANIZACIÓN DEL CÓDIGO
