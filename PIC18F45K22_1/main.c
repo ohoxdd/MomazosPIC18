@@ -498,7 +498,8 @@ void main(void)
 				updateStateTextTimer(timer_state);
 
 				// reinicia el tiempo del contador
-				writeTimerCountdown(time_max);
+				time_left = getCompressorTime(adc_channel_values, selected_press);
+				writeTimerCountdown(time_left);
 			} 
 		}
 	}
