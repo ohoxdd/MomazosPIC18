@@ -202,13 +202,13 @@ void writeTimerCountdown(state_t timer_state){
 
 
 void updateStateTextTimer(state_t timer_state) {
-    format_t ftime;
-
-	char countdown[256];
 	char stateText[50];
+
+	int fil = 1;
+	int col = 0;
   
 	// Update segun los estados
-    clearGLCD(1,1,60,127); // Clear del texto "Ready"/"Running..."/"Stopped"
+    clearChars(fil,col,10); // Clear del texto "Ready"/"Running..."/"Stopped"
     
     switch (timer_state) { // EL VALOR ACTUAL DEL STATUS
         case READY:
@@ -216,7 +216,7 @@ void updateStateTextTimer(state_t timer_state) {
             sprintf(stateText, "Ready\n");
             
             writeTimerCountdown(time_left);
-            writeTxt(1,19, stateText); 
+            writeTxt(fil,col, stateText); 
             break;
             
         case RUNNING:
@@ -225,7 +225,7 @@ void updateStateTextTimer(state_t timer_state) {
             
             sprintf(stateText, "Running...\n"); 
             
-            writeTxt(1,14, stateText);
+            writeTxt(fil,col, stateText);
             break;
             
         case STOPPED:
@@ -235,7 +235,7 @@ void updateStateTextTimer(state_t timer_state) {
             sprintf(stateText, "Stopped!\n");
             
 			writeTimerCountdown(time_left);
-            writeTxt(1,16, stateText);
+            writeTxt(fil,col, stateText);
             
             break;
     }
