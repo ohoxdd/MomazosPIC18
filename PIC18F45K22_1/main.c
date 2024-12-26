@@ -262,6 +262,20 @@ bool detectPuncture(unsigned int prev, unsigned int val) {
 	// 
 //}
 
+write_temp(double temperature){
+	clearGLCD(2,2, 63, 127);
+	char buff[128];
+	sprintf(buff, "%.2f C", temperature);
+	writeTxt(2, 16, buff);
+}
+
+write_ambient_pressure(unsigned int read_press){
+	clearGLCD(3,3, 63, 127);
+	char buff[128];
+	sprintf(buff, "%2d PSI", read_press);
+	writeTxt(3, 16, buff);
+}
+
 void main(void)
 { 
 	initPIC_config();
@@ -289,7 +303,7 @@ void main(void)
 
 	// Variable que dicta si se escribe la temperatura en pantalla 
 	// y se recalcula la presion ajustada a la temperatura
-	double temperature = 25.0;
+	// double temperature = 25.0;
 
 	int adc_channel_values[28];
 
@@ -309,6 +323,11 @@ void main(void)
     updateStateTextTimer(timer_state);
 
 	int time_max;
+	// escribe por primera vez presión selected
+	write_pressure();
+	// escribe por primera vez temp y presión ambiental
+	write_temp(25.0);
+	write_ambient_pressure(0);
 	while (1)
 	{   
 		// adc related update flags to 0
@@ -324,27 +343,16 @@ void main(void)
 		if (last_updated_channel == 6) change_temp = true;
 		else if (last_updated_channel == 7) change_press = true;
 
-		write_adc_values(change_temp, change_press, adc_channel_values);
+		// write_adc_values(change_temp, change_press, adc_channel_values);
 		
 		if (change_temp) {
-
-			// escribe temperatura
-			clearGLCD(2,2, 63, 127);
-			char buff[128];
-			temperature = calculate_temp(adc_channel_values[6]);
-			sprintf(buff, "%.2f C", temperature);
-			writeTxt(2, 16, buff);
-			write_pressure();
+			double temperature = calculate_temp(adc_channel_values[6]);
+			write_temp(temperature);
 		}
 		
 		if (change_press) {
-			// escribe presion
-			clearGLCD(3,3, 63, 127);
-			char buff[128];
 			unsigned int read_press = getReadPressure(adc_channel_values[7]);
-			sprintf(buff, "%2d PSI", read_press);
-			writeTxt(3, 16, buff);
-			write_pressure();
+			write_ambient_pressure(read_press);
 		}
 
 		if (timer_state == Running && change_time) {

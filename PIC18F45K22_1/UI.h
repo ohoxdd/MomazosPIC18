@@ -38,9 +38,6 @@ typedef struct{
 
 datos_medidor_t datos_medidor;
 
-int medidor_base_f;
-int medidor_base_c;
-
 void writeCharMatrixRow(sprite_t sprite, int start_row, int start_col);
 
 writeByteAnywhere(int start_row, int start_col, int draw);
