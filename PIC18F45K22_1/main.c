@@ -33,7 +33,6 @@
 const double precalc = 13.595; 
 
 // Variables globales de presion (habra que quitarlas)
-unsigned int selected_press;
 unsigned int adjust_pressure;
 
 struct DC_values DC_configurations[3] = {
@@ -114,22 +113,22 @@ unsigned int getReadPressure(unsigned long int adc_press) {
 }
 
 // Podriamos pasar solo los valores del channel 6 y 7, no hay necesidad de copiar el array entero
-unsigned int getCompressorTime(int adc_channel_values[28]) {
+unsigned int getCompressorTime(int adc_channel_values[28], int selected_pressure) {
 	int result;
 	int adc_temp = adc_channel_values[6];
 	int read_press = getReadPressure(adc_channel_values[7]);
 
 	double t_ambient_double = calculate_temp(adc_temp);
 	int t_ambient = (int)t_ambient_double; // esto puede llegar a truncar bastante
-	result = ((selected_press-read_press)/2) - (t_ambient - 25);
+	result = ((selected_pressure - read_press)/2) - (t_ambient - 25);
 	result *= 10; // esto para que este en decimas de segundo
 	if (result < 0) result = 0;
 	return (unsigned int)result;
 }
 
-void write_pressure(){
+void write_pressure(int selected_pressure){
 	char buff[256];
-    sprintf(buff,"PSI selected: %3d",selected_press);
+    sprintf(buff,"PSI selected: %3d", selected_pressure);
 	
 	clearChars(0,0,17); // Sujeto a cambiar, ns como funciona esto
    	writeTxt(0,0,buff);
@@ -140,25 +139,30 @@ void change_pwm_values(struct DC_values values) {
 	CCPR3L = values.MSb;
 }
 
-void change_selected_pressure(int change) {
-	int old_pressure = selected_press;
-	selected_press += change;
-	if (selected_press <= MIN_PRESSURE) selected_press = MIN_PRESSURE;
-	else if (selected_press >= MAX_PRESSURE) selected_press = MAX_PRESSURE;
+int change_selected_pressure(int change, int selected_pressure) {
+	int old_pressure = selected_pressure;
+	selected_pressure += change;
+	if (selected_pressure <= MIN_PRESSURE) {
+		selected_pressure = MIN_PRESSURE;
+	} else if (selected_pressure >= MAX_PRESSURE) {
+		selected_pressure = MAX_PRESSURE;
+	}
 
 	// Comprobar si la presion pasa de un intervalo a otro y, 
 	// si lo hace, cambiar los valores de los registros que controlan el duty cycle "potencia del compresor"
 	
-	if (old_pressure > 30 && selected_press <= 30) {
+	if (old_pressure > 30 && selected_pressure <= 30) {
 		// Entra al intervalo <= 30 psi
 		change_pwm_values(DC_configurations[0]);
-	} else if ((old_pressure <= 30 && selected_press > 30) || (old_pressure > 60 && selected_press <= 60)) {
+	} else if ((old_pressure <= 30 && selected_pressure > 30) || (old_pressure > 60 && selected_pressure <= 60)) {
 		// Entra al intervalo <= 60 psi
 		change_pwm_values(DC_configurations[1]);
-	} else if (old_pressure <= 60 && selected_press > 60) {
+	} else if (old_pressure <= 60 && selected_pressure > 60) {
 		// Entra al intervalo <= 90 psi
 		change_pwm_values(DC_configurations[2]);
 	}
+
+	return selected_pressure;
 }
 
 void write_adc_values(bool change_temp, bool change_press, int adc_values_arr[28]) {
@@ -299,7 +303,7 @@ void main(void)
 	
 	
 	// selecciona la presion y la pone a 50% por defecto junto al medidor
-	selected_press = 50;
+	unsigned int selected_press = 50;
 
 	int adc_channel_values[28];
 
@@ -324,7 +328,7 @@ void main(void)
 
 	int time_max;
 	// escribe por primera vez presión selected
-	write_pressure();
+	write_pressure(selected_press);
 	// escribe por primera vez temp y presión ambiental
 	write_temp(25.0);
 	write_ambient_pressure(0);
@@ -410,10 +414,10 @@ void main(void)
 				RC0_update = true;
 				
 				// cambio la presi�n seleccionada, la ajusta, y la establece
-				change_selected_pressure(1);
+				selected_press = change_selected_pressure(1, selected_press);
 
 				// actualiza la pantalla en base a los cambios
-				write_pressure();
+				write_pressure(selected_press);
 
 
 			} else if (RC0_pressed && inputDetector(PREV_C, READ_C,  0, RISING)){
@@ -428,10 +432,10 @@ void main(void)
 				RC1_update = true;
 
 				// cambio la presi�n seleccionada, la ajusta, y la establece
-				change_selected_pressure(-1);
+				selected_press = change_selected_pressure(-1, selected_press);
 
 				// actualiza la pantalla en base a los cambios
-				write_pressure();
+				write_pressure(selected_press);
 
 
 			} else if (RC1_pressed && inputDetector(PREV_C, READ_C,  1, FALLING) ){
@@ -457,7 +461,7 @@ void main(void)
 					// y se debe calcular el tiempo antes de encender el propio timer
 					
 					//time_left = TIEMPO_INICIAL;
-					time_left = getCompressorTime(adc_channel_values);
+					time_left = getCompressorTime(adc_channel_values, selected_press);
 					time_max = time_left;
 					
 					/* DEBUG USART LINES */
