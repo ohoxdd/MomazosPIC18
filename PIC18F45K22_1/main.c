@@ -207,8 +207,11 @@ void writeTimerCountdown(int time){
 void updateStateTextTimer(state_t timer_state) {
 	char stateText[50];
 
-	int fil = 1;
+	int fil = 0;
 	int col = 0;
+
+	int sprite_fil = 8;
+	int sprite_col = 0;
   
 	// Update segun los estados
     clearChars(fil,col,10); // Clear del texto "Ready"/"Running..."/"Stopped"
@@ -217,8 +220,9 @@ void updateStateTextTimer(state_t timer_state) {
         case READY:
 
             sprintf(stateText, "Ready\n");
-            
-            // writeTimerCountdown(time_left);
+			clearChars(1, sprite_col, 5);
+			clearChars(3, sprite_col, 5);
+			writeSpriteAnywhere(stateReady, sprite_fil + 8, sprite_col);
             writeTxt(fil,col, stateText); 
             break;
             
@@ -227,8 +231,9 @@ void updateStateTextTimer(state_t timer_state) {
             // solo nos preocupamos de escribir el texto del estado de "Running..."
             
             sprintf(stateText, "Running...\n"); 
-            
             writeTxt(fil,col, stateText);
+
+			writeSpriteAnywhere(stateRunning, sprite_fil, sprite_col);
             break;
             
         case STOPPED:
@@ -236,9 +241,9 @@ void updateStateTextTimer(state_t timer_state) {
             // para tener el valor correcto en caso de pausa
 
             sprintf(stateText, "Stopped!\n");
-            
-			// writeTimerCountdown(time_left);
             writeTxt(fil,col, stateText);
+
+			writeSpriteAnywhere(stateStopped, sprite_fil, sprite_col);
             
             break;
     }
