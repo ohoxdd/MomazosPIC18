@@ -35,11 +35,9 @@ const double precalc = 13.595;
 // Variables globales de presion (habra que quitarlas)
 unsigned int adjust_pressure;
 
-
-
 // Variables de la RSI
 bool change_time = true;
-unsigned int time_left = TIEMPO_INICIAL;
+unsigned int time_left;
 int counter_decimas = 0;
 bool check_pressure;
 
@@ -150,7 +148,7 @@ int change_selected_pressure(int change, int selected_pressure) {
 }
 
 void change_pwm_profile(int selected_pressure) {
-	
+
 	struct DC_values DC_configurations[3] = {
 		{0x32, 0x0}, // 40%
 		{0x54, 0x0}, // 80%
