@@ -220,8 +220,9 @@ void updateStateTextTimer(state_t timer_state) {
         case READY:
 
             sprintf(stateText, "Ready\n");
-			clearChars(1, sprite_col, 5);
-			clearChars(3, sprite_col, 5);
+			int page = sprite_fil/8;
+			clearChars(page, sprite_col, 5);
+			clearChars(page+2, sprite_col, 5);
 			writeSpriteAnywhere(stateReady, sprite_fil + 8, sprite_col);
             writeTxt(fil,col, stateText); 
             break;
