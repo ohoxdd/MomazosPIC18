@@ -398,7 +398,6 @@ void main(void)
 			/* RUNNING -> STOPPED */
 			bool timer_end = time_left == 0;
 			if (button_stop_pressed || timer_end) {
-				// w_pressed = false;
 				timer_state = states_set_next(timer_state);
 				updateStateTextTimer(timer_state);
 			}
@@ -478,7 +477,7 @@ void main(void)
 			/* STOPPED -> READY */
 
 			if (button_sel_pressed) {
-
+				clear_medidor();
 				timer_state = states_set_next(timer_state);
 				updateStateTextTimer(timer_state);
 			} 
