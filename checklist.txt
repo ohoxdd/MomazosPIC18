@@ -28,7 +28,7 @@ Elementos
 [X] Barra de progreso de tiempo 
 [ ] animación mientras se infla 
 [ ] animación botones (4)
-[ ] info de PSI selecciónado
+[X] info de PSI selecciónado
 
 [] animaciones
 - animación aviso de pinchazo 
