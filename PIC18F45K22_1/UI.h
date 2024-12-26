@@ -40,6 +40,8 @@ datos_medidor_t datos_medidor;
 
 void writeSpriteAnywhere(sprite_t sprite, int start_row, int start_col);
 
+void writeSpriteOffset(sprite_t sprite, int start_row, int start_col, int offset);
+
 void writeByteAnywhere(int start_row, int start_col, int draw);
 
 button_id setup_button(button_frame_t button_frames, int fil, int col);

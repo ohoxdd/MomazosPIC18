@@ -18,6 +18,26 @@ void writeSpriteAnywhere(sprite_t sprite, int start_row, int start_col) {
 	} 
 }
 
+void writeSpriteOffset(sprite_t sprite, int start_row, int start_col, int offset) {
+	int filas = sprite.fil;
+	int columnas = sprite.col;
+	char* matrix = sprite.matrix;
+
+	
+	int written_rows = 0;
+	for (int i = 0; i < filas; ++i) {
+		// pone el indice a la fila correspondiente
+		int arr_page_index = i * columnas;
+		for (int j = 0; j < columnas; ++j) {
+			// desplaza el indice, cuando llega sobrepasa el numero de filas vuelve al principio;
+			int array_ind = arr_page_index + (offset + j) % columnas;
+			writeByteAnywhere(start_row + written_rows, start_col + j, matrix[array_ind]);
+			// array_ind++;
+		}
+		written_rows += 8;
+	} 
+}
+
 void writeByteAnywhere(int start_row, int start_col, int draw) {
 
 	int start_page = start_row/8;

@@ -306,16 +306,9 @@ void main(void)
    	uint8_t READ_C = PORTC;
 	uint8_t PREV_C = READ_C;
 
-	// variables animacion de botones
-/* 	bool RC0_pressed = !PORTCbits.RC0;
-	bool RC1_pressed = PORTCbits.RC1;
-	
-	bool RC0_update = true;
-	bool RC1_update = true; */
-	
-	
-	// writeSpriteAnywhere(stateReady, 45, 60);
-	
+	// variable de animación de estados
+	int anim_running_offset = 0;
+
 	
 	// selecciona la presion y la pone a 50% por defecto junto al medidor
 	unsigned int selected_press = 50;
@@ -399,6 +392,12 @@ void main(void)
 			// actualiza texto de countdown
 			if (change_time) {
 				writeTimerCountdown(time_left); 
+				
+				anim_running_offset--;
+				if (anim_running_offset < 0) {
+					anim_running_offset = 23;
+				}
+				writeSpriteOffset(stateRunning, 8, 0, anim_running_offset);
 			}
 
 			// actualiza barra de progreso
