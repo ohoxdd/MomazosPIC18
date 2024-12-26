@@ -2,39 +2,6 @@
 
 
 
-void update_medidor(int current_psi, int change_psi){
-	int new_psi = current_psi + change_psi;
-	if ((new_psi > MAX_PRESSURE) || (new_psi < MIN_PRESSURE)) return;
-
-	int height = current_psi/2;
-	int new_height = new_psi/2;
-
-	int diff = new_height - height;
-
-	int num_its = abs(diff);
-	int row = medidor_base_f - height;
-
-	int change;
-	bool increase;
-	if (diff > 0) {
-		increase = true; // negative means one row up
-		change = -1;
-	} else if (diff < 0) {
-		increase = false; // positive means one row down
-		change = 1;
-	} else return; // return if diff = 0
-
-	for (int i = 0; i < num_its; ++i) {
-		for (int j = 0; j < ANCHURA_MEDIDOR; j++) {
-			if (increase)
-			SetDot(row, medidor_base_c+j);
-			else
-			ClearDot(row, medidor_base_c+j);
-		}
-		row += change;
-	}
-}
-
 void writeCharMatrixRow(sprite_t sprite, int start_row, int start_col) {
 	int fil = sprite.fil;
 	int col = sprite.col;
@@ -171,28 +138,28 @@ bool CheckUpdateButtonAnim(button_id id, bool pressed, int anim_state) {
 }
 
 void setup_medidor(int fil, int col, int longit, int pintar){
-	datos_medidor.base_f = fil;
-	datos_medidor.base_c = col;
+	datos_medidor.base_f = fil+2;
+	datos_medidor.base_c = col+1;
 	datos_medidor.longitud = longit;
 	datos_medidor.pintados = 0;
-	// new_update_medidor(pintar, longit, 0);
+
 	int borde_izq = datos_medidor.base_c - 1;
 	int borde_der = datos_medidor.base_c + datos_medidor.longitud + 2;
-	int borde_sup = datos_medidor.base_f - 1;
-	int borde_inf = datos_medidor.base_f + 1;
+	int borde_sup = datos_medidor.base_f - 8;
+	int borde_inf = datos_medidor.base_f + 8;
 
-	writeByte(borde_sup,  borde_izq, 0x80);
-	writeByte(borde_sup,  borde_der, 0x80);
+	writeByteAnywhere(borde_sup,  borde_izq, 0x80);
+	writeByteAnywhere(borde_sup,  borde_der, 0x80);
 	for (int i = borde_izq + 1; i < borde_der; ++i) {
-		writeByte(borde_sup,  i, 0x40);
+		writeByteAnywhere(borde_sup,  i, 0x40);
 	}
-	writeByte(datos_medidor.base_f, borde_izq, 0xFF);
-	writeByte(datos_medidor.base_f, borde_der, 0xFF);
+	writeByteAnywhere(datos_medidor.base_f, borde_izq, 0xFF);
+	writeByteAnywhere(datos_medidor.base_f, borde_der, 0xFF);
 
-	writeByte(borde_inf,  borde_izq, 0x01);
-	writeByte(borde_inf,  borde_der, 0x01);
+	writeByteAnywhere(borde_inf,  borde_izq, 0x01);
+	writeByteAnywhere(borde_inf,  borde_der, 0x01);
 	for (int i = borde_izq + 1; i < borde_der; ++i) {
-		writeByte(borde_inf,  i, 0x02);
+		writeByteAnywhere(borde_inf,  i, 0x02);
 	}
 
 
@@ -210,6 +177,13 @@ void invertDot(int row, int col) {
 	}
 }
 
+void clear_medidor() {
+	int fil = datos_medidor.base_f;
+	int col = datos_medidor.base_c  + 1;
+	for (int i = 0; i < datos_medidor.longitud; ++i) {
+		writeByteAnywhere(fil, col + i, 0x00);
+	}
+}
 void new_update_medidor(const int valor, const int max_valor, const int min_valor){
 	if ((valor > max_valor) || (valor < min_valor)) return;
 	int range = max_valor - min_valor;
@@ -232,7 +206,7 @@ void new_update_medidor(const int valor, const int max_valor, const int min_valo
 	} else return; // return if diff = 0
 
 	for (int i = 0; i < num_its; ++i) {
-		writeByte(datos_medidor.base_f, col, draw);
+		writeByteAnywhere(datos_medidor.base_f, col, draw);
 		col += change;
 	}
 

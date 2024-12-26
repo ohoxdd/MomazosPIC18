@@ -187,9 +187,9 @@ void writeTimerCountdown(state_t timer_state){
 	    char buff[128];
 
 		ftime = getFormatedTime(time_left);
-		sprintf(buff, "%02d.%0d\n", ftime.segs, ftime.dec);
+		sprintf(buff, "Time: %02d.%0d\n", ftime.segs, ftime.dec);
 		
-		writeTxt(0, 20, buff); 
+		writeTxt(5, 0, buff); 
 		
 		change_time = false;
 }
@@ -209,11 +209,7 @@ void updateStateTextTimer(state_t timer_state) {
 
             sprintf(stateText, "Ready\n");
             
-            ftime = getFormatedTime(time_left);
-            sprintf(countdown, "%02d.%0d\n", ftime.segs, ftime.dec);
-
-            
-            writeTxt(0, 20, countdown); 
+            writeTimerCountdown(time_left);
             writeTxt(1,19, stateText); 
             break;
             
@@ -232,11 +228,7 @@ void updateStateTextTimer(state_t timer_state) {
 
             sprintf(stateText, "Stopped!\n");
             
-            ftime = getFormatedTime(time_left);
-            sprintf(countdown, "%02d.%0d\n", ftime.segs, ftime.dec);
-
-            
-            writeTxt(0, 20, countdown); 
+			writeTimerCountdown(time_left);
             writeTxt(1,16, stateText);
             
             break;
@@ -290,9 +282,7 @@ void main(void)
 	bool RC0_update = true;
 	bool RC1_update = true;
 	
-	state_t timer_state = Ready;
-	states_set(timer_state);
-    updateStateTextTimer(timer_state);
+	
 	
 	// selecciona la presion y la pone a 50% por defecto junto al medidor
 	pressure_perc = 50;
@@ -312,7 +302,12 @@ void main(void)
 	int prev_pressure = -1;
 	bool punxada = false;
 
-	setup_medidor(6, 2, 50, 0);
+	setup_medidor(48, 1, 50, 0);
+	
+	state_t timer_state = Ready;
+	states_set(timer_state);
+    updateStateTextTimer(timer_state);
+
 	int time_max;
 	while (1)
 	{   

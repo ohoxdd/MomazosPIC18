@@ -22,6 +22,7 @@ void states_set(state_t state) {
             
         case Ready: 
             // STOPPED ---> READY
+            clear_medidor();
 			PORTA = 0x1;
             TMR0H = TIMER_STARTH;
             TMR0L = TIMER_STARTL;
