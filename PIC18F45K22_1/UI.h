@@ -40,6 +40,8 @@ datos_medidor_t datos_medidor;
 
 void writeSpriteAnywhere(sprite_t sprite, int start_row, int start_col);
 
+void scrollSection(int start_page, int start_col, int pages, int cols, int offset);
+
 void writeSpriteOffset(sprite_t sprite, int start_row, int start_col, int offset);
 
 void writeByteAnywhere(int start_row, int start_col, int draw);

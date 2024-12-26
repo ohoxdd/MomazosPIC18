@@ -38,6 +38,40 @@ void writeSpriteOffset(sprite_t sprite, int start_row, int start_col, int offset
 	} 
 }
 
+void scrollSection(int start_page, int start_col, const int pages, int cols, int offset){
+	uint8_t aux_pages[8];
+
+	int aux_col;
+
+	/* if (offset < 0) {
+		aux_col = start_col;
+	} else {
+		aux_col = start_col + cols - 1;
+	} */
+
+	// save rightmost
+	aux_col = start_col + cols - 1;
+
+	for (int i = 0; i < pages; i++) {
+		aux_pages[i] = readByte(start_page+i,aux_col);
+	}
+
+	for (int i = cols; i > 0; i--) {
+		for (int j = 0; j < pages; j++) {
+			// read from left
+			int current_col = start_col+i;
+			int current_page = start_page+j;
+			uint8_t read = readByte(current_page, current_col-1);
+			// write to right
+			writeByte(current_page, current_col, read);
+		}
+	}
+
+	for (int i = 0; i < pages; i++) {
+		writeByte(start_page+i, start_col, aux_pages[i]);
+	}
+}
+
 void writeByteAnywhere(int start_row, int start_col, int draw) {
 
 	int start_page = start_row/8;

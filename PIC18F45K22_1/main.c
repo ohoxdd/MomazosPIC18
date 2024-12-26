@@ -398,6 +398,8 @@ void main(void)
 					anim_running_offset = 23;
 				}
 				writeSpriteOffset(stateRunning, 8, 0, anim_running_offset);
+				// scrollSection(1, 0, 3, 24, 0);
+				
 			}
 
 			// actualiza barra de progreso
