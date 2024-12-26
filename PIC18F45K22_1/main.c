@@ -122,10 +122,8 @@ unsigned int getCompressorTime(int adc_channel_values[28], int selected_pressure
 
 void write_pressure(int selected_pressure){
 	char buff[256];
-    sprintf(buff,"PSI selected: %3d", selected_pressure);
-	
-	clearChars(0,0,17); // Sujeto a cambiar, ns como funciona esto
-   	writeTxt(0,0,buff);
+    sprintf(buff,"Selected:%2d", selected_pressure);
+   	writeTxt(7,65,buff);
 }
 
 void change_pwm_values(struct DC_values values) {
