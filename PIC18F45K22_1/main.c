@@ -290,18 +290,22 @@ void main(void)
 	clearGLCD(0,7,0,127);	//Esborrem pantalla
 	setStartLine(0);		//Definim linia d'inici
    
+	// animación de inicio
 	splash_play();
 	
 	// variables responsables la detecci�n de flancos
    	uint8_t READ_C = PORTC;
 	uint8_t PREV_C = READ_C;
 
-	bool RC0_pressed = !PORTCbits.RC0;
+	// variables animacion de botones
+/* 	bool RC0_pressed = !PORTCbits.RC0;
 	bool RC1_pressed = PORTCbits.RC1;
 	
 	bool RC0_update = true;
-	bool RC1_update = true;
+	bool RC1_update = true; */
 	
+	
+
 	
 	
 	// selecciona la presion y la pone a 50% por defecto junto al medidor
@@ -336,8 +340,8 @@ void main(void)
 	write_ambient_pressure(0);
 	while (1)
 	{   
-		/* ESTADO ALWAYS */
-		/* ESTADO ALWAYS */
+		/* ALWAYS */
+		/* ALWAYS */
 
 		// adc related update flags to 0
 		bool change_temp = false;
@@ -361,9 +365,24 @@ void main(void)
 			write_ambient_pressure(read_press);
 		}
 
+		/* INPUT DIGITAL */
+		/* INPUT DIGITAL */
+
         PREV_C = READ_C; // PREVIO <- ACTUAL
 		READ_C = PORTC; // ACTUAL <- PORTC
 		
+		bool button_add_pressed = inputDetector(PREV_C, READ_C,  0, FALLING) || d_pressed;
+		d_pressed = false;
+
+		bool button_sub_pressed = inputDetector(PREV_C, READ_C,  1, RISING) || a_pressed;
+		a_pressed = false;
+
+		bool button_sel_pressed = inputDetector(PREV_C, READ_C, 2, FALLING) || s_pressed;
+		s_pressed = false;
+		
+		bool button_stop_pressed = inputDetector(PREV_C, READ_C, 3, FALLING) || w_pressed;
+		w_pressed = false;
+
 		/* ESTADO RUNNING */
 		/* ESTADO RUNNING */
 		if (timer_state == Running)	{
@@ -378,9 +397,8 @@ void main(void)
 
 			/* RUNNING -> STOPPED */
 			bool timer_end = time_left == 0;
-
-			if (inputDetector(PREV_C, READ_C, 3, 0) || w_pressed || timer_end) {
-				w_pressed = false;
+			if (button_stop_pressed || timer_end) {
+				// w_pressed = false;
 				timer_state = states_set_next(timer_state);
 				updateStateTextTimer(timer_state);
 			}
@@ -406,89 +424,64 @@ void main(void)
 				usart_1_puts(buff);
 				punxada = false;
 			} 
+		} 
 
+		/* ESTADO READY */
+		/* ESTADO READY */
 
-		} else {
-			// RC0 button checking
-			if ((!RC0_pressed && inputDetector(PREV_C, READ_C,  0, FALLING)) || d_pressed ){
-				d_pressed = false;
-				RC0_pressed = true;
-				RC0_update = true;
-				
-				// cambio la presi�n seleccionada, la ajusta, y la establece
+		else if (timer_state == Ready) {
+
+			// Aumenta presión
+			if (button_add_pressed){
 				selected_press = change_selected_pressure(1, selected_press);
-
-				// actualiza la pantalla en base a los cambios
 				write_pressure(selected_press);
+			} 
 
-
-			} else if (RC0_pressed && inputDetector(PREV_C, READ_C,  0, RISING)){
-				RC0_pressed = false;
-				RC0_update = true;
-			}
-
-			//RC1 button checking
-			if ((!RC1_pressed && inputDetector(PREV_C, READ_C,  1, RISING)) || a_pressed){
-				a_pressed = false;
-				RC1_pressed = true;
-				RC1_update = true;
-
-				// cambio la presi�n seleccionada, la ajusta, y la establece
+			// Disminuye presión
+			if (button_sub_pressed){
 				selected_press = change_selected_pressure(-1, selected_press);
-
-				// actualiza la pantalla en base a los cambios
 				write_pressure(selected_press);
-
-
-			} else if (RC1_pressed && inputDetector(PREV_C, READ_C,  1, FALLING) ){
-				RC1_pressed = false;
-				RC1_update = true;
 			}
 
-			// STOPPED -> RUNNING
-			// READY -> RUNNING
-			// Termina bajo condiciones normales
+			/* READY -> RUNNING */
+			if (button_sel_pressed) {
 
-			// SELECT
-			if (inputDetector(PREV_C, READ_C, 2, 0) || s_pressed) {
-				s_pressed = false;
+				time_left = getCompressorTime(adc_channel_values, selected_press);
+				time_max = time_left;
 
-				
+				change_pwm_profile(selected_press);
 
-				if (timer_state == Ready) {
-					// next state == Running, calculamos el tiempo
-					// esto es un poco chapuza pq me da pereza organizar el codigo bien
-					//
-					// esto tmb lo hago aqui pq el propio states_set enciende los timers, 
-					// y se debe calcular el tiempo antes de encender el propio timer
-					
-					//time_left = TIEMPO_INICIAL;
-					time_left = getCompressorTime(adc_channel_values, selected_press);
-					time_max = time_left;
-					change_pwm_profile(selected_press);
-					
-					/* DEBUG USART LINES */
-					/* DEBUG USART LINES */
-
-						char debug[128];
-						sprintf(debug, "Tiempo configurado a %02d.%d segundos\n", time_left/10, time_left%10);
-						usart_1_puts(debug);
-						//unsigned int read_press = getReadPressure(adc_channel_values[7]);
-						//sprintf(debug, "Diferencia de presion = %d - %d = %d\n", pressure_perc, read_press, pressure_perc - read_press);
-						//usart_1_puts(debug);
-						////sprintf(debug, "Formula:\n");
-						//usart_1_puts(debug);
-						//sprintf(debug, "s = (%d-%d)/2 - (%d - 25)\n", pressure_perc, read_press, (int)calculate_temp(adc_channel_values[6]));
-						//usart_1_puts(debug);
-
-					/* DEBUG USART LINES */
-					/* DEBUG USART LINES */
-				}
 				timer_state = states_set_next(timer_state);
 				updateStateTextTimer(timer_state);
 				
-			}
+					/* DEBUG USART LINES */
+					/* DEBUG USART LINES */
 
-		} 
+					char debug[128];
+					sprintf(debug, "Tiempo configurado a %02d.%d segundos\n", time_left/10, time_left%10);
+					usart_1_puts(debug);
+					/* unsigned int read_press = getReadPressure(adc_channel_values[7]);
+					sprintf(debug, "Diferencia de presion = %d - %d = %d\n", pressure_perc, read_press, pressure_perc - read_press);
+					usart_1_puts(debug);
+					//sprintf(debug, "Formula:\n");
+					usart_1_puts(debug);
+					sprintf(debug, "s = (%d-%d)/2 - (%d - 25)\n", pressure_perc, read_press, (int)calculate_temp(adc_channel_values[6]));
+					usart_1_puts(debug); */	
+			} 
+		}
+
+		/* ESTADO STOPPED */
+		/* ESTADO STOPPED */
+
+		else if (timer_state == Stopped){
+
+			/* STOPPED -> READY */
+
+			if (button_sel_pressed) {
+
+				timer_state = states_set_next(timer_state);
+				updateStateTextTimer(timer_state);
+			} 
+		}
 	}
 }
