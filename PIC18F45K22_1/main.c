@@ -188,11 +188,11 @@ void write_adc_values(bool change_temp, bool change_press, int adc_values_arr[28
 
 
 
-void writeTimerCountdown(state_t timer_state){
+void writeTimerCountdown(int time){
 		format_t ftime;
 	    char buff[128];
 
-		ftime = getFormatedTime(time_left);
+		ftime = getFormatedTime(time);
 		sprintf(buff, "Time: %02d.%0d\n", ftime.segs, ftime.dec);
 		
 		writeTxt(5, 0, buff); 
