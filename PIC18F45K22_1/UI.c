@@ -1,7 +1,19 @@
 #include "UI.h"
 
-void write_button(bool pressed, int fil, int col, char* icon) {
+button_t setup_button(int fil, int col, char* icon) {
+	button_t result;
+	result.icon = icon;
+	result.fil = fil;
+	result.col = col;
+	return result;
+}
+
+
+void write_button(bool pressed, bool active, button_t button) {
 	// parte superior
+	char* icon = button.icon;
+	int fil = button.fil;
+	int col = button.col;
 	for (int i = 1; i < 8; ++i) {
 		writeByteAnywhere(fil, col + i, 0x01);
 	}
@@ -16,7 +28,7 @@ void write_button(bool pressed, int fil, int col, char* icon) {
 
 	for (int j = 1; j < 8; ++j) {
 		byte draw = body;
-		if ((icon != NULL) && j > 1 && j < 7) {
+		if ((active) && j > 1 && j < 7) {
 			int icon_i = j - 2;
 			draw = draw ^ icon[icon_i];
 		}

@@ -121,9 +121,11 @@ unsigned int getCompressorTime(int adc_channel_values[28], int selected_pressure
 }
 
 void write_pressure(int selected_pressure){
-	char buff[256];
-    sprintf(buff,"Selected:%2d", selected_pressure);
-   	writeTxt(7,65,buff);
+	char buff[10];
+    sprintf(buff,"PSI:");
+	writeTxt(3,0,buff);
+    sprintf(buff,"%2d", selected_pressure);
+   	writeTxt(3,6,buff);
 }
 
 void change_pwm_values(struct DC_values values) {
@@ -210,7 +212,7 @@ void updateStateTextTimer(state_t timer_state) {
 	int fil = 0;
 	int col = 0;
 
-	int sprite_fil = 8;
+	int sprite_fil = 0;
 	int sprite_col = 0;
   
 	// Update segun los estados
@@ -224,7 +226,7 @@ void updateStateTextTimer(state_t timer_state) {
 			clearChars(page, sprite_col, 5);
 			clearChars(page+2, sprite_col, 5);
 			writeSpriteAnywhere(stateReady, sprite_fil + 8, sprite_col);
-            writeTxt(fil,col, stateText); 
+            // writeTxt(fil,col, stateText); 
             break;
             
         case RUNNING:
@@ -232,9 +234,9 @@ void updateStateTextTimer(state_t timer_state) {
             // solo nos preocupamos de escribir el texto del estado de "Running..."
             
             sprintf(stateText, "Running...\n"); 
-            writeTxt(fil,col, stateText);
+            // writeTxt(fil,col, stateText);
 
-			writeSpriteAnywhere(stateRunning, sprite_fil, sprite_col);
+			// writeSpriteAnywhere(stateRunning, sprite_fil, sprite_col);
             break;
             
         case STOPPED:
@@ -242,7 +244,7 @@ void updateStateTextTimer(state_t timer_state) {
             // para tener el valor correcto en caso de pausa
 
             sprintf(stateText, "Stopped!\n");
-            writeTxt(fil,col, stateText);
+            // writeTxt(fil,col, stateText);
 
 			writeSpriteAnywhere(stateStopped, sprite_fil, sprite_col);
             
@@ -308,7 +310,10 @@ void main(void)
 
 	// variable de animación de estados
 	int anim_running_offset = 0;
-
+	button_t boton_resta = setup_button(24, 20, sub);
+	button_t boton_suma = setup_button(24, 41, add);
+	write_button(false, true, boton_resta);
+	write_button(false, true, boton_suma);
 	
 	// selecciona la presion y la pone a 50% por defecto junto al medidor
 	unsigned int selected_press = 50;
@@ -385,6 +390,10 @@ void main(void)
 		bool button_stop_pressed = inputDetector(PREV_C, READ_C, 3, FALLING) || w_pressed;
 		w_pressed = false;
 
+		/* ANIMACIÓN BOTONES */
+		/* ANIMACIÓN BOTONES */
+
+
 		/* ESTADO RUNNING */
 		/* ESTADO RUNNING */
 		if (timer_state == RUNNING)	{
@@ -397,7 +406,7 @@ void main(void)
 				if (anim_running_offset < 0) {
 					anim_running_offset = 23;
 				}
-				writeSpriteOffset(stateRunning, 8, 0, anim_running_offset);
+				writeSpriteOffset(stateRunning, 0, 0, anim_running_offset);
 				// scrollSection(1, 0, 3, 24, 0);
 				
 			}

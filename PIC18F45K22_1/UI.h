@@ -36,9 +36,17 @@ typedef struct{
     int pintados;
 } datos_medidor_t;
 
+typedef struct {
+	char* icon;
+	int fil;
+	int col;
+} button_t;
+
+button_t setup_button(int fil, int col, char* icon);
+
 datos_medidor_t datos_medidor;
 
-void write_button(bool pressed, int fil, int col, char* icon);
+void write_button(bool pressed, bool active, button_t button);
 
 void writeSpriteAnywhere(sprite_t sprite, int start_row, int start_col);
 
