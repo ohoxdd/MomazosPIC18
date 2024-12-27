@@ -11,7 +11,7 @@
 #define NOM1 "Angel A. Quinones\n"
 #define NOM2 "Hector Fdez. de Sevilla\n"
 
-bool splash_on = false;
+bool splash_on = true;
 
 char* splash_text[] = {
 		TITOL,
