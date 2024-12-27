@@ -41,6 +41,7 @@ typedef struct {
 	int fil;
 	int col;
 	bool pressed;
+	bool change;
 } button_t;
 
 button_t setup_button(int fil, int col, char* icon);

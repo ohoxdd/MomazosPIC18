@@ -293,6 +293,37 @@ write_ambient_pressure(unsigned int read_press){
 	writeTxt(3, 16, buff);
 }
 
+typedef enum  {
+	PULLUP,
+	PULLDOWN,
+} pull_t;
+
+bool button_input_and_anim(byte PREV, byte READ, int pin, pull_t pull, button_t* anim_boton) {
+	flanc_t flanc_press = (pull == PULLUP) ? RISING : FALLING;
+	
+	// si no esta presionado, intentamos detectar flanco de presión
+	bool clicked = false;
+	if (!anim_boton->pressed) {
+		clicked = inputDetector(PREV, READ,  pin, flanc_press);
+		if (clicked) {
+			// actualizamos animación
+			anim_boton->pressed = true;
+			anim_boton->change = true;
+		}
+	// si esta presionado, intentamos detectar flanco de elevación
+	} else {
+		bool released = inputDetector(PREV, READ,  pin, !flanc_press);
+		if (released) {
+			// actualizamos animación
+			anim_boton->pressed = false;
+			anim_boton->change = true;
+		}
+	}
+	// devolvemos si ha habido click
+	return clicked;
+}
+
+
 void main(void)
 { 
 	initPIC_config();
@@ -379,21 +410,12 @@ void main(void)
         PREV_C = READ_C; // PREVIO <- ACTUAL
 		READ_C = PORTC; // ACTUAL <- PORTC
 
-		// bool add_change = false;
-		// si no esta pulsando, espero a que se pulse
-		bool add_click = inputDetector(PREV_C, READ_C,  0, FALLING);
-		if (!add_pressed && add_click){
-			add_pressed = true;
-		}
-		// si esta pulsado, espero a que no se pulse
-		else if (add_pressed && inputDetector(PREV_C, READ_C,  0, RISING)) {
-			add_pressed = false; 
-		}
-
+		bool add_click = button_input_and_anim(PREV_C, READ_C, 0, PULLDOWN, &boton_suma);
 		bool command_add = add_click || d_pressed;
 		d_pressed = false;
 
-		bool command_sub = inputDetector(PREV_C, READ_C,  1, RISING) || a_pressed;
+		bool sub_click = button_input_and_anim(PREV_C, READ_C, 1, PULLUP, &boton_resta);
+		bool command_sub = sub_click || a_pressed;
 		a_pressed = false;
 
 		bool command_sel = inputDetector(PREV_C, READ_C, 2, FALLING) || s_pressed;
@@ -404,9 +426,14 @@ void main(void)
 
 		/* ANIMACIÓN BOTONES */
 		/* ANIMACIÓN BOTONES */
-		if (add_pressed != boton_suma.pressed) {
-			boton_suma.pressed = add_pressed;
+		if (boton_suma.change) {
+			boton_suma.change = false;
 			write_button(true, boton_suma);
+		}
+
+		if (boton_resta.change) {
+			boton_resta.change = false;
+			write_button(true, boton_resta);
 		}
 
 		/* ESTADO RUNNING */
