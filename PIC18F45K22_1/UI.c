@@ -6,6 +6,7 @@ button_t setup_button(int fil, int col, char* icon) {
 	result.fil = fil;
 	result.col = col;
 	result.pressed = false;
+	result.change = true;
 	return result;
 }
 

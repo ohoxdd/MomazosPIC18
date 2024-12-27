@@ -344,8 +344,6 @@ void main(void)
 	int anim_running_offset = 0;
 	button_t boton_resta = setup_button(24, 20, sub);
 	button_t boton_suma = setup_button(24, 41, add);
-	write_button(true, boton_resta);
-	write_button(true, boton_suma);
 	
 	// selecciona la presion y la pone a 50% por defecto junto al medidor
 	unsigned int selected_press = 50;
