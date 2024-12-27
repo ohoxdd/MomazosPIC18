@@ -18,20 +18,7 @@
 #define LONGITUD_MEDIDOR 50
 
 
-typedef struct{
-	int base_f;
-    int base_c;
-    int longitud;
-    int pintados;
-} datos_medidor_t;
 
-typedef struct {
-	char* icon;
-	int fil;
-	int col;
-	bool pressed;
-	bool change;
-} button_t;
 
 button_t ui_button_settup(int fil, int col, char* icon);
 

@@ -24,6 +24,19 @@ struct DC_values {
 	uint8_t LSb; // CCP3CON<5:4>
 };
 
+typedef struct{
+	int base_f;
+    int base_c;
+    int longitud;
+    int pintados;
+} datos_medidor_t;
 
+typedef struct {
+	char* icon;
+	int fil;
+	int col;
+	bool pressed;
+	bool change;
+} button_t;
 
 #endif
