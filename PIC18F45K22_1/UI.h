@@ -1,10 +1,12 @@
 #ifndef UI_H
 #define UI_H 
 
+#include <xc.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <string.h>
 
 #include "typedefs.h"
 #include "GLCD.h"
@@ -31,25 +33,27 @@ typedef struct {
 	bool change;
 } button_t;
 
-button_t setup_button(int fil, int col, char* icon);
+button_t ui_button_settup(int fil, int col, char* icon);
 
-datos_medidor_t datos_medidor;
+datos_medidor_t ui_datos_medidor;
 
-void write_button(bool active, button_t button);
+void ui_button_draw(bool active, button_t button);
 
-void writeSpriteAnywhere(sprite_t sprite, int start_row, int start_col);
+void ui_drawSprite(sprite_t sprite, int start_row, int start_col);
 
-void writeSelectionAnywhere(char* matrix, int f_array, int c_array,  int f_glcd, int c_glcd, int c_ini, int c_fin);
+void ui_drawSelectedCols(char* matrix, int f_array, int c_array,  int f_glcd, int c_glcd, int c_ini, int c_fin);
 
-void writeSpriteOffset(sprite_t sprite, int start_row, int start_col, int offset);
+void ui_drawScrolled(sprite_t sprite, int start_row, int start_col, int offset);
 
-void writeByteAnywhere(int start_row, int start_col, int draw);
+void ui_writeByteAnywhere(int start_row, int start_col, int draw);
 
-void clear_medidor();
+void ui_medidor_clear();
 
-void setup_medidor(int fil, int col, int longit, int pintar);
+void ui_medidor_steup(int fil, int col, int longit, int pintar);
 
-void new_update_medidor(const int valor, const int max_valor, const int min_valor);
+void ui_medidor_draw(const int valor, const int max_valor, const int min_valor);
+
+
 
 #endif 
 

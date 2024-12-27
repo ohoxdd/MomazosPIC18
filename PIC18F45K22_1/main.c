@@ -117,9 +117,9 @@ unsigned int getCompressorTime(int adc_channel_values[28], int selected_pressure
 void write_pressure(int selected_pressure){
 	char buff[16];
     sprintf(buff,"PSI:");
-	writeTxt(4,13,buff);
+	utils_writeTxt(4,13,buff);
     sprintf(buff,"%2d", selected_pressure);
-   	writeTxt(4,19,buff);
+   	utils_writeTxt(4,19,buff);
 }
 
 void change_pwm_values(struct DC_values values) {
@@ -170,10 +170,10 @@ void writeTimerCountdown(int time){
 		format_t ftime;
 	    char buff[16];
 
-		ftime = getFormatedTime(time);
+		ftime = utils_getFormatedTime(time);
 		sprintf(buff, "Time: %02d.%0d\n", ftime.segs, ftime.dec);
 		
-		writeTxt(0, 13, buff); 
+		utils_writeTxt(0, 13, buff); 
 		
 		change_time = false;
 }
@@ -184,17 +184,17 @@ void writeStateSprite(state_t timer_state, int running_offset) {
 	int page = sprite_fil / 8;
     switch (timer_state) { 
         case READY:
-			clearChars(page, sprite_col, 5);
-			clearChars((page + 2), sprite_col, 5); 
-			writeSpriteAnywhere(stateReady, sprite_fil + 8, sprite_col);
+			utils_clearChars(page, sprite_col, 5);
+			utils_clearChars((page + 2), sprite_col, 5); 
+			ui_drawSprite(stateReady, sprite_fil + 8, sprite_col);
 		break;
 		
 		case RUNNING:
-			writeSpriteOffset(stateRunning, sprite_fil, sprite_col, running_offset);
+			ui_drawScrolled(stateRunning, sprite_fil, sprite_col, running_offset);
         break;
             
         case STOPPED:
-			writeSpriteAnywhere(stateStopped, sprite_fil, sprite_col);
+			ui_drawSprite(stateStopped, sprite_fil, sprite_col);
 		break;
     }
 }
@@ -224,9 +224,9 @@ bool detectPuncture(unsigned int prev, unsigned int val) {
 }
 
 void displayPunctureWarning() {
-	writeSpriteAnywhere(notifWarning, 40, 0);
-	writeTxt(5, 5, "PRESS.");
-	writeTxt(6, 5, "LOSS!");
+	ui_drawSprite(notifWarning, 40, 0);
+	utils_writeTxt(5, 5, "PRESS.");
+	utils_writeTxt(6, 5, "LOSS!");
 }
 
 bool displayEndAnimation(bool anim_end_on, int anim_end_offset) {
@@ -234,9 +234,9 @@ bool displayEndAnimation(bool anim_end_on, int anim_end_offset) {
 	bool write_msg = false;
 	if (anim_end_offset <= notifCar.col) {
 		int start_col = notifCar.col - anim_end_offset;
-		writeSelectionAnywhere(notifCar.matrix, notifCar.fil, notifCar.col, 40, 0, start_col, notifCar.col);
+		ui_drawSelectedCols(notifCar.matrix, notifCar.fil, notifCar.col, 40, 0, start_col, notifCar.col);
 	} else {
-		writeTxt(6, 6, "DONE!");
+		utils_writeTxt(6, 6, "DONE!");
 		anim_end_on = false;
 	}
 	return anim_end_on;
@@ -244,22 +244,22 @@ bool displayEndAnimation(bool anim_end_on, int anim_end_offset) {
 
 void clearNotifs() {
 	clearGLCD(5, 7, 0, 23);
-	clearChars(5, 5, 6);
-	clearChars(6, 5, 6);
+	utils_clearChars(5, 5, 6);
+	utils_clearChars(6, 5, 6);
 }
 
 void write_temp(double temperature){
 	// clearGLCD(2,2, 63, 127);
 	char buff[10];
 	sprintf(buff, "%5.1f C", temperature);
-	writeTxt(0, 5, buff);
+	utils_writeTxt(0, 5, buff);
 }
 
 void write_ambient_pressure(unsigned int read_press){
 	// clearGLCD(3,3, 63, 127);
 	char buff[10];
 	sprintf(buff, "%2d PSI", read_press);
-	writeTxt(1, 6, buff);
+	utils_writeTxt(1, 6, buff);
 }
 
 typedef enum  {
@@ -273,7 +273,7 @@ bool button_input_and_anim(byte PREV, byte READ, int pin, pull_t pull, button_t*
 	// si no esta presionado, intentamos detectar flanco de presión
 	bool clicked = false;
 	if (!anim_boton->pressed) {
-		clicked = inputDetector(PREV, READ,  pin, flanc_press);
+		clicked = utils_inputDetector(PREV, READ,  pin, flanc_press);
 		if (clicked) {
 			// actualizamos animación
 			anim_boton->pressed = true;
@@ -281,7 +281,7 @@ bool button_input_and_anim(byte PREV, byte READ, int pin, pull_t pull, button_t*
 		}
 	// si esta presionado, intentamos detectar flanco de elevación
 	} else {
-		bool released = inputDetector(PREV, READ,  pin, !flanc_press);
+		bool released = utils_inputDetector(PREV, READ,  pin, !flanc_press);
 		if (released) {
 			// actualizamos animación
 			anim_boton->pressed = false;
@@ -293,8 +293,8 @@ bool button_input_and_anim(byte PREV, byte READ, int pin, pull_t pull, button_t*
 }
 
 void write_button_labels(){
-	writeTxt(6, 13, "SLCT");
-	writeTxt(7, 13, "STOP");
+	utils_writeTxt(6, 13, "SLCT");
+	utils_writeTxt(7, 13, "STOP");
 }
 
 
@@ -320,10 +320,10 @@ void main(void)
 	bool anim_end_on = false;
 	int anim_end_offset = 1;
 
-	button_t boton_resta = setup_button(32, 85, sub);
-	button_t boton_suma = setup_button(32, 106, add);
-	button_t boton_select = setup_button((6*8)-1, 87, select);
-	button_t boton_stop = setup_button((7*8)-1, 87, stop);
+	button_t boton_resta = ui_button_settup(32, 85, sub);
+	button_t boton_suma = ui_button_settup(32, 106, add);
+	button_t boton_select = ui_button_settup((6*8)-1, 87, select);
+	button_t boton_stop = ui_button_settup((7*8)-1, 87, stop);
 	write_button_labels();
 
 	// selecciona la presion y la pone a 50% por defecto junto al medidor
@@ -343,7 +343,7 @@ void main(void)
 
 	// inicializa la barra de progreso
 	int time_max;
-	setup_medidor(8, 65, 50, 0);
+	ui_medidor_steup(8, 65, 50, 0);
 	
 	// inicializa el estado
 	state_t timer_state = READY;
@@ -413,22 +413,22 @@ void main(void)
 		/* ANIMACIÓN BOTONES */
 		if (boton_suma.change) {
 			boton_suma.change = false;
-			write_button(true, boton_suma);
+			ui_button_draw(true, boton_suma);
 		}
 
 		if (boton_resta.change) {
 			boton_resta.change = false;
-			write_button(true, boton_resta);
+			ui_button_draw(true, boton_resta);
 		}
 
 		if (boton_select.change) {
 			boton_select.change = false;
-			write_button(true, boton_select);
+			ui_button_draw(true, boton_select);
 		}
 
 		if (boton_stop.change) {
 			boton_stop.change = false;
-			write_button(true, boton_stop);
+			ui_button_draw(true, boton_stop);
 		}
 
 		/* ESTADO RUNNING */
@@ -444,13 +444,13 @@ void main(void)
 					anim_running_offset = 23;
 				}
 				writeStateSprite(timer_state, anim_running_offset);
-				// writeSpriteOffset(stateRunning, 0, 0, anim_running_offset);
+				// ui_drawScrolled(stateRunning, 0, 0, anim_running_offset);
 				// scrollSection(1, 0, 3, 24, 0);
 				
 			}
 
 			// actualiza barra de progreso
-			new_update_medidor(time_max - time_left, time_max, 0);
+			ui_medidor_draw(time_max - time_left, time_max, 0);
 
 			/* RUNNING -> STOPPED */
 			bool timer_end = time_left == 0;
@@ -546,7 +546,7 @@ void main(void)
 			/* STOPPED -> READY */
 			if (command_sel) {
 				clearNotifs();
-				clear_medidor();
+				ui_medidor_clear();
 				timer_state = states_set_next(timer_state);
 				writeStateSprite(timer_state, 0);
 				

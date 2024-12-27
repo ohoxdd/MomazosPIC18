@@ -13,8 +13,8 @@ void splash_play() {
     clearGLCD(0, 8, 0, 128);
     int n = sizeof(splash_text)/sizeof(splash_text[0]);
     for (int i = 0; i < n; i++) {
-        int column = calc_center_spacing(splash_text[i]);
-        writeTxt(2+i, column, splash_text[i]); 
+        int column = utils_calc_center_spacing(splash_text[i]);
+        utils_writeTxt(2+i, column, splash_text[i]); 
     }
 
 	
