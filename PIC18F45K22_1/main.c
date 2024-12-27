@@ -32,6 +32,7 @@
 // Variable global temperatura precalculada
 const double precalc = 13.595; 
 
+
 // Variables de la RSI
 bool change_time = true;
 unsigned int time_left;
@@ -177,52 +178,27 @@ void writeTimerCountdown(int time){
 		change_time = false;
 }
 
-
-void updateStateTextTimer(state_t timer_state) {
-	char stateText[50];
-
-	int fil = 0;
-	int col = 0;
-
+void writeStateSprite(state_t timer_state, int running_offset) {
 	int sprite_fil = 0;
 	int sprite_col = 0;
-  
-	// Update segun los estados
-    // clearChars(fil,col,10); // Clear del texto "Ready"/"Running..."/"Stopped"
-    
-    switch (timer_state) { // EL VALOR ACTUAL DEL STATUS
+	int page = sprite_fil / 8;
+    switch (timer_state) { 
         case READY:
-
-            sprintf(stateText, "Ready\n");
-			int page = sprite_fil/8;
 			clearChars(page, sprite_col, 5);
-			clearChars(page+2, sprite_col, 5);
+			clearChars((page + 2), sprite_col, 5); 
 			writeSpriteAnywhere(stateReady, sprite_fil + 8, sprite_col);
-            // writeTxt(fil,col, stateText); 
-            break;
-            
-        case RUNNING:
-            // Aqui, como el countdown de running se tiene que actualizar cada decima de segundo
-            // solo nos preocupamos de escribir el texto del estado de "Running..."
-            
-            sprintf(stateText, "Running...\n"); 
-            // writeTxt(fil,col, stateText);
-
-			// writeSpriteAnywhere(stateRunning, sprite_fil, sprite_col);
-            break;
+		break;
+		
+		case RUNNING:
+			writeSpriteOffset(stateRunning, sprite_fil, sprite_col, running_offset);
+        break;
             
         case STOPPED:
-            // Es necesario escribir el valor del timer en stopped 
-            // para tener el valor correcto en caso de pausa
-
-            sprintf(stateText, "Stopped!\n");
-            // writeTxt(fil,col, stateText);
-
 			writeSpriteAnywhere(stateStopped, sprite_fil, sprite_col);
-            
-            break;
+		break;
     }
 }
+
 
 // Tasas a partir de las que consideramos
 // pinchazo
@@ -356,7 +332,7 @@ void main(void)
 	state_t timer_state = READY;
 	states_set(timer_state);
 	// inicializa texto de estado
-    updateStateTextTimer(timer_state);
+    writeStateSprite(timer_state, 0);
 
 	int time_max;
 	// escribe por primera vez presión selected
@@ -452,7 +428,8 @@ void main(void)
 				if (anim_running_offset < 0) {
 					anim_running_offset = 23;
 				}
-				writeSpriteOffset(stateRunning, 0, 0, anim_running_offset);
+				writeStateSprite(timer_state, anim_running_offset);
+				// writeSpriteOffset(stateRunning, 0, 0, anim_running_offset);
 				// scrollSection(1, 0, 3, 24, 0);
 				
 			}
@@ -471,7 +448,7 @@ void main(void)
 				clearNotifs();
 				writeTimerCountdown(time_left);
 				timer_state = states_set_next(timer_state);
-				updateStateTextTimer(timer_state);
+				writeStateSprite(timer_state, 0);
 			}
 
 			// detección y aviso pinchazo
@@ -528,7 +505,8 @@ void main(void)
 				change_pwm_profile(selected_press);
 
 				timer_state = states_set_next(timer_state);
-				updateStateTextTimer(timer_state);
+				anim_running_offset = 0;
+				writeStateSprite(timer_state, anim_running_offset);
 				
 					/* DEBUG USART LINES */
 					/* DEBUG USART LINES */
@@ -571,7 +549,7 @@ void main(void)
 				clearNotifs();
 				clear_medidor();
 				timer_state = states_set_next(timer_state);
-				updateStateTextTimer(timer_state);
+				writeStateSprite(timer_state, 0);
 				
 				// reinicia el tiempo del contador
 				time_left = getCompressorTime(adc_channel_values, selected_press);
