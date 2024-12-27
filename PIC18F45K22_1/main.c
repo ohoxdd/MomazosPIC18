@@ -487,6 +487,7 @@ void main(void)
 			bool timer_end = time_left == 0;
 
 			if (command_stop || timer_end) {
+clearNotifs();
 				writeTimerCountdown(time_left);
 				timer_state = states_set_next(timer_state);
 				updateStateTextTimer(timer_state);
@@ -575,6 +576,7 @@ void main(void)
 			clearNotifs();
 
 			if (command_sel) {
+				clearNotifs();
 				clear_medidor();
 				timer_state = states_set_next(timer_state);
 				updateStateTextTimer(timer_state);
