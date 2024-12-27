@@ -1,6 +1,7 @@
 #ifndef TYPEDEFS_H
 #define TYPEDEFS_H
 
+#include <stdbool.h>
 #include <stdint.h>
 
 typedef enum{
