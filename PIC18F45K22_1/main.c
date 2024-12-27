@@ -287,14 +287,14 @@ void clearNotifs() {
 	clearChars(6, 5, 6);
 }
 
-write_temp(double temperature){
+void write_temp(double temperature){
 	// clearGLCD(2,2, 63, 127);
 	char buff[10];
 	sprintf(buff, "%5.1f C", temperature);
 	writeTxt(0, 5, buff);
 }
 
-write_ambient_pressure(unsigned int read_press){
+void write_ambient_pressure(unsigned int read_press){
 	// clearGLCD(3,3, 63, 127);
 	char buff[10];
 	sprintf(buff, "%2d PSI", read_press);
@@ -503,28 +503,26 @@ void main(void)
 			}
 
 			// detección y aviso pinchazo
-			if (check_pressure) {
+			if (!punxada && check_pressure) {
 				if (prev_pressure == -1) {
 					prev_pressure = getReadPressure(adc_channel_values[7]);
 				} else {
 					unsigned int actual_pressure = getReadPressure(adc_channel_values[7]);
 					punxada = detectPuncture(prev_pressure, actual_pressure);
 					prev_pressure = actual_pressure;
+
+					if (punxada) {
+						displayPunctureWarning();
+
+						char buff[32];
+						sprintf(buff, "Pinchazo detectado!!!\n");
+						usart_1_puts(buff);
+						//punxada = false;
+					} 
+		} 
 				}
 			}
 
-			if (punxada) {
-				// displayPunctureWarning();
-				// Como funciona esto?
-				//
-				displayPunctureWarning();
-
-				char buff[32];
-				sprintf(buff, "Pinchazo detectado!!!\n");
-				usart_1_puts(buff);
-				punxada = false;
-			} 
-		} 
 
 		/* ESTADO READY */
 		/* ESTADO READY */
