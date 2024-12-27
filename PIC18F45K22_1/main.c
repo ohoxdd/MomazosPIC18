@@ -93,14 +93,10 @@ double calculate_temp(int adc_temp) {
 
 } 
 // Para hacer la conversion del valor del adc a la presion (0:1023) --> (0:90)
-// Lo que hacemos es escalar el valor 90/1023 a 58982/2^16 para poder hacer
-// una division por potencia de 2.  
+
 
 unsigned int getReadPressure(unsigned long int adc_press) {
-	//return ((adc_press*58982)/65536);
 	return (adc_press*88)/1000;
-	// return ((adc_press*58982) >> 16) no estoy seguro de que esto funcione
-	// a lo mejor el compilador hace su magia pero meh, no me quiero arriesgar
 }
 
 // Podriamos pasar solo los valores del channel 6 y 7, no hay necesidad de copiar el array entero
@@ -338,9 +334,9 @@ void main(void)
 { 
 	initPIC_config();
 	
-	GLCDinit();			//Inicialitzem la pantalla
-	clearGLCD(0,7,0,127);	//Esborrem pantalla
-	setStartLine(0);		//Definim linia d'inici
+	GLCDinit();			
+	clearGLCD(0,7,0,127);	
+	setStartLine(0);		
    
 	// animación de inicio
 	splash_play();
@@ -561,13 +557,7 @@ void main(void)
 					char debug[128];
 					sprintf(debug, "Tiempo configurado a %02d.%d segundos\n", time_left/10, time_left%10);
 					usart_1_puts(debug);
-					/* unsigned int read_press = getReadPressure(adc_channel_values[7]);
-					sprintf(debug, "Diferencia de presion = %d - %d = %d\n", pressure_perc, read_press, pressure_perc - read_press);
-					usart_1_puts(debug);
-					//sprintf(debug, "Formula:\n");
-					usart_1_puts(debug);
-					sprintf(debug, "s = (%d-%d)/2 - (%d - 25)\n", pressure_perc, read_press, (int)calculate_temp(adc_channel_values[6]));
-					usart_1_puts(debug); */	
+	
 			} 
 		}
 
@@ -575,9 +565,7 @@ void main(void)
 		/* ESTADO STOPPED */
 
 		else if (timer_state == STOPPED){
-			/* bool notif_car_driven = false;
-			bool notif_car_mesage = false;
-			bool notif_car_finished = false; */
+		
 			if (notif_car_finished) {
 				bool write_msg = false;
 				if (change_time) {
