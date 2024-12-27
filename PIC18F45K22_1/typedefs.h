@@ -9,10 +9,10 @@ typedef enum{
  STOPPED
 }state_t;
 
-enum flanc_t {
+typedef enum{
 	FALLING,
 	RISING, 
-};
+} flanc_t;
 
 typedef struct{
 	unsigned int segs;

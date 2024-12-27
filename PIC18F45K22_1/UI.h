@@ -40,13 +40,14 @@ typedef struct {
 	char* icon;
 	int fil;
 	int col;
+	bool pressed;
 } button_t;
 
 button_t setup_button(int fil, int col, char* icon);
 
 datos_medidor_t datos_medidor;
 
-void write_button(bool pressed, bool active, button_t button);
+void write_button(bool active, button_t button);
 
 void writeSpriteAnywhere(sprite_t sprite, int start_row, int start_col);
 

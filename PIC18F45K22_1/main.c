@@ -313,8 +313,8 @@ void main(void)
 	int anim_running_offset = 0;
 	button_t boton_resta = setup_button(24, 20, sub);
 	button_t boton_suma = setup_button(24, 41, add);
-	write_button(false, true, boton_resta);
-	write_button(false, true, boton_suma);
+	write_button(true, boton_resta);
+	write_button(true, boton_suma);
 	
 	// selecciona la presion y la pone a 50% por defecto junto al medidor
 	unsigned int selected_press = 50;
@@ -379,19 +379,18 @@ void main(void)
         PREV_C = READ_C; // PREVIO <- ACTUAL
 		READ_C = PORTC; // ACTUAL <- PORTC
 
-		bool add_change = false;
+		// bool add_change = false;
 		// si no esta pulsando, espero a que se pulse
-		if (!add_pressed && inputDetector(PREV_C, READ_C,  0, FALLING)){
-			add_change =  true;
+		bool add_click = inputDetector(PREV_C, READ_C,  0, FALLING);
+		if (!add_pressed && add_click){
 			add_pressed = true;
 		}
 		// si esta pulsado, espero a que no se pulse
 		else if (add_pressed && inputDetector(PREV_C, READ_C,  0, RISING)) {
-			add_change = true;
 			add_pressed = false; 
 		}
 
-		bool command_add = (add_pressed && add_change) || d_pressed;
+		bool command_add = add_click || d_pressed;
 		d_pressed = false;
 
 		bool command_sub = inputDetector(PREV_C, READ_C,  1, RISING) || a_pressed;
@@ -405,9 +404,9 @@ void main(void)
 
 		/* ANIMACIÓN BOTONES */
 		/* ANIMACIÓN BOTONES */
-		if (add_change) {
-			add_change = false;
-			write_button(add_pressed, true, boton_suma);
+		if (add_pressed != boton_suma.pressed) {
+			boton_suma.pressed = add_pressed;
+			write_button(true, boton_suma);
 		}
 
 		/* ESTADO RUNNING */

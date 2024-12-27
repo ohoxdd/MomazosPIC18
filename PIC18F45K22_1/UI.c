@@ -5,15 +5,17 @@ button_t setup_button(int fil, int col, char* icon) {
 	result.icon = icon;
 	result.fil = fil;
 	result.col = col;
+	result.pressed = false;
 	return result;
 }
 
 
-void write_button(bool pressed, bool active, button_t button) {
+void write_button(bool active, button_t button) {
 	// parte superior
 	char* icon = button.icon;
 	int fil = button.fil;
 	int col = button.col;
+	bool pressed = button.pressed;
 	for (int i = 1; i < 8; ++i) {
 		writeByteAnywhere(fil, col + i, 0x01);
 	}
