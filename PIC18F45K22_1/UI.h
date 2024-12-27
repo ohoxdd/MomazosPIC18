@@ -15,19 +15,6 @@
 #define ANCHURA_MEDIDOR 10
 #define LONGITUD_MEDIDOR 50
 
-#define MAX_BUTTONS 4
-
-typedef int button_id;
-enum states_animation {
-	UNPRESSED,
-	CHANGING,
-	PRESS,
-};
-
-int num_buttons = 0;
-button_frame_t idbutton_frames[MAX_BUTTONS];
-int idbutton_row[MAX_BUTTONS];
-int idbutton_col[MAX_BUTTONS];
 
 typedef struct{
 	int base_f;
@@ -54,9 +41,6 @@ void writeSpriteAnywhere(sprite_t sprite, int start_row, int start_col);
 
 void writeSelectionAnywhere(char* matrix, int f_array, int c_array,  int f_glcd, int c_glcd, int c_ini, int c_fin);
 
-
-void scrollSection(int start_page, int start_col, int pages, int cols, int offset);
-
 void writeSpriteOffset(sprite_t sprite, int start_row, int start_col, int offset);
 
 void writeByteAnywhere(int start_row, int start_col, int draw);
@@ -64,8 +48,6 @@ void writeByteAnywhere(int start_row, int start_col, int draw);
 void clear_medidor();
 
 void setup_medidor(int fil, int col, int longit, int pintar);
-
-void invertDot(int row, int col);
 
 void new_update_medidor(const int valor, const int max_valor, const int min_valor);
 

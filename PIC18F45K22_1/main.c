@@ -32,8 +32,6 @@
 // Variable global temperatura precalculada
 const double precalc = 13.595; 
 
-// Variables globales de presion (habra que quitarlas)
-unsigned int adjust_pressure;
 
 // Variables de la RSI
 bool change_time = true;
@@ -96,14 +94,10 @@ double calculate_temp(int adc_temp) {
 
 } 
 // Para hacer la conversion del valor del adc a la presion (0:1023) --> (0:90)
-// Lo que hacemos es escalar el valor 90/1023 a 58982/2^16 para poder hacer
-// una division por potencia de 2.  
+
 
 unsigned int getReadPressure(unsigned long int adc_press) {
-	//return ((adc_press*58982)/65536);
 	return (adc_press*88)/1000;
-	// return ((adc_press*58982) >> 16) no estoy seguro de que esto funcione
-	// a lo mejor el compilador hace su magia pero meh, no me quiero arriesgar
 }
 
 // Podriamos pasar solo los valores del channel 6 y 7, no hay necesidad de copiar el array entero
@@ -172,27 +166,6 @@ void change_pwm_profile(int selected_pressure) {
 	}
 }
 
-void write_adc_values(bool change_temp, bool change_press, int adc_values_arr[28]) {
-	char buff[16];
-	int current_chan = ADCON0bits.CHS;
-
-	if (change_temp){
-		clearChars(6,15,11);
-		sprintf(buff, "ADC 6: %d\n", adc_values_arr[6]);
-		writeTxt(6, 15, buff);
-	}
-	if (change_press) {
-		clearChars(7,15,11);
-		//read_press = getReadPressure(adc_values_arr[7]);
-		sprintf(buff, "ADC 7: %d\n", adc_values_arr[7]);
-		writeTxt(7, 15, buff);
-	}
-	//sprintf(buff, "ADC CHAN: %d\n", ADCON0bits.CHS);
-	//writeTxt(5, 11, buff);
-}
-
-
-
 void writeTimerCountdown(int time){
 		format_t ftime;
 	    char buff[16];
@@ -205,52 +178,27 @@ void writeTimerCountdown(int time){
 		change_time = false;
 }
 
-
-void updateStateTextTimer(state_t timer_state) {
-	char stateText[50];
-
-	int fil = 0;
-	int col = 0;
-
+void writeStateSprite(state_t timer_state, int running_offset) {
 	int sprite_fil = 0;
 	int sprite_col = 0;
-  
-	// Update segun los estados
-    // clearChars(fil,col,10); // Clear del texto "Ready"/"Running..."/"Stopped"
-    
-    switch (timer_state) { // EL VALOR ACTUAL DEL STATUS
+	int page = sprite_fil / 8;
+    switch (timer_state) { 
         case READY:
-
-            sprintf(stateText, "Ready\n");
-			int page = sprite_fil/8;
 			clearChars(page, sprite_col, 5);
-			clearChars(page+2, sprite_col, 5);
+			clearChars((page + 2), sprite_col, 5); 
 			writeSpriteAnywhere(stateReady, sprite_fil + 8, sprite_col);
-            // writeTxt(fil,col, stateText); 
-            break;
-            
-        case RUNNING:
-            // Aqui, como el countdown de running se tiene que actualizar cada decima de segundo
-            // solo nos preocupamos de escribir el texto del estado de "Running..."
-            
-            sprintf(stateText, "Running...\n"); 
-            // writeTxt(fil,col, stateText);
-
-			// writeSpriteAnywhere(stateRunning, sprite_fil, sprite_col);
-            break;
+		break;
+		
+		case RUNNING:
+			writeSpriteOffset(stateRunning, sprite_fil, sprite_col, running_offset);
+        break;
             
         case STOPPED:
-            // Es necesario escribir el valor del timer en stopped 
-            // para tener el valor correcto en caso de pausa
-
-            sprintf(stateText, "Stopped!\n");
-            // writeTxt(fil,col, stateText);
-
 			writeSpriteAnywhere(stateStopped, sprite_fil, sprite_col);
-            
-            break;
+		break;
     }
 }
+
 
 // Tasas a partir de las que consideramos
 // pinchazo
@@ -280,6 +228,19 @@ void displayPunctureWarning() {
 	writeTxt(5, 5, "PRESS.");
 	writeTxt(6, 5, "LOSS!");
 }
+
+bool displayEndAnimation(bool anim_end_on, int anim_end_offset) {
+	if (!anim_end_on) return;
+	bool write_msg = false;
+	if (anim_end_offset <= notifCar.col) {
+		int start_col = notifCar.col - anim_end_offset;
+		writeSelectionAnywhere(notifCar.matrix, notifCar.fil, notifCar.col, 40, 0, start_col, notifCar.col);
+	} else {
+		writeTxt(6, 6, "DONE!");
+		anim_end_on = false;
+	}
+	return anim_end_on;
+} 
 
 void clearNotifs() {
 	clearGLCD(5, 7, 0, 23);
@@ -341,9 +302,9 @@ void main(void)
 { 
 	initPIC_config();
 	
-	GLCDinit();			//Inicialitzem la pantalla
-	clearGLCD(0,7,0,127);	//Esborrem pantalla
-	setStartLine(0);		//Definim linia d'inici
+	GLCDinit();			
+	clearGLCD(0,7,0,127);	
+	setStartLine(0);		
    
 	// animación de inicio
 	splash_play();
@@ -353,8 +314,11 @@ void main(void)
 	uint8_t PREV_C = READ_C;
 	bool add_pressed = false;
 
-	// variable de animación de estados
+	// variables de animación 
 	int anim_running_offset = 0;
+	// test animación coche
+	bool anim_end_on = false;
+	int anim_end_offset = 1;
 
 	button_t boton_resta = setup_button(32, 85, sub);
 	button_t boton_suma = setup_button(32, 106, add);
@@ -378,24 +342,23 @@ void main(void)
 	bool punxada = false;
 
 	// inicializa la barra de progreso
+	int time_max;
 	setup_medidor(8, 65, 50, 0);
 	
 	// inicializa el estado
 	state_t timer_state = READY;
 	states_set(timer_state);
 	// inicializa texto de estado
-    updateStateTextTimer(timer_state);
+    writeStateSprite(timer_state, 0);
 
-	int time_max;
+	
 	// escribe por primera vez presión selected
 	write_pressure(selected_press);
 	// escribe por primera vez temp y presión ambiental
 	write_temp(25.0);
 	write_ambient_pressure(0);
 
-	// test animación coche
-	bool notif_car_finished = false;
-	int notif_car_i = 1;
+	
 
 	while (1)
 	{   
@@ -480,7 +443,8 @@ void main(void)
 				if (anim_running_offset < 0) {
 					anim_running_offset = 23;
 				}
-				writeSpriteOffset(stateRunning, 0, 0, anim_running_offset);
+				writeStateSprite(timer_state, anim_running_offset);
+				// writeSpriteOffset(stateRunning, 0, 0, anim_running_offset);
 				// scrollSection(1, 0, 3, 24, 0);
 				
 			}
@@ -493,13 +457,13 @@ void main(void)
 
 			if (command_stop || timer_end) {
 				if (timer_end) {
-					notif_car_finished = true;
-					notif_car_i = 1;
+					anim_end_on = true;
+					anim_end_offset = 1;
 				}
 				clearNotifs();
 				writeTimerCountdown(time_left);
 				timer_state = states_set_next(timer_state);
-				updateStateTextTimer(timer_state);
+				writeStateSprite(timer_state, 0);
 			}
 
 			// detección y aviso pinchazo
@@ -556,7 +520,8 @@ void main(void)
 				change_pwm_profile(selected_press);
 
 				timer_state = states_set_next(timer_state);
-				updateStateTextTimer(timer_state);
+				anim_running_offset = 0;
+				writeStateSprite(timer_state, anim_running_offset);
 				
 					/* DEBUG USART LINES */
 					/* DEBUG USART LINES */
@@ -564,13 +529,7 @@ void main(void)
 					char debug[128];
 					sprintf(debug, "Tiempo configurado a %02d.%d segundos\n", time_left/10, time_left%10);
 					usart_1_puts(debug);
-					/* unsigned int read_press = getReadPressure(adc_channel_values[7]);
-					sprintf(debug, "Diferencia de presion = %d - %d = %d\n", pressure_perc, read_press, pressure_perc - read_press);
-					usart_1_puts(debug);
-					//sprintf(debug, "Formula:\n");
-					usart_1_puts(debug);
-					sprintf(debug, "s = (%d-%d)/2 - (%d - 25)\n", pressure_perc, read_press, (int)calculate_temp(adc_channel_values[6]));
-					usart_1_puts(debug); */	
+	
 			} 
 		}
 
@@ -578,36 +537,18 @@ void main(void)
 		/* ESTADO STOPPED */
 
 		else if (timer_state == STOPPED){
-			/* bool notif_car_driven = false;
-			bool notif_car_mesage = false;
-			bool notif_car_finished = false; */
-			if (notif_car_finished) {
-				bool write_msg = false;
-				if (change_time) {
-					bool loop;
-					while (loop = (notif_car_i <= notifCar.col)) {
-						int start_col = notifCar.col - notif_car_i;
-						writeSelectionAnywhere(notifCar.matrix, notifCar.fil, notifCar.col, 40, 0, start_col, notifCar.col);
-						notif_car_i++;
-					}
-					if (!loop) {
-						write_msg = true;
-					}
-				}
-
-				if (write_msg) {
-					writeTxt(6, 6, "DONE!");
-					notif_car_finished = false;
-				}
+		
+			if (change_time) {
+				anim_end_on = displayEndAnimation(anim_end_on, anim_end_offset);
+				anim_end_offset++;
 			}
-			
 
 			/* STOPPED -> READY */
 			if (command_sel) {
 				clearNotifs();
 				clear_medidor();
 				timer_state = states_set_next(timer_state);
-				updateStateTextTimer(timer_state);
+				writeStateSprite(timer_state, 0);
 				
 				// reinicia el tiempo del contador
 				time_left = getCompressorTime(adc_channel_values, selected_press);
