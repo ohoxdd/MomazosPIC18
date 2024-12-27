@@ -1,8 +1,17 @@
 #include "usart.h"
-
+#include <stdint.h>
 
 void usart_handle_input_RSI() {
-	unsigned char input = RCREG1; // esto levanta ya la flag
+
+	if (RCSTA1bits.OERR) {
+		RCSTA1bits.CREN = 0;
+	}
+
+	uint8_t ferr = RCSTA1bits.FERR;
+	uint8_t input = RCREG1;
+
+	if (ferr && !input) return;
+
 	switch (input) {
 		case 'w': {w_pressed = true; break;}
 		case 'a': {a_pressed = true; break;}
