@@ -98,7 +98,9 @@ double calculate_temp(int adc_temp) {
 
 
 unsigned int getReadPressure(unsigned long int adc_press) {
-	return (adc_press*88)/1000;
+	unsigned int result = adc_press* 45 + 256;
+	result /= 512;
+	return result;
 }
 
 // Podriamos pasar solo los valores del channel 6 y 7, no hay necesidad de copiar el array entero
