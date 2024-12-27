@@ -48,12 +48,6 @@ void writeSpriteOffset(sprite_t sprite, int start_row, int start_col, int offset
 
 void writeByteAnywhere(int start_row, int start_col, int draw);
 
-button_id setup_button(button_frame_t button_frames, int fil, int col);
-
-void draw_button(button_id id);
-
-bool CheckUpdateButtonAnim(button_id id, bool pressed, int anim_state);
-
 void clear_medidor();
 
 void setup_medidor(int fil, int col, int longit, int pintar);

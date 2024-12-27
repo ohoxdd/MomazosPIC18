@@ -131,60 +131,6 @@ void writeByteAnywhere(int start_row, int start_col, int draw) {
 		writeByte(final_page, start_col, res);
 	}
 }
-button_id setup_button(button_frame_t button_frames, int fil, int col){
-	if (num_buttons == MAX_BUTTONS) return;
-	idbutton_frames[num_buttons] = button_frames;
-	idbutton_row[num_buttons] = fil;
-	idbutton_col[num_buttons] = col;
-
-	button_id id = num_buttons;
-	num_buttons++;
-	return id;
-}
-
-void draw_button(button_id id) {
-	button_frame_t frames = idbutton_frames[id];
-	int fil = idbutton_row[id];
-	int col = idbutton_col[id];
-	sprite_t* pbase = frames.base;
-	sprite_t* punpressed = frames.unpressed;
-	writeCharMatrixRow(*pbase,fil+16,col);
-	writeCharMatrixRow(*punpressed,fil,col);
-}
-
-bool CheckUpdateButtonAnim(button_id id, bool pressed, int anim_state) {
-	button_frame_t frames = idbutton_frames[id];
-	int fil = idbutton_row[id];
-	int col = idbutton_col[id];
-
-	bool write = false;
-	if (pressed && anim_state != PRESS) {
-		anim_state++;
-		write = true;
-	}
-	else if (!pressed && anim_state != UNPRESSED) {
-		anim_state--;
-		write = true;
-	}
-
-	if (write){
-	sprite_t* pframe;
-		switch (anim_state)
-		{
-		case UNPRESSED:
-			pframe = frames.unpressed;
-			break;
-		case CHANGING:
-			pframe = frames.changing;
-			break;
-		case PRESS:
-			pframe = frames.pressed;
-			break;
-		}
-		writeCharMatrixRow(*pframe,fil,col);
-	}
-	return anim_state;
-}
 
 void setup_medidor(int fil, int col, int longit, int pintar){
 	datos_medidor.base_f = fil+2;
