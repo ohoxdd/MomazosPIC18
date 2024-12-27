@@ -299,7 +299,7 @@ typedef enum  {
 } pull_t;
 
 bool button_input_and_anim(byte PREV, byte READ, int pin, pull_t pull, button_t* anim_boton) {
-	flanc_t flanc_press = (pull == PULLUP) ? RISING : FALLING;
+	flanc_t flanc_press = (pull == PULLUP) ? FALLING : RISING;
 	
 	// si no esta presionado, intentamos detectar flanco de presión
 	bool clicked = false;
@@ -344,6 +344,10 @@ void main(void)
 	int anim_running_offset = 0;
 	button_t boton_resta = setup_button(24, 20, sub);
 	button_t boton_suma = setup_button(24, 41, add);
+	button_t boton_stop = setup_button(50, 90, stop);
+	button_t boton_select = setup_button(50, 100, select);
+	write_button(true, boton_stop);
+	write_button(true, boton_select);
 	
 	// selecciona la presion y la pone a 50% por defecto junto al medidor
 	unsigned int selected_press = 50;
@@ -408,18 +412,20 @@ void main(void)
         PREV_C = READ_C; // PREVIO <- ACTUAL
 		READ_C = PORTC; // ACTUAL <- PORTC
 
-		bool add_click = button_input_and_anim(PREV_C, READ_C, 0, PULLDOWN, &boton_suma);
+		bool add_click = button_input_and_anim(PREV_C, READ_C, 0, PULLUP, &boton_suma);
 		bool command_add = add_click || d_pressed;
 		d_pressed = false;
 
-		bool sub_click = button_input_and_anim(PREV_C, READ_C, 1, PULLUP, &boton_resta);
+		bool sub_click = button_input_and_anim(PREV_C, READ_C, 1, PULLDOWN, &boton_resta);
 		bool command_sub = sub_click || a_pressed;
 		a_pressed = false;
 
-		bool command_sel = inputDetector(PREV_C, READ_C, 2, FALLING) || s_pressed;
+		bool select_click = button_input_and_anim(PREV_C, READ_C, 2, PULLDOWN, &boton_select);
+		bool command_sel = select_click || s_pressed;
 		s_pressed = false;
 		
-		bool command_stop = inputDetector(PREV_C, READ_C, 3, FALLING) || w_pressed;
+		bool stop_click = button_input_and_anim(PREV_C, READ_C, 3, PULLDOWN, &boton_stop);
+		bool command_stop = inputDetector(PREV_C, READ_C, 3, RISING) || w_pressed;
 		w_pressed = false;
 
 		/* ANIMACIÓN BOTONES */
@@ -432,6 +438,16 @@ void main(void)
 		if (boton_resta.change) {
 			boton_resta.change = false;
 			write_button(true, boton_resta);
+		}
+
+		if (boton_select.change) {
+			boton_select.change = false;
+			write_button(true, boton_select);
+		}
+
+		if (boton_stop.change) {
+			boton_stop.change = false;
+			write_button(true, boton_stop);
 		}
 
 		/* ESTADO RUNNING */
