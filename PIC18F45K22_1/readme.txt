@@ -80,6 +80,7 @@
 		usart.h     Lógica y control de errores por línea série
 		sprites.h   Arrays que contienen los diferentes sprites
 		CCP.h       Lógica del Pulse Width Modulator
+		sensors.h   Interpretar valores de los sensores de PSI/ºC
 	
 	Junto con el comprimido del proyecto se adjunta un .pdf y un .drawio
 	con el esquema de estados de la aplicación.
