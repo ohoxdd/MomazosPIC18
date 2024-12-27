@@ -425,7 +425,7 @@ void main(void)
 		s_pressed = false;
 		
 		bool stop_click = button_input_and_anim(PREV_C, READ_C, 3, PULLDOWN, &boton_stop);
-		bool command_stop = inputDetector(PREV_C, READ_C, 3, RISING) || w_pressed;
+		bool command_stop = stop_click || w_pressed;
 		w_pressed = false;
 
 		/* ANIMACIÓN BOTONES */
