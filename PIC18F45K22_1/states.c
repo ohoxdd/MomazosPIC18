@@ -9,6 +9,9 @@ void states_set(state_t state) {
 			PORTA = 0x2;
             TRISEbits.RE0 = 0; // Enable output driver
             T2CONbits.TMR2ON = 1;
+
+            TMR0H = TIMER_STARTH;
+            TMR0L = TIMER_STARTL;
             T0CONbits.TMR0ON = 1;
             break;
             
@@ -16,15 +19,17 @@ void states_set(state_t state) {
             // RUNNING ---> STOPPED
 			PORTA = 0x4;
             T2CONbits.TMR2ON = 0;
-            T0CONbits.TMR0ON = 0;
             TRISEbits.RE0 = 1; // Disable output driver
+
+            TMR0H = TIMER_STARTH;
+            TMR0L = TIMER_STARTL;
             break;
             
         case READY: 
             // STOPPED ---> READY
 			PORTA = 0x1;
-            TMR0H = TIMER_STARTH;
-            TMR0L = TIMER_STARTL;
+            
+            T0CONbits.TMR0ON = 0;
             break;
     }
 }

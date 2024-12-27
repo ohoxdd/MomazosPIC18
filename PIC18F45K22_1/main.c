@@ -284,7 +284,7 @@ void displayPunctureWarning() {
 void clearNotifs() {
 	clearGLCD(5, 7, 0, 23);
 	clearChars(5, 5, 6);
-	clearChars(6, 5, 5);
+	clearChars(6, 5, 6);
 }
 
 write_temp(double temperature){
@@ -392,6 +392,11 @@ void main(void)
 	// escribe por primera vez temp y presión ambiental
 	write_temp(25.0);
 	write_ambient_pressure(0);
+
+	// test animación coche
+	bool notif_car_finished = false;
+	int notif_car_i = 1;
+
 	while (1)
 	{   
 		/* ALWAYS */
@@ -487,7 +492,11 @@ void main(void)
 			bool timer_end = time_left == 0;
 
 			if (command_stop || timer_end) {
-clearNotifs();
+				if (timer_end) {
+					notif_car_finished = true;
+					notif_car_i = 1;
+				}
+				clearNotifs();
 				writeTimerCountdown(time_left);
 				timer_state = states_set_next(timer_state);
 				updateStateTextTimer(timer_state);
@@ -571,16 +580,37 @@ clearNotifs();
 		/* ESTADO STOPPED */
 
 		else if (timer_state == STOPPED){
+			/* bool notif_car_driven = false;
+			bool notif_car_mesage = false;
+			bool notif_car_finished = false; */
+			if (notif_car_finished) {
+				bool write_msg = false;
+				if (change_time) {
+					bool loop;
+					while (loop = (notif_car_i <= notifCar.col)) {
+						int start_col = notifCar.col - notif_car_i;
+						writeSelectionAnywhere(notifCar.matrix, notifCar.fil, notifCar.col, 40, 0, start_col, notifCar.col);
+						notif_car_i++;
+					}
+					if (!loop) {
+						write_msg = true;
+					}
+				}
+
+				if (write_msg) {
+					writeTxt(6, 6, "DONE!");
+					notif_car_finished = false;
+				}
+			}
+			
 
 			/* STOPPED -> READY */
-			clearNotifs();
-
 			if (command_sel) {
 				clearNotifs();
 				clear_medidor();
 				timer_state = states_set_next(timer_state);
 				updateStateTextTimer(timer_state);
-
+				
 				// reinicia el tiempo del contador
 				time_left = getCompressorTime(adc_channel_values, selected_press);
 				writeTimerCountdown(time_left);

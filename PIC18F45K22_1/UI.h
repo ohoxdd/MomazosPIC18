@@ -52,6 +52,9 @@ void write_button(bool active, button_t button);
 
 void writeSpriteAnywhere(sprite_t sprite, int start_row, int start_col);
 
+void writeSelectionAnywhere(char* matrix, int f_array, int c_array,  int f_glcd, int c_glcd, int c_ini, int c_fin);
+
+
 void scrollSection(int start_page, int start_col, int pages, int cols, int offset);
 
 void writeSpriteOffset(sprite_t sprite, int start_row, int start_col, int offset);

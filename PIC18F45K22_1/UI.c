@@ -40,7 +40,6 @@ void write_button(bool active, button_t button) {
 	// lados
 	writeByteAnywhere(fil + 1, col, 0x7f);
 	writeByteAnywhere(fil + 1, col + 8, 0x7f);
-	
 }
 
 void writeSpriteAnywhere(sprite_t sprite, int start_row, int start_col) {
@@ -53,6 +52,25 @@ void writeSpriteAnywhere(sprite_t sprite, int start_row, int start_col) {
 	for (int i = 0; i < filas; ++i) {
 		for (int j = 0; j < columnas; ++j) {
 			writeByteAnywhere(start_row + written_rows, start_col + j, matrix[array_ind]);
+			array_ind++;
+		}
+		written_rows += 8;
+	} 
+}
+
+void writeSelectionAnywhere(char* matrix, int f_array, int c_array,  int f_glcd, int c_glcd, int c_ini, int c_fin) {
+	// int f_array = sprite.fil;
+	// int c_array = sprite.col;
+	// char* matrix = sprite.matrix;
+
+	int written_rows = 0;
+	int ncols = c_fin  - c_ini;
+	for (int i = 0; i < f_array; ++i) {
+		// comienza en fila i
+		// avanza hasta la columna c_ini
+		int array_ind = i * c_array + c_ini;
+		for (int j = 0; j < ncols; ++j) {
+			writeByteAnywhere(f_glcd + written_rows, c_glcd + j, matrix[array_ind]);
 			array_ind++;
 		}
 		written_rows += 8;
