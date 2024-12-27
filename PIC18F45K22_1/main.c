@@ -229,17 +229,17 @@ void displayPunctureWarning() {
 	writeTxt(6, 5, "LOSS!");
 }
 
-bool displayEndAnimation(bool notif_car_finished, int notif_car_i) {
-	if (!notif_car_finished) return;
+bool displayEndAnimation(bool anim_end_on, int anim_end_offset) {
+	if (!anim_end_on) return;
 	bool write_msg = false;
-	if (notif_car_i <= notifCar.col) {
-		int start_col = notifCar.col - notif_car_i;
+	if (anim_end_offset <= notifCar.col) {
+		int start_col = notifCar.col - anim_end_offset;
 		writeSelectionAnywhere(notifCar.matrix, notifCar.fil, notifCar.col, 40, 0, start_col, notifCar.col);
 	} else {
 		writeTxt(6, 6, "DONE!");
-		notif_car_finished = false;
+		anim_end_on = false;
 	}
-	return notif_car_finished;
+	return anim_end_on;
 } 
 
 void clearNotifs() {
@@ -314,8 +314,11 @@ void main(void)
 	uint8_t PREV_C = READ_C;
 	bool add_pressed = false;
 
-	// variable de animación de estados
+	// variables de animación 
 	int anim_running_offset = 0;
+	// test animación coche
+	bool anim_end_on = false;
+	int anim_end_offset = 1;
 
 	button_t boton_resta = setup_button(32, 85, sub);
 	button_t boton_suma = setup_button(32, 106, add);
@@ -339,6 +342,7 @@ void main(void)
 	bool punxada = false;
 
 	// inicializa la barra de progreso
+	int time_max;
 	setup_medidor(8, 65, 50, 0);
 	
 	// inicializa el estado
@@ -347,16 +351,14 @@ void main(void)
 	// inicializa texto de estado
     writeStateSprite(timer_state, 0);
 
-	int time_max;
+	
 	// escribe por primera vez presión selected
 	write_pressure(selected_press);
 	// escribe por primera vez temp y presión ambiental
 	write_temp(25.0);
 	write_ambient_pressure(0);
 
-	// test animación coche
-	bool notif_car_finished = false;
-	int notif_car_i = 1;
+	
 
 	while (1)
 	{   
@@ -455,8 +457,8 @@ void main(void)
 
 			if (command_stop || timer_end) {
 				if (timer_end) {
-					notif_car_finished = true;
-					notif_car_i = 1;
+					anim_end_on = true;
+					anim_end_offset = 1;
 				}
 				clearNotifs();
 				writeTimerCountdown(time_left);
@@ -537,8 +539,8 @@ void main(void)
 		else if (timer_state == STOPPED){
 		
 			if (change_time) {
-				notif_car_finished = displayEndAnimation(notif_car_finished, notif_car_i);
-				notif_car_i++;
+				anim_end_on = displayEndAnimation(anim_end_on, anim_end_offset);
+				anim_end_offset++;
 			}
 
 			/* STOPPED -> READY */
