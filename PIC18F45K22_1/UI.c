@@ -1,6 +1,32 @@
 #include "UI.h"
 
+void write_button(bool pressed, int fil, int col, char* icon) {
+	// parte superior
+	for (int i = 1; i < 8; ++i) {
+		writeByteAnywhere(fil, col + i, 0x01);
+	}
+	// cuerpo
+	byte body;
 
+	if (pressed) {
+		body = 0xFF;
+	} else {
+		body = 0x80;
+	}
+
+	for (int j = 1; j < 8; ++j) {
+		byte draw = body;
+		if ((icon != NULL) && j > 1 && j < 7) {
+			int icon_i = j - 2;
+			draw = draw ^ icon[icon_i];
+		}
+		writeByteAnywhere(fil + 1, col + j, draw);
+	}
+	// lados
+	writeByteAnywhere(fil + 1, col, 0x7f);
+	writeByteAnywhere(fil + 1, col + 8, 0x7f);
+	
+}
 
 void writeSpriteAnywhere(sprite_t sprite, int start_row, int start_col) {
 	int filas = sprite.fil;

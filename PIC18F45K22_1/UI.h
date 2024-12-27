@@ -38,6 +38,8 @@ typedef struct{
 
 datos_medidor_t datos_medidor;
 
+void write_button(bool pressed, int fil, int col, char* icon);
+
 void writeSpriteAnywhere(sprite_t sprite, int start_row, int start_col);
 
 void scrollSection(int start_page, int start_col, int pages, int cols, int offset);
