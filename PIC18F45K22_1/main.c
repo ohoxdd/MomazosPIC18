@@ -123,9 +123,9 @@ unsigned int getCompressorTime(int adc_channel_values[28], int selected_pressure
 void write_pressure(int selected_pressure){
 	char buff[10];
     sprintf(buff,"PSI:");
-	writeTxt(3,0,buff);
+	writeTxt(4,13,buff);
     sprintf(buff,"%2d", selected_pressure);
-   	writeTxt(3,6,buff);
+   	writeTxt(4,19,buff);
 }
 
 void change_pwm_values(struct DC_values values) {
@@ -200,7 +200,7 @@ void writeTimerCountdown(int time){
 		ftime = getFormatedTime(time);
 		sprintf(buff, "Time: %02d.%0d\n", ftime.segs, ftime.dec);
 		
-		writeTxt(5, 0, buff); 
+		writeTxt(0, 13, buff); 
 		
 		change_time = false;
 }
@@ -216,7 +216,7 @@ void updateStateTextTimer(state_t timer_state) {
 	int sprite_col = 0;
   
 	// Update segun los estados
-    clearChars(fil,col,10); // Clear del texto "Ready"/"Running..."/"Stopped"
+    // clearChars(fil,col,10); // Clear del texto "Ready"/"Running..."/"Stopped"
     
     switch (timer_state) { // EL VALOR ACTUAL DEL STATUS
         case READY:
@@ -280,17 +280,17 @@ bool detectPuncture(unsigned int prev, unsigned int val) {
 //}
 
 write_temp(double temperature){
-	clearGLCD(2,2, 63, 127);
+	// clearGLCD(2,2, 63, 127);
 	char buff[128];
-	sprintf(buff, "%.2f C", temperature);
-	writeTxt(2, 16, buff);
+	sprintf(buff, "%5.1f C", temperature);
+	writeTxt(0, 5, buff);
 }
 
 write_ambient_pressure(unsigned int read_press){
-	clearGLCD(3,3, 63, 127);
+	// clearGLCD(3,3, 63, 127);
 	char buff[128];
 	sprintf(buff, "%2d PSI", read_press);
-	writeTxt(3, 16, buff);
+	writeTxt(1, 6, buff);
 }
 
 typedef enum  {
@@ -323,6 +323,11 @@ bool button_input_and_anim(byte PREV, byte READ, int pin, pull_t pull, button_t*
 	return clicked;
 }
 
+void write_button_labels(){
+	writeTxt(6, 13, "SLCT");
+	writeTxt(7, 13, "STOP");
+}
+
 
 void main(void)
 { 
@@ -342,13 +347,13 @@ void main(void)
 
 	// variable de animación de estados
 	int anim_running_offset = 0;
-	button_t boton_resta = setup_button(24, 20, sub);
-	button_t boton_suma = setup_button(24, 41, add);
-	button_t boton_stop = setup_button(50, 90, stop);
-	button_t boton_select = setup_button(50, 100, select);
-	write_button(true, boton_stop);
-	write_button(true, boton_select);
-	
+
+	button_t boton_resta = setup_button(32, 85, sub);
+	button_t boton_suma = setup_button(32, 106, add);
+	button_t boton_select = setup_button((6*8)-1, 87, select);
+	button_t boton_stop = setup_button((7*8)-1, 87, stop);
+	write_button_labels();
+
 	// selecciona la presion y la pone a 50% por defecto junto al medidor
 	unsigned int selected_press = 50;
 
@@ -365,7 +370,7 @@ void main(void)
 	bool punxada = false;
 
 	// inicializa la barra de progreso
-	setup_medidor(48, 1, 50, 0);
+	setup_medidor(8, 65, 50, 0);
 	
 	// inicializa el estado
 	state_t timer_state = READY;
