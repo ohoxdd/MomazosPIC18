@@ -229,6 +229,19 @@ void displayPunctureWarning() {
 	writeTxt(6, 5, "LOSS!");
 }
 
+bool displayEndAnimation(bool notif_car_finished, int notif_car_i) {
+	if (!notif_car_finished) return;
+	bool write_msg = false;
+	if (notif_car_i <= notifCar.col) {
+		int start_col = notifCar.col - notif_car_i;
+		writeSelectionAnywhere(notifCar.matrix, notifCar.fil, notifCar.col, 40, 0, start_col, notifCar.col);
+	} else {
+		writeTxt(6, 6, "DONE!");
+		notif_car_finished = false;
+	}
+	return notif_car_finished;
+} 
+
 void clearNotifs() {
 	clearGLCD(5, 7, 0, 23);
 	clearChars(5, 5, 6);
@@ -523,26 +536,10 @@ void main(void)
 
 		else if (timer_state == STOPPED){
 		
-			if (notif_car_finished) {
-				bool write_msg = false;
-				if (change_time) {
-					bool loop;
-					while (loop = (notif_car_i <= notifCar.col)) {
-						int start_col = notifCar.col - notif_car_i;
-						writeSelectionAnywhere(notifCar.matrix, notifCar.fil, notifCar.col, 40, 0, start_col, notifCar.col);
-						notif_car_i++;
-					}
-					if (!loop) {
-						write_msg = true;
-					}
-				}
-
-				if (write_msg) {
-					writeTxt(6, 6, "DONE!");
-					notif_car_finished = false;
-				}
+			if (change_time) {
+				notif_car_finished = displayEndAnimation(notif_car_finished, notif_car_i);
+				notif_car_i++;
 			}
-			
 
 			/* STOPPED -> READY */
 			if (command_sel) {
