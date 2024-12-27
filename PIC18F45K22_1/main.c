@@ -307,6 +307,7 @@ void main(void)
 	// variables responsables la detecci�n de flancos
    	uint8_t READ_C = PORTC;
 	uint8_t PREV_C = READ_C;
+	bool add_pressed = false;
 
 	// variable de animación de estados
 	int anim_running_offset = 0;
@@ -377,22 +378,37 @@ void main(void)
 
         PREV_C = READ_C; // PREVIO <- ACTUAL
 		READ_C = PORTC; // ACTUAL <- PORTC
-		
-		bool button_add_pressed = inputDetector(PREV_C, READ_C,  0, FALLING) || d_pressed;
+
+		bool add_change = false;
+		// si no esta pulsando, espero a que se pulse
+		if (!add_pressed && inputDetector(PREV_C, READ_C,  0, FALLING)){
+			add_change =  true;
+			add_pressed = true;
+		}
+		// si esta pulsado, espero a que no se pulse
+		else if (add_pressed && inputDetector(PREV_C, READ_C,  0, RISING)) {
+			add_change = true;
+			add_pressed = false; 
+		}
+
+		bool command_add = (add_pressed && add_change) || d_pressed;
 		d_pressed = false;
 
-		bool button_sub_pressed = inputDetector(PREV_C, READ_C,  1, RISING) || a_pressed;
+		bool command_sub = inputDetector(PREV_C, READ_C,  1, RISING) || a_pressed;
 		a_pressed = false;
 
-		bool button_sel_pressed = inputDetector(PREV_C, READ_C, 2, FALLING) || s_pressed;
+		bool command_sel = inputDetector(PREV_C, READ_C, 2, FALLING) || s_pressed;
 		s_pressed = false;
 		
-		bool button_stop_pressed = inputDetector(PREV_C, READ_C, 3, FALLING) || w_pressed;
+		bool command_stop = inputDetector(PREV_C, READ_C, 3, FALLING) || w_pressed;
 		w_pressed = false;
 
 		/* ANIMACIÓN BOTONES */
 		/* ANIMACIÓN BOTONES */
-
+		if (add_change) {
+			add_change = false;
+			write_button(add_pressed, true, boton_suma);
+		}
 
 		/* ESTADO RUNNING */
 		/* ESTADO RUNNING */
@@ -417,7 +433,7 @@ void main(void)
 			/* RUNNING -> STOPPED */
 			bool timer_end = time_left == 0;
 
-			if (button_stop_pressed || timer_end) {
+			if (command_stop || timer_end) {
 				writeTimerCountdown(time_left);
 				timer_state = states_set_next(timer_state);
 				updateStateTextTimer(timer_state);
@@ -452,13 +468,13 @@ void main(void)
 		else if (timer_state == READY) {
 			bool new_selected_press = false;
 			// Aumenta presión
-			if (button_add_pressed){
+			if (command_add){
 				new_selected_press = change_selected_pressure(1, &selected_press);
 				write_pressure(selected_press);
 			} 
 
 			// Disminuye presión
-			if (button_sub_pressed){
+			if (command_sub){
 				new_selected_press = change_selected_pressure(-1, &selected_press);
 				write_pressure(selected_press);
 			}
@@ -470,7 +486,7 @@ void main(void)
 			}
 
 			/* READY -> RUNNING */
-			if (button_sel_pressed) {
+			if (command_sel) {
 
 				time_left = getCompressorTime(adc_channel_values, selected_press);
 				time_max = time_left;
@@ -503,7 +519,7 @@ void main(void)
 
 			/* STOPPED -> READY */
 
-			if (button_sel_pressed) {
+			if (command_sel) {
 				clear_medidor();
 				timer_state = states_set_next(timer_state);
 				updateStateTextTimer(timer_state);
