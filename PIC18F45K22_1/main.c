@@ -165,27 +165,6 @@ void change_pwm_profile(int selected_pressure) {
 	}
 }
 
-void write_adc_values(bool change_temp, bool change_press, int adc_values_arr[28]) {
-	char buff[16];
-	int current_chan = ADCON0bits.CHS;
-
-	if (change_temp){
-		clearChars(6,15,11);
-		sprintf(buff, "ADC 6: %d\n", adc_values_arr[6]);
-		writeTxt(6, 15, buff);
-	}
-	if (change_press) {
-		clearChars(7,15,11);
-		//read_press = getReadPressure(adc_values_arr[7]);
-		sprintf(buff, "ADC 7: %d\n", adc_values_arr[7]);
-		writeTxt(7, 15, buff);
-	}
-	//sprintf(buff, "ADC CHAN: %d\n", ADCON0bits.CHS);
-	//writeTxt(5, 11, buff);
-}
-
-
-
 void writeTimerCountdown(int time){
 		format_t ftime;
 	    char buff[16];
