@@ -32,9 +32,6 @@
 // Variable global temperatura precalculada
 const double precalc = 13.595; 
 
-// Variables globales de presion (habra que quitarlas)
-unsigned int adjust_pressure;
-
 // Variables de la RSI
 bool change_time = true;
 unsigned int time_left;
