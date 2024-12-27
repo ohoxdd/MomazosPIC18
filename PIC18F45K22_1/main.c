@@ -275,9 +275,17 @@ bool detectPuncture(unsigned int prev, unsigned int val) {
 	return diff_pressure <= THRESHOLD_LOW;
 }
 
-//void displayPunctureWarning() {
-	// 
-//}
+void displayPunctureWarning() {
+	writeSpriteAnywhere(notifWarning, 40, 0);
+	writeTxt(5, 5, "PRESS.");
+	writeTxt(6, 5, "LOSS!");
+}
+
+void clearNotifs() {
+	clearGLCD(5, 7, 0, 23);
+	clearChars(5, 5, 6);
+	clearChars(6, 5, 5);
+}
 
 write_temp(double temperature){
 	// clearGLCD(2,2, 63, 127);
@@ -499,6 +507,7 @@ void main(void)
 				// displayPunctureWarning();
 				// Como funciona esto?
 				//
+				displayPunctureWarning();
 
 				char buff[32];
 				sprintf(buff, "Pinchazo detectado!!!\n");
@@ -563,6 +572,7 @@ void main(void)
 		else if (timer_state == STOPPED){
 
 			/* STOPPED -> READY */
+			clearNotifs();
 
 			if (command_sel) {
 				clear_medidor();
