@@ -121,7 +121,7 @@ unsigned int getCompressorTime(int adc_channel_values[28], int selected_pressure
 }
 
 void write_pressure(int selected_pressure){
-	char buff[10];
+	char buff[16];
     sprintf(buff,"PSI:");
 	writeTxt(4,13,buff);
     sprintf(buff,"%2d", selected_pressure);
@@ -173,7 +173,7 @@ void change_pwm_profile(int selected_pressure) {
 }
 
 void write_adc_values(bool change_temp, bool change_press, int adc_values_arr[28]) {
-	char buff[64];
+	char buff[16];
 	int current_chan = ADCON0bits.CHS;
 
 	if (change_temp){
@@ -195,7 +195,7 @@ void write_adc_values(bool change_temp, bool change_press, int adc_values_arr[28
 
 void writeTimerCountdown(int time){
 		format_t ftime;
-	    char buff[128];
+	    char buff[16];
 
 		ftime = getFormatedTime(time);
 		sprintf(buff, "Time: %02d.%0d\n", ftime.segs, ftime.dec);
@@ -281,14 +281,14 @@ bool detectPuncture(unsigned int prev, unsigned int val) {
 
 write_temp(double temperature){
 	// clearGLCD(2,2, 63, 127);
-	char buff[128];
+	char buff[10];
 	sprintf(buff, "%5.1f C", temperature);
 	writeTxt(0, 5, buff);
 }
 
 write_ambient_pressure(unsigned int read_press){
 	// clearGLCD(3,3, 63, 127);
-	char buff[128];
+	char buff[10];
 	sprintf(buff, "%2d PSI", read_press);
 	writeTxt(1, 6, buff);
 }
@@ -500,7 +500,7 @@ void main(void)
 				// Como funciona esto?
 				//
 
-				char buff[256];
+				char buff[32];
 				sprintf(buff, "Pinchazo detectado!!!\n");
 				usart_1_puts(buff);
 				punxada = false;
