@@ -89,4 +89,6 @@ unsigned const char splash_bitmap [1024]= {
 };
 
 void splash_play();
+
+void writeMatrix(int start_page, int start_col, int fil, int col, char* matrix);
 #endif

@@ -1,5 +1,4 @@
 #include "splash.h"
-#include "test.h"
 
 
 
@@ -20,4 +19,14 @@ void splash_play() {
 	
     __delay_ms(2000);
     clearGLCD(0,7,0,127); 
+}
+
+void writeMatrix(int start_page, int start_col, int fil, int col, char* matrix) {
+    int array_ind = 0;
+    for (int i = 0; i < fil; ++i) {
+        for (int j = 0; j < col; ++j) {
+            writeByte(start_page + i, start_col + j, matrix[array_ind]);
+            array_ind++;
+        }
+    }
 }

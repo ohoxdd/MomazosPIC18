@@ -75,7 +75,7 @@
 		typedefs.h  Definiciones de tipos de datos
 		initPIC.h   Configuracion inicial del PIC18F45K22
 		ADC.h       Lógica relacionada con el Analog/Digital Converter
-		states.h    Acciones al cambiar el estado de la apliación
+		states.h    Cambio de configs de registros al cambiar el estado de la apliación
 		UI.h        Dibujado de los elementos de la UI
 		usart.h     Lógica y control de errores por línea série
 		sprites.h   Arrays que contienen los diferentes sprites
